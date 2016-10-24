@@ -13,9 +13,18 @@ qpin_plot(qpin_obj)
 Visualization of quarterly estimates and probability of informed trading with ggplot2.
 }
 \examples{
+# Loading one year of simulated daily buys and sells
+
 data('BSfrequent2015')
+
+# Quarterly estimates for model parameters and the probability of informed trading
+# Rownames of 'BSfrequent2015' equal the business days in 2015.
+
 qpin_list <- qpin(numbuys = BSfrequent2015[,"Buys"], numsells = BSfrequent2015[,"Sells"],
                   dates = as.Date(rownames(BSfrequent2015), format = "\%Y-\%m-\%d"))
+                  
+# Visualization of quarterly estimates
+                   
 qpin_plot(qpin_list)
 
 }

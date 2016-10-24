@@ -51,6 +51,7 @@ Quarterly estimates can be visualized with the \code{\link{qpin_plot}} function.
  \item{\code{\link{BSfrequent2015}}}{A matrix containing one year of synthetic daily buys and sells data representing a frequently traded stock.
                                      Rownames equal the business days in 2015.}
 }
+Source of all included datasets: own simulation
 }
 
 \section{Author}{

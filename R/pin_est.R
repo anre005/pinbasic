@@ -6,6 +6,7 @@
 #' \code{\link{nlminb}} function in the \pkg{stats} package is used for maximization.
 #' In the literature, at least data for 60 trading days is recommended to ensure convergence of optimization.
 #' No information about the trading days' dates is needed.
+#' Vectors for \code{numbuys} and \code{numsells} need to have same length.
 #'
 #' @inheritParams pin_ll
 #' @inheritParams pin_est_core
@@ -48,19 +49,25 @@
 #' @return
 #' A list with seven components:
 #' \describe{
-#' \item{Results}{Matrix containing the parameter estimates as well as their standard errors,
+#' \item{Results}{Matrix containing the parameter estimates as well as their estimated standard errors,
 #'  t-values and p-values.}
 #'  \item{ll}{Value of likelihood function returned by \code{nlminb}}
 #'  \item{pin}{Estimated probability of informed trading}
 #'  \item{conv}{Convergence code for nlminb optimization}
-#'  \item{message}{Convergence message returned from the nlminb optimizer}
+#'  \item{message}{Convergence message returned by the nlminb optimizer}
 #'  \item{iterations}{Number of iterations until convergence of nlminb optimizer}
 #'  \item{init_vals}{Vector of initial values}
 #'  }
 #'
 #' @examples
+#' # Loading simulated data for frequently traded stock
+#' 
 #' data("BSfrequent")
-#' res_freq <- pin_est(numbuys = BSfrequent[,"Buys"], numsells = BSfrequent[,"Sells"])
+#' 
+#' # Optimization with HAC initial values and Lin-Ke likelihood factorization
+#' 
+#' pin_freq <- pin_est(numbuys = BSfrequent[,"Buys"],
+#'                     numsells = BSfrequent[,"Sells"])
 #' @export
 
 pin_est <- function(numbuys = NULL, numsells = NULL,

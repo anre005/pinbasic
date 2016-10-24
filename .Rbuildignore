@@ -1,6 +1,7 @@
 ^README\.Rmd$
 Makefile
 pinbasic.Rproj
+cran-comments.md
 
 ^.*\.Rproj$
 ^\.Rproj\.user$

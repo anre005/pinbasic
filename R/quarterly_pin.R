@@ -7,7 +7,8 @@
 #' According to the help page of this function \code{dates} argument must be \cr
 #' \emph{a date-time object of class POSIXct, POSIXlt, Date, chron, yearmon, yearqtr, zoo, zooreg,
 #'  timeDate, xts, its, ti, jul, timeSeries, fts or anything else that can be converted with as.POSIXlt}. \cr
-#' \code{\link{nlminb}} function in the \pkg{stats} package is used for maximization.
+#' \code{\link{nlminb}} function in the \pkg{stats} package is used for maximization. 
+#' Vectors for \code{numbuys} and \code{numsells} need to have same length. 
 #'
 #' @param dates see \strong{Details}
 #' @inheritParams pin_ll
@@ -25,12 +26,12 @@
 #' Naming scheme for the outer list is 'Year.QuarterNumber', where QuarterNumber equals an integer from 1 to 4.
 #' The inner list is structured as follows:
 #' \describe{
-#' \item{Results}{Matrix containing the parameter estimates as well as their standard errors,
+#' \item{Results}{Matrix containing the parameter estimates as well as their estimated standard errors,
 #'  t-values and p-values.}
 #'  \item{ll}{Value of likelihood function returned by \code{nlminb}}
 #'  \item{pin}{Value(s) of the estimated probability of informed trading}
 #'  \item{conv}{Convergence code for nlminb optimization}
-#'  \item{message}{Convergence message returned from the nlminb optimizer}
+#'  \item{message}{Convergence message returned by the nlminb optimizer}
 #'  \item{iterations}{Number of iterations until convergence of nlminb optimizer}
 #'  \item{init_vals}{Vector of initial values}
 #'  }
@@ -70,7 +71,13 @@
 #' \emph{Journal of Banking & Finance}, Volume 36, Issue 2, pp. 454 - 467
 #'
 #' @examples
+#' # Loading one year of simulated daily buys and sells
+#' 
 #' data('BSfrequent2015')
+#' 
+#' # Quarterly estimates for model parameters and the probability of informed trading
+#' # Rownames of 'BSfrequent2015' equal the business days in 2015.
+#' 
 #' qpin2015 <- qpin(numbuys = BSfrequent2015[,"Buys"], numsells = BSfrequent2015[,"Sells"],
 #'                  dates = as.Date(rownames(BSfrequent2015), format = "%Y-%m-%d"))
 

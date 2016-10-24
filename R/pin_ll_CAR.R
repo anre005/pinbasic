@@ -4,10 +4,12 @@
 #' or Lin and Ke (2011).
 #'
 #' If names are not set for \code{param} or one or more of the vector names do not match the valid choices, they are internally set to
-#' \code{'alpha'}, \code{'delta'}, \code{'epsilon_b'}, \code{'epsilon_s'}, \code{'mu'} (in this order).
+#' \code{'alpha'}, \code{'delta'}, \code{'epsilon_b'}, \code{'epsilon_s'}, \code{'mu'} (in this order). 
+#' Vectors for \code{numbuys} and \code{numsells} need to have same length.
 #'
 #' @param param \emph{numeric}: (named) vector of model parameters
-#'                              (valid names: \code{'alpha'}, \code{'delta'}, \code{'epsilon_b'}, \code{'epsilon_s'}, \code{'mu'})
+#'                              (valid names: \code{'alpha'}, \code{'delta'}, \code{'epsilon_b'}, \code{'epsilon_s'}, \code{'mu'}), 
+#'                              length must equal 5
 #' @param numbuys \emph{numeric} vector of daily buys
 #' @param numsells \emph{numeric} vector of daily sells
 #' @param factorization \emph{character}: switch between EHO ('EHO') and Lin-Ke ('Lin_Ke') factorization

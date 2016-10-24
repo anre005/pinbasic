@@ -5,7 +5,7 @@
 \title{Initial values for PIN optimization}
 \usage{
 initial_vals(numbuys = NULL, numsells = NULL, method = c("Grid", "HAC",
-  "HAC_Ref"), length = 5, num_clust = 5, verbose = FALSE)
+  "HAC_Ref"), length = 5, num_clust = 5, details = FALSE)
 }
 \arguments{
 \item{numbuys}{\emph{numeric} vector of daily buys}
@@ -18,40 +18,64 @@ valid choices are: 'Grid', 'HAC' and 'HAC_Ref', defaults to 'HAC'}
 \item{length}{\emph{numeric} length of equidistant sequence from 0.1 to 0.9 for parameters of grid search algorithm,
 defaults to 5, irrelevant for HAC and refined HAC method}
 
-\item{num_clust}{\emph{numeric} only relevant for refinded HAC method, total number of clusters trading data is grouped in equals
-\code{num_clust} + 1}
+\item{num_clust}{\emph{numeric} only relevant for refined HAC method, total number of clusters trading data is grouped in,
+equals \code{num_clust} + 1}
 
-\item{verbose}{\emph{logical} only relevant for grid search algorithm, if \code{TRUE} number of infeasible sets of initial values are returned}
+\item{details}{\emph{logical} only relevant for grid search and refined HAC algorithm, 
+if \code{TRUE} and \code{method = 'Grid'} the number of infeasible sets of initial values are returned, 
+if \code{TRUE} and \code{method = 'HAC_Ref'} detailed information about likelihood function evaluations are returned}
 }
 \value{
 Matrix with set(s) of initial values for PIN model optimization.
- If \code{method = 'Grid'} and \code{verbose = TRUE} a list with four elements is returned:
+ If \code{method = 'Grid'} and \code{details = TRUE} a list with four elements is returned:
  \describe{
  \item{inits}{Matrix of sets of initial values}
  \item{neg_eps}{Number of infeasible sets due to negative values for intensity of uninformed sells}
  \item{irr_mu}{Number of infeasible sets due to intensity of informed trading larger than any daily buys and sells data}
  \item{rem}{Total number of removed sets of initial values}
  }
+ If \code{method = 'HAC_Ref'} and \code{details = TRUE} a matrix with six columns and \code{num_clust} rows is returned.
+ Columns give information about (potential) initial values for model parameters and corresponding likelihood function value.
 }
 \description{
-Generates set(s) of initial values which can be used in PIN optimization routines
+Generates set(s) of initial values which can be used in PIN optimization routines.
 }
 \examples{
+# Loading simulated datasets
+
 data("BSinfrequent")
 data("BSfrequent")
 data("BSheavy")
 
 # Grid Search
-grid <- initial_vals(numbuys = BSinfrequent[,"Buys"], numsells = BSinfrequent[,"Sells"],
+
+grid <- initial_vals(numbuys = BSinfrequent[,"Buys"],
+                     numsells = BSinfrequent[,"Sells"],
                      method = "Grid")
+                     
+# Grid Search: Detailed Output
+
+grid_detailed <- initial_vals(numbuys = BSinfrequent[,"Buys"],
+                              numsells = BSinfrequent[,"Sells"],
+                              method = "Grid", details = TRUE)
 
 # HAC
-hac <- initial_vals(numbuys = BSfrequent[,"Buys"], numsells = BSfrequent[,"Sells"],
+
+hac <- initial_vals(numbuys = BSfrequent[,"Buys"],
+                    numsells = BSfrequent[,"Sells"],
                     method = "HAC")
 
-# refined HAC
-hac_ref <- initial_vals(numbuys = BSheavy[,"Buys"], numsells = BSheavy[,"Sells"],
+# Refined HAC
+
+hac_ref <- initial_vals(numbuys = BSheavy[,"Buys"],
+                        numsells = BSheavy[,"Sells"],
                         method = "HAC_Ref")
+                        
+# Refined HAC: Detailed Output
+
+hac_ref_detailed <- initial_vals(numbuys = BSheavy[,"Buys"],
+                                 numsells = BSheavy[,"Sells"],
+                                 method = "HAC_Ref", details = TRUE)
 
 }
 \references{
@@ -66,6 +90,6 @@ using hierarchical agglomerative clustering \cr
 
 Yan, Zhang, 2012, \cr
 An improved estimation method and empirical properties of the probability of informed trading, \cr
-\emph{Journal of Banking & Finance}, Volume 36, Issue 2, Pages 454-467
+\emph{Journal of Banking & Finance}, Volume 36, Issue 2, pp. 454-467
 }
 
