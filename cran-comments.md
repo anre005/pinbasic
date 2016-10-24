@@ -4,4 +4,8 @@
   * win-builder (devel and release)
 
 ## R CMD check results
-There were ERRORS | WARNINGS | NOTES. 
+There were no ERRORs or WARNINGs. 
+
+There was 1 NOTE: checking CRAN incoming feasibility
+
+This is the first submission of the pinbasic package.

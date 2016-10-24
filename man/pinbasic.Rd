@@ -59,6 +59,11 @@ Andreas Recktenwald (Saarland University, Statistics & Econometrics) \cr
 Email: \email{a.recktenwald@mx.uni-saarland.de}
 }
 
+\section{Github}{
+
+\url{https://github.com/anre005/pinbasic}
+}
+
 \section{References}{
 
 Easley, Hvidkjaer and O'Hara (2002) \cr
