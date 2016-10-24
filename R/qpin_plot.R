@@ -24,11 +24,13 @@
 #' @references
 #' Wickham, Hadley (2009) \cr
 #' ggplot2: Elegant Graphics for Data Analysis \cr
-#' \emph{Springer-Verlag New York}
+#' \emph{Springer-Verlag New York} \cr
+#' \doi{10.1007/978-0-387-98141-3}
 #'
 #' Wickham, Hadley (2007) \cr
 #' Reshaping Data with the reshape Package \cr
-#' \emph{Journal of Statistical Software}, Volume 21, Issue 12, pp. 1 - 20
+#' \emph{Journal of Statistical Software}, Volume 21, Issue 12, pp. 1 - 20 \cr
+#' \doi{10.18637/jss.v021.i12}
 #'
 #' Wickham, Hadley (2016) \cr
 #' scales: Scale Functions for Visualization \cr

@@ -81,15 +81,18 @@ hac_ref_detailed <- initial_vals(numbuys = BSheavy[,"Buys"],
 \references{
 Ersan, Oguz and Alici, Asli (2016) \cr
 An unbiased computation methodology for estimating the probability of informed trading (PIN) \cr
-\emph{Journal of International Financial Markets, Institutions and Money}, Volume 43, pp. 74 - 94
+\emph{Journal of International Financial Markets, Institutions and Money}, Volume 43, pp. 74 - 94 \cr
+\doi{10.1016/j.intfin.2016.04.001}
 
 Gan, Quan et al. (2015) \cr
 A faster estimation method for the probability of informed trading
 using hierarchical agglomerative clustering \cr
-\emph{Quantitative Finance}, Volume 15, Issue 11, pp. 1805 - 1821
+\emph{Quantitative Finance}, Volume 15, Issue 11, pp. 1805 - 1821 \cr
+\doi{10.1080/14697688.2015.1023336}
 
-Yan, Zhang, 2012, \cr
-An improved estimation method and empirical properties of the probability of informed trading, \cr
-\emph{Journal of Banking & Finance}, Volume 36, Issue 2, pp. 454-467
+Yan, Yuxing and Zhang, Shaojun (2012) \cr
+An improved estimation method and empirical properties of the probability of informed trading \cr
+\emph{Journal of Banking & Finance}, Volume 36, Issue 2, pp. 454 - 467 \cr
+\doi{10.1016/j.jbankfin.2011.08.003}
 }
 

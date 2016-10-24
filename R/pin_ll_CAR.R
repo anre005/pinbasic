@@ -21,11 +21,13 @@
 #' @references
 #' Easley, David et al. (2010) \cr
 #' Factoring Information into Returns \cr
-#' \emph{Journal of Financial and Quantitative Analysis}, Volume 45, Issue 2, pp. 293 - 309
+#' \emph{Journal of Financial and Quantitative Analysis}, Volume 45, Issue 2, pp. 293 - 309 \cr
+#' \doi{10.1017/S0022109010000074}
 #'
 #' Lin, Hsiou-Wei William and Ke, Wen-Chyan (2011) \cr
 #' A computing bias in estimating the probability of informed trading \cr
-#' \emph{Journal of Financial Markets}, Volume 14, Issue 4, pp. 625 - 640
+#' \emph{Journal of Financial Markets}, Volume 14, Issue 4, pp. 625 - 640 \cr
+#' \doi{10.1016/j.finmar.2011.03.001}
 
 pin_ll <- function(param = NULL, numbuys = NULL, numsells = NULL,
                    factorization = c("Lin_Ke", "EHO")) {

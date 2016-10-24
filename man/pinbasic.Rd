@@ -67,26 +67,31 @@ Email: \email{a.recktenwald@mx.uni-saarland.de}
 
 \section{References}{
 
-Easley, Hvidkjaer and O'Hara (2002) \cr
+Easley, David et al. (2002) \cr
 Is Information Risk a Determinant of Asset Returns? \cr
-\emph{The Journal of Finance}, Volume 57, Number 5, pp. 2185 - 2221
+\emph{The Journal of Finance}, Volume 57, Number 5, pp. 2185 - 2221 \cr
+\doi{10.1111/1540-6261.00493}
 
-Easley, Kiefer, O'Hara and Paperman (1996) \cr
+Easley, David et al. (1996) \cr
 Liquidity, Information, and Infrequently Traded Stocks\cr
-\emph{The Journal of Finance}, Volume 51, Number 4, pp. 1405 - 1436
+\emph{The Journal of Finance}, Volume 51, Number 4, pp. 1405 - 1436 \cr
+\doi{10.1111/j.1540-6261.1996.tb04074.x}
 
 Easley, David et al. (2010) \cr
 Factoring Information into Returns \cr
-\emph{Journal of Financial and Quantitative Analysis}, Volume 45, Issue 2, pp. 293 - 309
+\emph{Journal of Financial and Quantitative Analysis}, Volume 45, Issue 2, pp. 293 - 309 \cr
+\doi{10.1017/S0022109010000074}
 
 Ersan, Oguz and Alici, Asli (2016) \cr
 An unbiased computation methodology for estimating the probability of informed trading (PIN) \cr
-\emph{Journal of International Financial Markets, Institutions and Money}, Volume 43, pp. 74 - 94
+\emph{Journal of International Financial Markets, Institutions and Money}, Volume 43, pp. 74 - 94 \cr
+\doi{10.1016/j.intfin.2016.04.001}
 
 Gan, Quan et al. (2015) \cr
 A faster estimation method for the probability of informed trading
 using hierarchical agglomerative clustering \cr
-\emph{Quantitative Finance}, Volume 15, Issue 11, pp. 1805 - 1821
+\emph{Quantitative Finance}, Volume 15, Issue 11, pp. 1805 - 1821 \cr
+\doi{10.1080/14697688.2015.1023336}
 
 Grolemund, Garett and Wickham, Hadley (2011) \cr
 Dates and Times Made Easy with lubridate \cr
@@ -94,15 +99,18 @@ Dates and Times Made Easy with lubridate \cr
 
 Lin, Hsiou-Wei William and Ke, Wen-Chyan (2011) \cr
 A computing bias in estimating the probability of informed trading \cr
-\emph{Journal of Financial Markets}, Volume 14, Issue 4, pp. 625 - 640
+\emph{Journal of Financial Markets}, Volume 14, Issue 4, pp. 625 - 640 \cr
+\doi{10.1016/j.finmar.2011.03.001}
 
 Wickham, Hadley (2009) \cr
 ggplot2: Elegant Graphics for Data Analysis \cr
-\emph{Springer-Verlag New York}
+\emph{Springer-Verlag New York} \cr
+\doi{10.1007/978-0-387-98141-3}
 
 Wickham, Hadley (2007) \cr
 Reshaping Data with the reshape Package \cr
-\emph{Journal of Statistical Software}, Volume 21, Issue 12, pp. 1 - 20
+\emph{Journal of Statistical Software}, Volume 21, Issue 12, pp. 1 - 20 \cr
+\doi{10.18637/jss.v021.i12}
 
 Wickham, Hadley (2016) \cr
 scales: Scale Functions for Visualization \cr
@@ -110,6 +118,7 @@ scales: Scale Functions for Visualization \cr
 
 Yan, Yuxing and Zhang, Shaojun (2012) \cr
 An improved estimation method and empirical properties of the probability of informed trading \cr
-\emph{Journal of Banking & Finance}, Volume 36, Issue 2, pp. 454 - 467
+\emph{Journal of Banking & Finance}, Volume 36, Issue 2, pp. 454 - 467 \cr
+\doi{10.1016/j.jbankfin.2011.08.003}
 }
 

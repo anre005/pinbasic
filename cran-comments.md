@@ -1,3 +1,8 @@
+## Resubmission
+This is a resubmission. I added:
+  * DOIs for references in DESCRIPTION file
+  * DOIs for references in manual pages
+
 ## Test environments
   * local linux install (Manjaro Linux [16.10, Kernel 4.8.4-1]), R 3.3.1
   * OS X (on travis-ci), oldrel: R 3.2.4, release: R 3.3.1

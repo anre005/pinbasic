@@ -6,9 +6,10 @@ Authors@R: person("Andreas", "Recktenwald", email = "a.recktenwald@mx.uni-saarla
     role = c("aut", "cre"))
 Description: Utilities for fast and stable estimation of the probability of 
  informed trading (PIN) in the model introduced by Easley et al. (2002) 
- are implemented. Since the basic model developed by Easley et al. (1996) 
- is nested in the former due to equating the intensity of uninformed buys 
- and sells, functionalities can also be applied to this simpler model structure, if needed.
+ <DOI:10.1111/1540-6261.00493> are implemented. Since the basic model developed 
+ by Easley et al. (1996) <DOI:10.1111/j.1540-6261.1996.tb04074.x> is nested in the 
+ former due to equating the intensity of uninformed buys and sells, functionalities 
+ can also be applied to this simpler model structure, if needed.
 Depends:
     R (>= 3.1)
 Imports:
