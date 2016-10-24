@@ -1,5 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+[![Travis-CI Build Status](https://travis-ci.org/anre005/pinbasic.svg?branch=master)](https://travis-ci.org/anre005/pinbasic)
+
 pinbasic: Fast and Stable Estimation of the Probability of Informed Trading (PIN)
 =================================================================================
 
@@ -43,7 +45,10 @@ pin_est(numbuys = BSfrequent[,"Buys"], numsells = BSfrequent[,"Sells"])
 #> $init_vals
 #>     alpha     delta epsilon_b epsilon_s        mu 
 #>    0.2000    0.5000 1805.4259 1700.6852  597.6111
+```
 
+``` r
+# Quarterly Estimates and Visualization
 data('BSfrequent2015')
 qpin2015 <- qpin(numbuys = BSfrequent2015[,"Buys"], numsells = BSfrequent2015[,"Sells"],
                  dates = as.Date(rownames(BSfrequent2015), format = "%Y-%m-%d"))
@@ -51,7 +56,7 @@ qpin2015 <- qpin(numbuys = BSfrequent2015[,"Buys"], numsells = BSfrequent2015[,"
 qpin_plot(qpin2015)
 ```
 
-![](README-unnamed-chunk-2-1.png)
+![](README-quarterly_pin-1.png)
 
 Installation
 ------------

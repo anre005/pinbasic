@@ -5,3 +5,4 @@ pinbasic.Rproj
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^README-*
+^\.travis\.yml$
