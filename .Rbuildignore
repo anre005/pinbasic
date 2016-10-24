@@ -1,0 +1,7 @@
+^README\.Rmd$
+Makefile
+pinbasic.Rproj
+
+^.*\.Rproj$
+^\.Rproj\.user$
+^README-*

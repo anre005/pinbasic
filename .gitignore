@@ -1,0 +1,5 @@
+OldSim/
+*.tar.gz
+.Rproj.user
+README.md
+Makefile

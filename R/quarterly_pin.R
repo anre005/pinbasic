@@ -1,0 +1,120 @@
+#' Quarterly PIN estimates
+#'
+#' Estimation of model parameters and probability of informed trading for quarterly data.
+#'
+#' Wrapper around \code{\link{pin_est}} function and therefore inherits its settings for optimization.
+#' Data is splitted into quarters with the \code{\link[lubridate]{quarter}} function from \pkg{lubridate} package.
+#' According to the help page of this function \code{dates} argument must be \cr
+#' \emph{a date-time object of class POSIXct, POSIXlt, Date, chron, yearmon, yearqtr, zoo, zooreg,
+#'  timeDate, xts, its, ti, jul, timeSeries, fts or anything else that can be converted with as.POSIXlt}. \cr
+#' \code{\link{nlminb}} function in the \pkg{stats} package is used for maximization.
+#'
+#' @param dates see \strong{Details}
+#' @inheritParams pin_ll
+#' @inheritParams pin_est_core
+#'
+#' @seealso \code{\link{nlminb}},
+#'          \code{\link{initial_vals}}
+#'          \code{\link{pin_est}}
+#'          \code{\link{pin_est_core}}
+#'          \code{\link[lubridate]{quarter}}
+#'          \code{\link[lubridate]{year}}
+#'
+#' @return
+#' A list of lists. The length of the outer list equals the number of available quarters in the data.
+#' Naming scheme for the outer list is 'Year.QuarterNumber', where QuarterNumber equals an integer from 1 to 4.
+#' The inner list is structured as follows:
+#' \describe{
+#' \item{Results}{Matrix containing the parameter estimates as well as their standard errors,
+#'  t-values and p-values.}
+#'  \item{ll}{Value of likelihood function returned by \code{nlminb}}
+#'  \item{pin}{Value(s) of the estimated probability of informed trading}
+#'  \item{conv}{Convergence code for nlminb optimization}
+#'  \item{message}{Convergence message returned from the nlminb optimizer}
+#'  \item{iterations}{Number of iterations until convergence of nlminb optimizer}
+#'  \item{init_vals}{Vector of initial values}
+#'  }
+#'
+#' @references
+#' Easley, Hvidkjaer and O'Hara (2002) \cr
+#' Is Information Risk a Determinant of Asset Returns? \cr
+#' \emph{The Journal of Finance}, Volume 57, Number 5, pp. 2185 - 2221
+#'
+#' Easley, Kiefer, O'Hara and Paperman (1996) \cr
+#' Liquidity, Information, and Infrequently Traded Stocks\cr
+#' \emph{The Journal of Finance}, Volume 51, Number 4, pp. 1405 - 1436
+#'
+#' Easley, David et al. (2010) \cr
+#' Factoring Information into Returns \cr
+#' \emph{Journal of Financial and Quantitative Analysis}, Volume 45, Issue 2, pp. 293 - 309
+#'
+#' Ersan, Oguz and Alici, Asli (2016) \cr
+#' An unbiased computation methodology for estimating the probability of informed trading (PIN) \cr
+#' \emph{Journal of International Financial Markets, Institutions and Money}, Volume 43, pp. 74 - 94
+#'
+#' Lin, Hsiou-Wei William and Ke, Wen-Chyan (2011) \cr
+#' A computing bias in estimating the probability of informed trading \cr
+#' \emph{Journal of Financial Markets}, Volume 14, Issue 4, pp. 625 - 640
+#'
+#' Gan, Quan et al. (2015) \cr
+#' A faster estimation method for the probability of informed trading
+#' using hierarchical agglomerative clustering \cr
+#' \emph{Quantitative Finance}, Volume 15, Issue 11, pp. 1805 - 1821
+#'
+#' Grolemund, Garett and Wickham, Hadley (2011) \cr
+#' Dates and Times Made Easy with lubridate \cr
+#' \emph{Journal of Statistical Software}, Volume 40, Issue 3, pp. 1 - 25
+#'
+#' Yan, Yuxing and Zhang, Shaojun (2012) \cr
+#' An improved estimation method and empirical properties of the probability of informed trading \cr
+#' \emph{Journal of Banking & Finance}, Volume 36, Issue 2, pp. 454 - 467
+#'
+#' @examples
+#' data('BSfrequent2015')
+#' qpin2015 <- qpin(numbuys = BSfrequent2015[,"Buys"], numsells = BSfrequent2015[,"Sells"],
+#'                  dates = as.Date(rownames(BSfrequent2015), format = "%Y-%m-%d"))
+
+#' @export
+
+qpin <- function(numbuys = NULL, numsells = NULL, dates = NULL,
+                 lower = rep(0,5), upper = c(1,1,rep(Inf,3))) {
+  if(is.null(numbuys)) stop("Missing data for 'numbuys'")
+  if(is.null(numsells)) stop("Missing data for 'numsells'")
+  if(is.null(dates)) stop("Missing 'dates'")
+
+  quarters <- lubridate::quarter(dates, with_year = TRUE)
+  quarters_char <- as.character(quarters)
+
+  quarter_num <- length(unique(quarters))
+
+  quarter_list <- vector("list", quarter_num)
+  data_years <- unique(lubridate::year(dates))
+  data_years_char <- as.character(data_years)
+  quarters_per_year <- numeric(length(data_years))
+  names(quarters_per_year) <- data_years_char
+  quarter_names <- character(0)
+
+  for(i in data_years_char) {
+    quarters_per_year[i] <- max(as.numeric(substring(quarters_char[grepl(i,quarters_char)],
+                                                     first = 6)))
+    quarter_names <- c(quarter_names, paste0(i, ".", 1:quarters_per_year[i]))
+  }
+
+  names(quarter_list) <- quarter_names
+  BS_data <- cbind(numbuys, numsells)
+
+  for(i in data_years_char) {
+    for(j in 1:quarters_per_year[i]) {
+      quarter_list[[paste0(i,".",j)]] <- BS_data[quarters_char == paste0(i,".",j),]
+    }
+  }
+
+  res <- lapply(quarter_list,
+                function(x) pin_est(numbuys = x[,1], numsells = x[,2],
+                                    lower = lower, upper = upper))
+  res
+}
+
+
+
+

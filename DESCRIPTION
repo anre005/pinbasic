@@ -1,0 +1,23 @@
+Package: pinbasic
+Title: Fast and Stable Estimation of the Probability of Informed Trading (PIN)
+Type: Package
+Version: 0.1.0
+Authors@R: person("Andreas", "Recktenwald", email = "a.recktenwald@mx.uni-saarland.de",
+    role = c("aut", "cre"))
+Description: Utilities for fast and stable estimation of the probability of 
+ informed trading (PIN) in the model introduced by Easley et al. (2002) 
+ are implemented. Since the basic model developed by Easley et al. (1996) 
+ is nested in the former due to equating the intensity of uninformed buys 
+ and sells, functionalities can also be applied to this simpler model structure, if needed.
+Depends:
+    R (>= 3.1)
+Imports:
+    stats, 
+    fastcluster, 
+    lubridate,
+    ggplot2, 
+    reshape2,
+    scales
+License: GPL-3
+LazyData: true
+RoxygenNote: 5.0.1
