@@ -61,7 +61,7 @@
 #' Liquidity, Information, and Infrequently Traded Stocks\cr
 #' \emph{The Journal of Finance}, Volume 51, Number 4, pp. 1405 - 1436 \cr
 #' \doi{10.1111/j.1540-6261.1996.tb04074.x}
-#' 
+#'
 #' Easley, David et al. (2010) \cr
 #' Factoring Information into Returns \cr
 #' \emph{Journal of Financial and Quantitative Analysis}, Volume 45, Issue 2, pp. 293 - 309 \cr
@@ -80,7 +80,8 @@
 #'
 #' Grolemund, Garett and Wickham, Hadley (2011) \cr
 #' Dates and Times Made Easy with lubridate \cr
-#' \emph{Journal of Statistical Software}, Volume 40, Issue 3, pp. 1 - 25
+#' \emph{Journal of Statistical Software}, Volume 40, Issue 3, pp. 1 - 25 \cr
+#' \doi{10.18637/jss.v040.i03}
 #'
 #' Lin, Hsiou-Wei William and Ke, Wen-Chyan (2011) \cr
 #' A computing bias in estimating the probability of informed trading \cr

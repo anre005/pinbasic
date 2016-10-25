@@ -95,7 +95,8 @@ using hierarchical agglomerative clustering \cr
 
 Grolemund, Garett and Wickham, Hadley (2011) \cr
 Dates and Times Made Easy with lubridate \cr
-\emph{Journal of Statistical Software}, Volume 40, Issue 3, pp. 1 - 25
+\emph{Journal of Statistical Software}, Volume 40, Issue 3, pp. 1 - 25 \cr
+\doi{10.18637/jss.v040.i03}
 
 Lin, Hsiou-Wei William and Ke, Wen-Chyan (2011) \cr
 A computing bias in estimating the probability of informed trading \cr

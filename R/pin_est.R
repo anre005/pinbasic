@@ -29,7 +29,7 @@
 #'
 #' Easley, David et al. (2010) \cr
 #' Factoring Information into Returns \cr
-#' \emph{Journal of Financial and Quantitative Analysis}, Volume 45, Issue 2, pp. 293 - 309
+#' \emph{Journal of Financial and Quantitative Analysis}, Volume 45, Issue 2, pp. 293 - 309 \cr
 #' \doi{10.1017/S0022109010000074}
 #'
 #' Ersan, Oguz and Alici, Asli (2016) \cr
@@ -42,7 +42,7 @@
 #' using hierarchical agglomerative clustering \cr
 #' \emph{Quantitative Finance}, Volume 15, Issue 11, pp. 1805 - 1821 \cr
 #' \doi{10.1080/14697688.2015.1023336}
-#' 
+#'
 #' Lin, Hsiou-Wei William and Ke, Wen-Chyan (2011) \cr
 #' A computing bias in estimating the probability of informed trading \cr
 #' \emph{Journal of Financial Markets}, Volume 14, Issue 4, pp. 625 - 640 \cr
@@ -68,11 +68,11 @@
 #'
 #' @examples
 #' # Loading simulated data for frequently traded stock
-#' 
+#'
 #' data("BSfrequent")
-#' 
+#'
 #' # Optimization with HAC initial values and Lin-Ke likelihood factorization
-#' 
+#'
 #' pin_freq <- pin_est(numbuys = BSfrequent[,"Buys"],
 #'                     numsells = BSfrequent[,"Sells"])
 #' @export

@@ -62,7 +62,7 @@ Liquidity, Information, and Infrequently Traded Stocks\cr
 
 Easley, David et al. (2010) \cr
 Factoring Information into Returns \cr
-\emph{Journal of Financial and Quantitative Analysis}, Volume 45, Issue 2, pp. 293 - 309
+\emph{Journal of Financial and Quantitative Analysis}, Volume 45, Issue 2, pp. 293 - 309 \cr
 \doi{10.1017/S0022109010000074}
 
 Ersan, Oguz and Alici, Asli (2016) \cr

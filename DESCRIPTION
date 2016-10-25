@@ -1,7 +1,7 @@
 Package: pinbasic
 Title: Fast and Stable Estimation of the Probability of Informed Trading (PIN)
 Type: Package
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: person("Andreas", "Recktenwald", email = "a.recktenwald@mx.uni-saarland.de",
     role = c("aut", "cre"))
 Description: Utilities for fast and stable estimation of the probability of 

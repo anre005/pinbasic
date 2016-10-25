@@ -53,7 +53,7 @@ Core function for optimization routines
 Grants the most control over optimization procedure.
 User-friendly wrappers for estimation with trading data of arbitrary length and quarterly data
 are implemented with \code{\link{pin_est}} and \code{\link{qpin}}, respectively.
-\code{\link{nlminb}} function in the \pkg{stats} package is used for maximization. 
+\code{\link{nlminb}} function in the \pkg{stats} package is used for maximization.
 Vectors for \code{numbuys} and \code{numsells} need to have same length.
 }
 \examples{
@@ -71,24 +71,24 @@ inits_hac <- initial_vals(numbuys = BSfrequent[,"Buys"],
                           numsells = BSfrequent[,"Sells"],
                           method = "HAC")
 
-inits_hac_ref <- initial_vals(numbuys = BSfrequent[,"Buys"], 
+inits_hac_ref <- initial_vals(numbuys = BSfrequent[,"Buys"],
                               numsells = BSfrequent[,"Sells"],
                               method = "HAC_Ref")
 
 # Optimization with different matrices of initial values
 
-pin_core_grid <- pin_est_core(numbuys = BSfrequent[,"Buys"], 
+pin_core_grid <- pin_est_core(numbuys = BSfrequent[,"Buys"],
                               numsells = BSfrequent[,"Sells"],
                               factorization = "Lin_Ke", init_vals = inits_grid,
                               lower = rep(0,5), upper = c(1,1, rep(Inf,3)),
                               num_best_res = 5)
 
-pin_core_hac <- pin_est_core(numbuys = BSfrequent[,"Buys"], 
+pin_core_hac <- pin_est_core(numbuys = BSfrequent[,"Buys"],
                              numsells = BSfrequent[,"Sells"],
                              factorization = "Lin_Ke", init_vals = inits_hac,
                              lower = rep(0,5), upper = c(1,1, rep(Inf,3)))
 
-pin_core_hac_ref <- pin_est_core(numbuys = BSfrequent[,"Buys"], 
+pin_core_hac_ref <- pin_est_core(numbuys = BSfrequent[,"Buys"],
                                  numsells = BSfrequent[,"Sells"],
                                  factorization = "Lin_Ke", init_vals = inits_hac_ref,
                                  lower = rep(0,5), upper = c(1,1, rep(Inf,3)))
@@ -106,7 +106,7 @@ Liquidity, Information, and Infrequently Traded Stocks\cr
 
 Easley, David et al. (2010) \cr
 Factoring Information into Returns \cr
-\emph{Journal of Financial and Quantitative Analysis}, Volume 45, Issue 2, pp. 293 - 309
+\emph{Journal of Financial and Quantitative Analysis}, Volume 45, Issue 2, pp. 293 - 309 \cr
 \doi{10.1017/S0022109010000074}
 
 Ersan, Oguz and Alici, Asli (2016) \cr
