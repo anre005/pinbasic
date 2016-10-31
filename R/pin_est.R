@@ -6,7 +6,9 @@
 #' \code{\link{nlminb}} function in the \pkg{stats} package is used for maximization.
 #' In the literature, at least data for 60 trading days is recommended to ensure convergence of optimization.
 #' No information about the trading days' dates is needed.
-#' Vectors for \code{numbuys} and \code{numsells} need to have same length.
+#' Vectors for \code{numbuys} and \code{numsells} need to have same length. \cr
+#' Calculation of confidence interval for the probability of informed trading is disabled by default.
+#' For more details see \code{\link{pin_est_core}}
 #'
 #' @inheritParams pin_ll
 #' @inheritParams pin_est_core
@@ -78,17 +80,21 @@
 #' @export
 
 pin_est <- function(numbuys = NULL, numsells = NULL,
-                    lower = rep(0,5), upper = c(1,1,rep(Inf,3))) {
+                    lower = rep(0,5), upper = c(1,1,rep(Inf,3)),
+                    confint = FALSE) {
   if(is.null(numbuys)) stop("Missing data for 'numbuys'")
   if(is.null(numsells)) stop("Missing data for 'numsells'")
 
   init_vals <- initial_vals(numbuys = numbuys, numsells = numsells, method = "HAC")
 
+  ci_con <- list(ncores = detectCores())
+
   res <- pin_est_core(numbuys = numbuys, numsells = numsells,
                       factorization = "Lin_Ke",
                       init_vals = init_vals, lower = lower, upper = upper,
                       num_best_res = 1,
-                      only_converged = TRUE)
+                      only_converged = TRUE,
+                      confint = confint, ci_control = ci_con)
 
   res
 }

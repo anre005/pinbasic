@@ -8,7 +8,9 @@
 #' \emph{a date-time object of class POSIXct, POSIXlt, Date, chron, yearmon, yearqtr, zoo, zooreg,
 #'  timeDate, xts, its, ti, jul, timeSeries, fts or anything else that can be converted with as.POSIXlt}. \cr
 #' \code{\link{nlminb}} function in the \pkg{stats} package is used for maximization.
-#' Vectors for \code{numbuys} and \code{numsells} need to have same length.
+#' Vectors for \code{numbuys} and \code{numsells} need to have same length. \cr
+#' Calculation of confidence interval for the probability of informed trading is disabled by default.
+#' For more details see \code{\link{pin_est_core}}
 #'
 #' @param dates see \strong{Details}
 #' @inheritParams pin_ll
@@ -93,7 +95,8 @@
 #' @export
 
 qpin <- function(numbuys = NULL, numsells = NULL, dates = NULL,
-                 lower = rep(0,5), upper = c(1,1,rep(Inf,3))) {
+                 lower = rep(0,5), upper = c(1,1,rep(Inf,3)),
+                 confint = FALSE) {
   if(is.null(numbuys)) stop("Missing data for 'numbuys'")
   if(is.null(numsells)) stop("Missing data for 'numsells'")
   if(is.null(dates)) stop("Missing 'dates'")
@@ -127,7 +130,8 @@ qpin <- function(numbuys = NULL, numsells = NULL, dates = NULL,
 
   res <- lapply(quarter_list,
                 function(x) pin_est(numbuys = x[,1], numsells = x[,2],
-                                    lower = lower, upper = upper))
+                                    lower = lower, upper = upper,
+                                    confint = confint))
   res
 }
 

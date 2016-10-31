@@ -5,7 +5,7 @@
 \title{Quarterly PIN estimates}
 \usage{
 qpin(numbuys = NULL, numsells = NULL, dates = NULL, lower = rep(0, 5),
-  upper = c(1, 1, rep(Inf, 3)))
+  upper = c(1, 1, rep(Inf, 3)), confint = FALSE)
 }
 \arguments{
 \item{numbuys}{\emph{numeric} vector of daily buys}
@@ -17,6 +17,9 @@ qpin(numbuys = NULL, numsells = NULL, dates = NULL, lower = rep(0, 5),
 \item{lower}{\emph{numeric} lower bounds for optimization, must have length of 5}
 
 \item{upper}{\emph{numeric} upper bounds for optimization, must have length of 5}
+
+\item{confint}{\emph{logical} Compute confidence intervals for PIN?
+Defaults to \code{FALSE}}
 }
 \value{
 A list of lists. The length of the outer list equals the number of available quarters in the data.
@@ -43,7 +46,9 @@ According to the help page of this function \code{dates} argument must be \cr
 \emph{a date-time object of class POSIXct, POSIXlt, Date, chron, yearmon, yearqtr, zoo, zooreg,
  timeDate, xts, its, ti, jul, timeSeries, fts or anything else that can be converted with as.POSIXlt}. \cr
 \code{\link{nlminb}} function in the \pkg{stats} package is used for maximization.
-Vectors for \code{numbuys} and \code{numsells} need to have same length.
+Vectors for \code{numbuys} and \code{numsells} need to have same length. \cr
+Calculation of confidence interval for the probability of informed trading is disabled by default.
+For more details see \code{\link{pin_est_core}}
 }
 \examples{
 # Loading one year of simulated daily buys and sells

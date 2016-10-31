@@ -5,7 +5,7 @@
 \title{Estimating PIN}
 \usage{
 pin_est(numbuys = NULL, numsells = NULL, lower = rep(0, 5), upper = c(1,
-  1, rep(Inf, 3)))
+  1, rep(Inf, 3)), confint = FALSE)
 }
 \arguments{
 \item{numbuys}{\emph{numeric} vector of daily buys}
@@ -15,6 +15,9 @@ pin_est(numbuys = NULL, numsells = NULL, lower = rep(0, 5), upper = c(1,
 \item{lower}{\emph{numeric} lower bounds for optimization, must have length of 5}
 
 \item{upper}{\emph{numeric} upper bounds for optimization, must have length of 5}
+
+\item{confint}{\emph{logical} Compute confidence intervals for PIN?
+Defaults to \code{FALSE}}
 }
 \value{
 A list with seven components:
@@ -37,7 +40,9 @@ User-friendly wrapper around workhorse function \code{pin_ll_max}.
 \code{\link{nlminb}} function in the \pkg{stats} package is used for maximization.
 In the literature, at least data for 60 trading days is recommended to ensure convergence of optimization.
 No information about the trading days' dates is needed.
-Vectors for \code{numbuys} and \code{numsells} need to have same length.
+Vectors for \code{numbuys} and \code{numsells} need to have same length. \cr
+Calculation of confidence interval for the probability of informed trading is disabled by default.
+For more details see \code{\link{pin_est_core}}
 }
 \examples{
 # Loading simulated data for frequently traded stock
