@@ -1,4 +1,5 @@
 #' @import foreach
+#' @import doParallel
 #' @import parallel
 #' @import stats
 
@@ -43,10 +44,10 @@ simulate_data <- function(param = NULL, seed = NULL, days = 60) {
 
 pin_confint <- function(param = NULL, numbuys = NULL, numsells = NULL,
                         lower = rep(0, 5), upper = c(1,1, rep(Inf, 3)),
-                        n = 1000, seed = 123, level = 0.95, ncores = 1) {
+                        n = 1000, seed = NULL, level = 0.95, ncores = detectCores()) {
   if(!is.numeric(ncores) && ncores < 1) stop("No valid 'ncores' argument!")
+  if(!is.null(seed)) set.seed(seed)
   sim_pin <- numeric(n)
-  set.seed(seed)
 
   ndays <- length(numbuys)
 
@@ -83,8 +84,8 @@ pin_confint <- function(param = NULL, numbuys = NULL, numsells = NULL,
 
     sim_pin <- apply(param, 2, pin_calc)
   } else {
-    cl <- parallel::makeCluster(ncores)
-    doParallel::registerDoParallel(cl)
+    cl <- makeCluster(ncores)
+    registerDoParallel(cl)
 
     sim_pin <- foreach(i = 1:n, .combine = "c") %dopar% {
       sim_dat <- simulate_data(param = param_dat, seed = NULL, days = ndays)
@@ -97,10 +98,8 @@ pin_confint <- function(param = NULL, numbuys = NULL, numsells = NULL,
 
         pin_calc(param)
     }
-    parallel::stopCluster(cl)
+    stopCluster(cl)
   }
-  # conf <- mean(sim_pin) + c(-1,1) * qnorm(level) * sd(sim_pin)
   conf <- quantile(sim_pin, probs = c((1-level)/2, 1 - (1-level)/2))
-  res <- list(conf_int = conf, sim_pin = sim_pin)
-  res
+  conf
 }
