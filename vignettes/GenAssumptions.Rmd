@@ -1,0 +1,47 @@
+## General PIN Framework
+
+In the sequential microstructure models for estimating the probability of informed trading
+the exchange of equities takes place over $\daysym = 1, \dots, \totaldays$
+pairwise independent trading days.
+No market activities are permitted in which a risk-neutral and competitive market maker is not involved.
+The market maker determines and updates the bid and ask prices utilizing the information he gathered
+so far for a trading day.
+Trading with the market maker is possible
+at every timestamp $t$ during regular market hours starting at $\originmarket$ and ending at $\closemarket$,
+i.e.~$t \in \left[\originmarket,\closemarket\right]$ with finite $\closemarket$.
+The beginning of official trading may vary depending on the chosen bourse $m$, i.e. the New York Stock Exchange
+starts regular trading at 9:30 am, whereas the German electronic marketplace XETRA opens earlier at 9:00 am.
+Likewise, the upper bound $\closemarket$ of the official trading interval may also vary according
+to the marketplace under consideration.
+Each trading day can reside in one of three possible states of the set $\states$.
+The elements of the set $\statesabbrv$, which represent the conditions of trading days,
+are no-news ($\nonews$), good-news ($goodnews$) and bad-news ($badnews$).
+Trading days on which private information influence the market activities are called *information events*.
+
+Market participants can be splitted in two disjoint groups, informed and uninformed traders.
+Traders holding private information are solely active on information events.
+In addition, they are assumed to be risk neutral and competitive.
+They buy (sell) if positive (negative) signals hit the market,
+which is the case on good-news (bad-news) trading days.
+The contrary group of traders, the uninformed market attendees,
+are active on every trading day for various reasons (diversification, liquidity reasons, $\dots$).
+<!-- % -->
+<!-- \begin{figure} -->
+<!--   \centering -->
+<!--   \includegraphics{tikzfigs/Pinframenew.tikz} -->
+<!--   \caption{Distribution of transactions on trading days with respect to the different days' conditions.} -->
+<!--   \label{fig:trading} -->
+<!-- \end{figure} -->
+<!-- % -->
+
+![Distribution of transactions on trading days with respect to the different days' conditions.](Pinframenew.png)
+
+
+In general, the probability of informed trading $\pintext$  can be defined as the relation of the expected number of
+transactions due to private information to the expected total number of trades,
+$$
+\begin{align}
+\label{eq:pingeneral}
+\pintext = \dfrac{\text{Expected number of information-based transactions}}{\text{Expected number of total transactions}}
+\end{align}
+$$

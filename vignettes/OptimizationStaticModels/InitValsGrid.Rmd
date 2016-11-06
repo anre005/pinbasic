@@ -1,0 +1,97 @@
+#### Grid Search Algorithm
+
+@YanZhang present a methodology to generate initial values by grid search technique.
+We need five starting values for the EHO model.
+The two probability parameters $\probinfevent$ and $\probbadnews$ can take on any values in
+the range of 0 to 1.
+The remaining parameters
+$\left(\intensuninfbuys, \intensuninfsells, \intensinf \right)$
+have no upper bound and can be any positive real number.
+
+To determine initial values for the non-probability parameters @YanZhang
+make use of the marginal distributions of buys and sells.^[
+More details are given in the appendix of @YanZhang.]
+The marginal distributions for buys and sells in the EHO model can be written as
+$$
+\begin{align}
+\label{eq:margdensehobuys}
+\prsym\left(B\right) &= \left(1-\probinfevent\right)\left(\exp\left(-\intensuninfbuys \right)\dfrac{\intensuninfbuys^{B_{\daysym}}}{B_{\daysym}!} \right) \notag \\
+                     & + \probinfevent \left(1-\probbadnews\right) \left(\exp\left(-(\intensuninfbuys + \intensinf) \right)\dfrac{\left(\intensuninfbuys + \intensinf
+                     \right)^{B_{\daysym}}}{B_{\daysym}!} \right) \notag \\
+                     & + \probinfevent \probbadnews \left(\exp\left(-\intensuninfbuys \right)\dfrac{\intensuninfbuys^{B_{\daysym}}}{B_{\daysym}!} \right)
+\end{align}
+$$
+and
+$$
+\begin{align}
+\label{eq:margdensehosells}
+\prsym\left(S\right) &= \left(1-\probinfevent\right)\left(\exp\left(-\intensuninfsells \right)
+                      \dfrac{\intensuninfsells^{S_{\daysym}}}{S_{\daysym}!} \right) \notag \\
+                     & + \probinfevent \left(1-\probbadnews\right) \left(\exp\left(-\intensuninfsells \right)
+                     \dfrac{\intensuninfsells^{S_{\daysym}}}{S_{\daysym}!} \right) \notag \\
+                     & + \probinfevent \probbadnews \left(\exp\left(-(\intensuninfsells + \intensinf) \right)
+                     \dfrac{\left(\intensuninfsells + \intensinf \right)^{S_{\daysym}}}{S_{\daysym}!} \right).
+\end{align}
+$$
+It is obvious that both marginal densities
+are weighted sums of Poisson distributed random variables.
+We can utilize the linearity of the expectation operator and write the expected values for the
+marginal distributions of the EHO model as
+$$
+\begin{align}
+\label{eq:expectedbuyseho}
+\expect\left(B\right) = \probinfevent (1 - \probbadnews) \intensinf + \intensuninfbuys \\
+\label{eq:expectedsellseho}
+\expect\left(S\right) = \probinfevent \probbadnews \intensinf + \intensuninfsells,
+\end{align}
+$$
+The equations for the expected values
+enable us to set initial values for all five parameters.
+
+First step is to get initial values for the probabilities $\probinfevent$ and $probbadnews$.
+<!-- As mentioned before, these parameters are bounded by 0 and 1. -->
+To prevent the initial guesses for these two parameters to lie on the boundaries
+we go with @YanZhang and take a sub-interval of $\left[0, 1\right]$.
+Starting values for $\probinfevent$ and $\probbadnews$ are limited to be a series of equidistant
+real-valued numbers in the range of $0.1$ to $0.9$, always beginning and ending
+with the minimum and maximum , respectively.^[
+These bounds are chosen according to the work by @YanZhang.
+In principle, any value reasonably bigger than 0 can be chosen as lower bound and
+any value reasonably smaller than 1 as upper bound.]
+In the next step, the sample averages $\overline{B}$ and $\overline{S}$ of the series
+of daily buys and sells replace the expectations $\expect(B)$ and $\expect(S)$.
+Since the term $\probinfevent (1 - \probbadnews) \intensinf$ in equation \\ref{eq:expectedbuyseho}
+is always positive, $\intensuninfbuys$ needs to be smaller than $\overline{B}$.
+The average daily number of buys $\overline{B}$ is then multiplied by the same equally spaced series of values which
+are chosen as initial values for $\probinfevent$ and $\probbadnews$ to generate starting values for the
+intensity of uninformed buyers $\intensuninfbuys$.
+The last step is to receive initial values for the intensity of sells initiated by noise traders $\intensuninfsells$
+and the intensity of transaction fulfilled by informed traders $\intensinf$.
+Therefore, equations \\ref{eq:expectedbuyseho} and \\ref{eq:expectedsellseho} are simultaneously solved.
+
+A set of initial values for the EHO model,
+$\thetaehoinishort = \left(\probinfevent^0, \probbadnews^0, \intensuninfbuys^0, \intensuninfsells^0, \intensinf^0 \right)$,
+can then be calculated as,
+$$
+\begin{align}
+\probinfevent^0 &= \probinfevent_i, \notag \\
+\probbadnews^0 &= \probbadnews_j, \notag \\
+\intensuninfbuys^0 &= \gamma_k \overline{B}, \notag \\
+\intensinf^0 &= \dfrac{\overline{B} - \intensuninfbuys^0}{\probinfevent^0 \left(1- \probbadnews^0\right)}, \notag \\
+\intensuninfsells^0 &= \overline{S} - \probinfevent^0 \probbadnews^0 \intensinf^0, \notag
+\end{align}
+$$
+where each of the three parameters $\probinfevent_i$, $\probbadnews_j$ and $\gamma_k$
+take on equally distanced values between 0.1 and 0.9, one at a time.
+@YanZhang choose the length of the series of initial values for
+$\probinfevent_i$, $\probbadnews_j$ and $\gamma_k$ to be five.
+Hence, the starting values for each of the three parameters are
+0.1, 0.3, 0.5, 0.7 and 0.9.
+This results in a total of $5^3 = 125$ potential sets of initial values.
+
+Howeber, not all combinations are feasible due to negative values for
+the intensity of uninformed sells $\intensuninfsells^0$.
+In addition, @Ersan recommend to exclude sets of starting values with
+*irrelevant* values for $\intensinf^0$ which is the case
+if $\intensinf^0$ exceeds the maximum number of daily buys or sells
+($\intensinf^0 > \max(B_{\daysym}, S_{\daysym}), \:\: d = 1, \dots, \totaldays$).

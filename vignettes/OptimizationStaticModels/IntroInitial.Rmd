@@ -1,0 +1,20 @@
+### Initial Values
+
+The previous sections give options
+to evaluate likelihood functions in the EKOP and EHO model in a stable and effective way.
+However, we did not have to care about initial values for the evaluations beforehand because
+we knew the data generating process.
+
+There is not *one* rule or algorithm delivering the best starting values which ensure
+the maximization to end in the global maximum for every optimization run.
+One possibility would be to perform an appropriate number of maximization runs with
+different sets of random starting values.
+This procedure can be cumbersome because it is unclear how many runs are really needed to reach the
+global maxima, instead of landing in one of possibly several local maxima.
+Furthermore, running several hundred or even thousands of optimizations can be very time-consuming.
+
+The next sections discuss three methods which aim to solve the problem
+of suitable initial values.
+Earlier, we demonstrated that there is practically
+no difference in terms of execution time between the simple and extended static model.
+Hence, for the remainder of this chapter we will concentrate on the EHO setup.

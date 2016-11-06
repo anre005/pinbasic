@@ -1,0 +1,64 @@
+## Optimization in Static Models
+
+```{r introfactr, child = "Introfactr.Rmd"}
+```
+
+```{r ehofactr, child = "EHOfactr.Rmd"}
+```
+
+```{r linke, child = "LinKefactr.Rmd"}
+```
+
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<!-- % -->
+<!-- % Package Interface Factorizations -->
+<!-- % -->
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+
+```{r factrpkginterface, child = "PackageInterfaceFactr.Rmd"}
+```
+
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<!-- % -->
+<!-- % Introduction to initial values -->
+<!-- % -->
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+
+```{r introinitial, child = "IntroInitial.Rmd"}
+```
+
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<!-- % -->
+<!-- % Initial Values via Grid Search -->
+<!-- % -->
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+
+```{r initgrid, child = "InitValsGrid.Rmd"}
+```
+
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<!-- % -->
+<!-- % Initial Values via HAC -->
+<!-- % -->
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+
+```{initcluster, child = "InitValsCluster.Rmd"}
+```
+
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<!-- % -->
+<!-- % Initial Values via HAC (Refined) -->
+<!-- % -->
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+
+```{r initclusterrefined, child = "InitValsClusterRefined.Rmd"}
+```
+
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<!-- % -->
+<!-- % Package Interface Initial Values -->
+<!-- % -->
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+
+```{r initialpkginterface, child = "PackageInterfaceInitial.Rmd"}
+```

@@ -1,0 +1,27 @@
+\section{R Package: pinbasic}
+\label{sec:rpkg}
+Utilities for fast and stable estimation of the probability of informed trading (PIN) are implemented.
+Since the EKOP model is nested in the EHO model,
+functionalities can also be be applied to this simpler model structure, if needed.
+State-of-the-art factorization of the model likelihood function as well as
+hierarchical agglomerative clustering algorithm for generating initial values for optimizations are provided.
+In total, two different likelihood factorizations and three methodologies generating starting values are implemented.
+Likelihood functions are evaluated with \Rfunc{pin\_ll} function and starting values are created with \Rfunc{initial\_vals}.
+The usage of these functions is explained in sections \ref{sec:pkginterfacefactr} and \ref{sec:pkginterfaceinit}.
+The probability of informed trading can be estimated for arbitrary length of daily buys and sells data with \Rfunc{pin\_est} function
+which is a wrapper around the workhorse function \Rfunc{pin\_est\_core}.
+No information about the time span of the underlying data is needed to perform optimizations with \Rfunc{pin\_est}.
+However, the recommendation given in the literature is using at least data for 60 trading days to ensure convergence
+of the likelihood maximization. (see e.g.~\textcite[p. 1416]{EKOP}).
+The \Rfunc{qpin} function delivers quarterly estimates.
+The number of available quarters in the data are detected utilizing functions from the \Rpkg{lubridate} package.
+A detailed description of the optimization routines implemented in the \Rpkg{pinbasic} package is given in section \ref{sec:pkginterfaceest}.
+Quarterly estimates can be visualized with the \Rfunc{qpin\_plot} function.
+% Additionally, confidence intervals for estimates of the probability of informed trading can be computed via Monte-Carlo simulations.
+
+The \pkgname\ package is available
+on the comprehensive \R\ archive network (CRAN)\footnote{%
+Package sources and binaries for Windows and Mac can be found at \url{https://cran.r-project.org/web/packages/pinbasic/index.html}.}
+and is listed in the \textsl{CRAN Task View: Empirical Finance}\footnote{%
+\url{https://cran.r-project.org/web/views/Finance.html}}.
+Development version of the package can be found at and installed from \url{https://github.com/anre005/pinbasic}.

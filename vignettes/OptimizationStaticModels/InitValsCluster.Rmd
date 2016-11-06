@@ -1,0 +1,102 @@
+#### Hierarchical Agglomerative Clustering
+
+Another methodology which utilizes hierarchical agglomerative clustering (HAC)
+to generate starting values 
+is proposed by @Cluster.
+The daily order imbalance $\orderimb, \daysym = 1, \dots, \totaldays$, serves as criterion to assign the trading days
+to three clusters representing no-news, good-news and bad-news trading days.
+HAC is a bottom-up clustering technique in which at the beginning of the algorithm
+all order imbalances $\orderimb$ illustrate a cluster of their own,
+e.g. if quarterly data is used to estimate the probability of informed trading
+around 60 clusters exist when the algorithm is initialized.
+
+@Cluster use the complete-linkage clustering to sequentially merge
+the small clusters to bigger ones.
+Two clusters with the shortest distance are combined in each step.
+The definition of *shortest distance* distinguish between the
+several available agglomerative clustering methods.^[
+@Cluster mention that they tested different agglomerative clustering methods
+but that the complete-linkage method performed marginally better than the others.
+For a description of the other available methods, e.g. single-linkage or centroid-linkage,
+see @ClusterAna.]
+In complete-linkage clustering or farthest-neighbour clustering,
+the distance between clusters is calculated as the distance between those two elements,
+whereat the elements are in separated clusters, that are farthest away from each other.
+The minimal computed distance in each step causes the merging of both clusters involved.
+
+To be precise, in the complete-linkage clustering,
+the distance $\operatorname{D}(X, Y)$ between two clusters $X$ and $Y$ can be written as
+$$
+\begin{align}
+\operatorname{D}(X,Y) = \underset{x \in X, y \in Y}{\max} d(x, y),
+\end{align}
+$$
+where $d(x, y)$ is the distance between the cluster elements $x \in X$ and $y \in Y$.
+@Cluster use the euclidean norm as measure for $d(x,y)$.
+
+The following is a step-by-step instruction how to use the
+clustering algorithm to generate initial values for the parameters
+in the EHO model [see @Cluster, p. 1809].
+
+
+1. Calculate a series of daily order imbalances,
+   $\orderimb = B_{\daysym} - S_{\daysym}$ with $\daysym = 1, \dots \totaldays$,
+   and use the daily order imbalances, buys and sells as inputs for the following
+   steps.
+2. Perform HAC on the daily order imbalances using the complete-linkage clustering.^[
+   According to @Cluster we use the `R` function `hclust` to perform this task [see @fastcluster].]
+   Stop the algorithm when there are three clusters left.
+3. The mean of the clusters serve as a criterion to assign them to no-news, good-news and bad-news.
+   The cluster with the highest mean is assumed to consists of trading days with positive
+   private information.
+   Likewise the cluster with the lowest mean adheres trading days with negative private information.
+   The remaining cluster is then defined as the no-news cluster.
+4. Compute the average daily buys $\bar{B}_c$ and sells $\bar{S}_c$ for $c \in \statesset$.
+   Then, assign each cluster a weight $w_c$ which is calculated as the proportion this cluster
+   occupies of the total number of trading days $\totaldays$.
+   Hence, the cluster weights sum up to 1.
+5. With the help of the classification of trading days and the cluster weights from the third and fourth step,
+   we are able to compute initial values for the intensities of uninformed buys and sells as
+   weighted sums of average buys $B_c$ and sells $S_c$, respectively.
+$$
+      \begin{align}
+      \intensuninfbuys^0 &= \dfrac{w_{\badnews}}{w_{\badnews} + w_{\nonews}} \bar{B}_{\badnews} +
+                            \dfrac{w_{\nonews}}{w_{\badnews} + w_{\nonews}} \bar{B}_{\nonews} \notag \\
+      \intensuninfsells^0 &= \dfrac{w_{\goodnews}}{w_{\goodnews} + w_{\nonews}} \bar{S}_{\badnews} +
+                            \dfrac{w_{\nonews}}{w_{\goodnews} + w_{\nonews}} \bar{S}_{\nonews} \notag
+      \end{align}
+$$
+6. The intensity of informed trading is then calculated as the weighted sum of the intensities of
+   informed buys $\intensinf_b^0$ and sells $\intensinf_s^0$.^[
+   A splitting of the intensity of informed trading is not present in the EHO model.
+   However, one could extend the existing model with this feature and already had a suitable
+   technique for generating initial values.] ^[
+   It is not ensured that $\intensinf_b^0$ and $\intensinf_s^0$ are positive.
+   Hence, if $\intensinf_b^0$ or $\intensinf_s^0$ are negative we set them to 0.]
+$$
+      \begin{align}
+        \intensinf_b^0 &= \bar{B}_{\goodnews} - \intensuninfbuys^0 \notag \\
+        \intensinf_s^0 &= \bar{S}_{\badnews} - \intensuninfsells^0 \notag \\
+        \intensinf^0 &= \dfrac{w_{\goodnews}}{w_{\goodnews} + w_{\badnews}} \intensinf_b^0 +
+                        \dfrac{w_{\badnews}}{w_{\goodnews} + w_{\badnews}} \intensinf_s^0 \notag
+      \end{align}
+$$
+7. Cluster sizes are utilized to compute starting values for the probability of an information event \probinfevent
+   and the probability of bad news given that private information enter the market \probbadnews{}.
+$$
+      \begin{align}
+        \probinfevent^0 &= w_{\goodnews} + w_{\badnews} \notag \notag \\
+        \probbadnews^0 &= \dfrac{w_{\badnews}}{\probinfevent^0} \notag
+      \end{align}
+$$
+8. An initial estimate of the probability of informed trading is given by
+$$
+  \begin{align}
+      \pintext = \dfrac{\probinfevent^0 \intensinf^0}{%
+                        \intensuninfbuys^0 + \intensuninfsells^0 + \probinfevent^0 \intensinf^0} \notag
+      \end{align}
+$$
+In contrast to the brute force grid search method discussed in the previous section,
+the HAC algorithm returns only a single vector of initial values.
+Furthermore, no computation time is spent in generating infeasible sets of values which are then
+immediately discarded.

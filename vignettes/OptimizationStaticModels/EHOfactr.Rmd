@@ -1,0 +1,53 @@
+#### EHO Factorization
+\label{sec:ehofactr}
+@EHO2010 reformulated the likelihood function in the static
+model with different intensities for uninformed buys and uninformed sells.
+The authors rearranged the likelihood function and dropped the constant term $-\log\left(B_{\daysym}!S_{\daysym}!\right)$
+so we can maximize the algebraically equivalent but more stable and robust factorization
+
+$$
+\begin{align}
+  \log \likelihood\left(\datasymbs \mid \thetaehoshort \right) =
+  &\sum\limits_{\daysym=1}^{\totaldays} \Biggl( -\intensuninfbuys - \intensuninfsells + M_{\daysym} \left(\log x_b + \log x_s\right) +
+    B_{\daysym} \log \left(\intensinf + \intensuninfbuys\right) + S_{\daysym} \log \left(\intensinf + \intensuninfsells\right) \Biggr) \notag \\
+  & + \sum\limits_{\daysym=1}^{\totaldays}
+  \log \Biggl( \left(1-\probinfevent\right) x_s^{S_{\daysym} - M_{\daysym}} x_b^{B_{\daysym} - M_{\daysym}}
+  + \probinfevent \left(1-\probbadnews\right)  \exp\left(-\intensinf \right) x_s^{S_{\daysym} - M_{\daysym}} x_b^{-M_{\daysym}} \notag \\
+  & + \probinfevent\probbadnews \exp\left(-\intensinf \right) x_b^{B_{\daysym} - M_{\daysym}} x_s^{-M_{\daysym}}  \Biggr),
+  \label{eq:ehofactr5par}
+\end{align}
+$$
+where $M_{\daysym} = \min \left(B_{\daysym}, S_{\daysym} \right) + \dfrac{\max \left(B_{\daysym}, S_{\daysym} \right)}{2}$,
+$x_s = \dfrac{\intensuninfsells}{\intensuninfsells + \intensinf}$ and
+$x_b = \dfrac{\intensuninfbuys}{\intensuninfbuys + \intensinf}$.
+
+According to @EHO2010 the computation of the probability of informed trading
+benefits from the reformulation
+due to two facts.
+The computing efficiency is increased and the truncation errors (over- and underflow) are reduced.
+No evaluation of factorials is needed, additionally $x_b$ and $x_s$ are always weakly smaller than 1 which leads to more stable
+calculations of the terms involving power operations.
+However, if the number of buyer- or seller-initiated transactions is very high for a trading day,
+evaluations of the terms $x_b^{-M_d}$ and $x_s^{-M_d}$ can be problematic and may result in infinite values.
+Hence, diminishing the frequency of over- and underflow errors is essential in calculating $\pintext$ for (very) frequently traded stocks.
+
+Since the EKOP model is nested in the EHO model,
+we can also apply the structure of the more stable formulation
+to the likelihood function of the simpler $\pintext$ model,
+$$
+\begin{align}
+  \label{eq:ekopehofactr}
+  \log \likelihood\left(\datasymbs \mid \thetaekopshort \right) =
+  &\sum\limits_{\daysym=1}^{\totaldays} \Biggl( -2\intensuninf + M_{\daysym} 2\log x +
+    \left( B_{\daysym} + S_{\daysym} \right) \log \left(\intensinf + \intensuninf\right) \Biggr) \notag \\
+  & + \sum\limits_{\daysym=1}^{\totaldays}
+  \log \Biggl( \left(1-\probinfevent\right) x^{S_{\daysym} + B_{\daysym} - 2 M_{\daysym}}
+  + \probinfevent \left(1-\probbadnews\right)  \exp\left(-\intensinf \right) x^{S_{\daysym} - 2 M_{\daysym}} \notag \\
+  & + \probinfevent\probbadnews \exp\left(-\intensinf \right) x^{B_{\daysym} - 2 M_{\daysym}} \Biggr),
+\end{align}
+$$
+where $x = \dfrac{\intensuninf}{\intensuninf + \intensinf}$ and $M_{\daysym}$ given in equation \\ref{eq:ehofactr5par}.
+
+@LinKe state that the $\pintext$ computation is downward-biased if the EHO likelihood formulation is used for
+stocks with a large transaction number.
+In the same work an accurate likelihood factorization is presented which we will discuss in the next section.

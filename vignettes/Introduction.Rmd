@@ -1,0 +1,17 @@
+## Introduction
+
+Utilities for fast and stable estimation of the probability of informed trading (PIN) are implemented.
+Since the EKOP model is nested in the EHO model,
+functionalities can also be be applied to this simpler model structure, if needed.
+State-of-the-art factorization of the model likelihood function as well as
+hierarchical agglomerative clustering algorithm for generating initial values for optimizations are provided.
+In total, two different likelihood factorizations and three methodologies generating starting values are implemented.
+Likelihood functions are evaluated with `pin_ll` function and starting values are created with `initial_vals`.
+The probability of informed trading can be estimated for arbitrary length of daily buys and sells data with `pin_est` function
+which is a wrapper around the workhorse function `pin_est_core`.
+No information about the time span of the underlying data is needed to perform optimizations with `pin_est`.
+However, the recommendation given in the literature is using at least data for 60 trading days to ensure convergence
+of the likelihood maximization [e.g. see @EKOP, p. 1416].
+The `qpin` function delivers quarterly estimates which can be visualized with the `qpin_plot` function.
+
+Development version of the package can be found at and installed from [Github](https://github.com/anre005/pinbasic).
