@@ -1,42 +1,46 @@
-### EKOP Model
+<!-- ### EKOP Model -->
 
-In the model introduced by @EKOP the arrival rates of buys and sells are assumed to be identical.
-However, the model distinguishes between uninformed and informed transactions.
-Uninformed buys and sells appear with rate $\intensuninf$, informed buys and sells
-with rate $\intensinf$.
-Both parameters $\intensuninf$ and $\intensinf$ are positive real numbers but
-no assumption is made about their relation in magnitude. % between these two parameters.
-Hence, it is possible that $\intensinf$, describing the intensity of informed traders, in certain cases
-can stride the rate of uninformed trading $\intensuninf$.
+<!-- In the model introduced by @EKOP the arrival rates of buys and sells are assumed to be identical. -->
+<!-- However, the model distinguishes between uninformed and informed transactions. -->
+The Poisson processes for uninformed buys and uninformed sells
+are assumed to have unique intensities.
+The expected number of uninformed buys equals $\intensuninfbuys$, whereas
+the expected amount of uninformed sells is $\intensuninfsells$.
+<!-- Uninformed buys and sells appear with rate $\intensuninf$,  -->
+Informed buys and sells appear with rate $\intensinf$.^[
+All model parameters representing trading intensities are assumed to be positive real numbers.]
+<!-- Both parameters $\intensuninf$ and $\intensinf$ are positive real numbers but -->
+<!-- no assumption is made about their relation in magnitude. -->
+<!-- Hence, it is possible that $\intensinf$, describing the intensity of informed traders, in certain cases -->
+<!-- can stride the rate of uninformed trading $\intensuninf$. -->
 
-The intensity for the observable merged Poisson process varies with the states of
-trading days.
-On a no-news day the rate of arrivals equals $2\intensuninf$ and on days with private information
-entering the market, either positive or negative, $2\intensuninf + \intensinf$.
-We can write the probabilities of
-observing a buy or sell for the $k$-th transaction on trading day \daysym,
-with respect to the type of the trading day, as,
-$$
-\begin{aligned}
-    \prsym\left(I_{k,d} = B \mid \text{No-News} \right) &= \dfrac{\intensuninf}{\intensuninf + \intensuninf} = \dfrac{1}{2}, \\
-    \prsym\left(I_{k,d} = S \mid \text{No-News} \right) &= \dfrac{\intensuninf}{\intensuninf + \intensuninf} = \dfrac{1}{2}, \\
-    \prsym\left(I_{k,d} = B \mid \text{Good-News} \right) &= \dfrac{\intensuninf + \intensinf}{\intensuninf + \intensuninf + \intensinf}, \\
-    \prsym\left(I_{k,d} = S \mid \text{Good-News} \right) &= \dfrac{\intensuninf}{\intensuninf + \intensuninf + \intensinf}, \\
-    \prsym\left(I_{k,d} = B \mid \text{Bad-News} \right) &= \dfrac{\intensuninf}{\intensuninf + \intensuninf + \intensinf}, \\
-    \prsym\left(I_{k,d} = S \mid \text{Bad-News} \right) &= \dfrac{\intensuninf + \intensinf}{\intensuninf + \intensuninf + \intensinf}.
-\end{aligned}
-$$
-According to equation \\ref{eq:pingeneral} the probability of informed trading in the EKOP model
+<!-- The intensity for the observable merged Poisson process varies with the states of -->
+<!-- trading days. -->
+<!-- On a no-news day the rate of arrivals equals $2\intensuninf$ and on days with private information -->
+<!-- entering the market, either positive or negative, $2\intensuninf + \intensinf$. -->
+<!-- We can write the probabilities of -->
+<!-- observing a buy or sell for the $k$-th transaction on trading day \daysym, -->
+<!-- with respect to the type of the trading day, as, -->
+<!-- $$ -->
+<!-- \begin{aligned} -->
+<!--     \prsym\left(I_{k,d} = B \mid \text{No-News} \right) &= \dfrac{\intensuninf}{\intensuninf + \intensuninf} = \dfrac{1}{2}, \\ -->
+<!--     \prsym\left(I_{k,d} = S \mid \text{No-News} \right) &= \dfrac{\intensuninf}{\intensuninf + \intensuninf} = \dfrac{1}{2}, \\ -->
+<!--     \prsym\left(I_{k,d} = B \mid \text{Good-News} \right) &= \dfrac{\intensuninf + \intensinf}{\intensuninf + \intensuninf + \intensinf}, \\ -->
+<!--     \prsym\left(I_{k,d} = S \mid \text{Good-News} \right) &= \dfrac{\intensuninf}{\intensuninf + \intensuninf + \intensinf}, \\ -->
+<!--     \prsym\left(I_{k,d} = B \mid \text{Bad-News} \right) &= \dfrac{\intensuninf}{\intensuninf + \intensuninf + \intensinf}, \\ -->
+<!--     \prsym\left(I_{k,d} = S \mid \text{Bad-News} \right) &= \dfrac{\intensuninf + \intensinf}{\intensuninf + \intensuninf + \intensinf}. -->
+<!-- \end{aligned} -->
+<!-- $$ -->
+According to equation \\ref{eq:pingeneral} the probability of informed trading in the EHO model
 can be calculated as
 $$
-\begin{align}
-\label{eq:pinekop}
+\begin{align}\label{eq:pineho}
 \pintext &= \dfrac{\probinfevent \probbadnews \intensinf + \probinfevent (1 - \probbadnews) \intensinf}
-                  {2(1 - \probinfevent)\intensuninf + 2\probinfevent \probbadnews \intensuninf + 2\probinfevent (1 - \probbadnews) \intensuninf + \probinfevent \probbadnews \intensinf + \probinfevent (1 - \probbadnews) \intensinf} \notag \\
-         &= \dfrac{\probinfevent \intensinf}{2\intensuninf + \probinfevent \intensinf},
+                  {(1 - \probinfevent)(\intensuninfbuys + \intensuninfsells) + \probinfevent \probbadnews (\intensuninfbuys + \intensuninfsells) + \probinfevent (1 - \probbadnews) (\intensuninfbuys + \intensuninfsells) + \probinfevent \probbadnews \intensinf + \probinfevent (1 - \probbadnews) \intensinf} \notag \\
+         &= \dfrac{\probinfevent \intensinf}{\intensuninfbuys + \intensuninfsells + \probinfevent \intensinf},
 \end{align}
 $$
-where $\pintext$ and the model parameters are constant over the range of the underlying data.
+where $\pintext$ and the model parameters are constant over the whole range of the underlying data.
 We can think of the arrivals of buys and sells on no-news days as
 flipping a (fair) coin with equal probabilities for the two potential outcomes.
 Instead of seeing heads or tails when tossing the coin,
@@ -47,8 +51,8 @@ depending on the direction of the private information.
 Informed buyers (sellers) enter the market if they receive a positive (negative) signal.
 The intensity of the point process for buys (sells) increases by the positive parameter $\intensinf$
 whereas the rate for sells (buys) remains on the level for no-news days.
-Therefore the probability of observing a transaction which is buyer- (seller-)initiated increases
-which causes a decrease in the probability for sells (buys).
+<!-- Therefore the probability of observing a transaction which is buyer- (seller-)initiated increases -->
+<!-- which causes a decrease in the probability for sells (buys). -->
 
 The following scenario tree illustrates
 the probabilities for the potential states a trading day in the $\pintext$ framework can reside in.
@@ -69,10 +73,10 @@ the different trading days' conditions can be read directly from the graph.
 <!--   \label{fig:EKOPtree} -->
 <!-- \end{figure} -->
 
-![EKOP Scenario Tree](EKOPtree.png)
+![EKOP Scenario Tree](EHOtree.png)
 
 
-For deriving the (log) likelihood function in the EKOP setting we can utilize standard theory for
+For deriving the (log) likelihood function in the EHO setting we can utilize standard theory for
 homogeneous Poisson processes.
 A Poisson process on the (positive) real line is completely defined by
 the following equation [see @daley2003, p. 19],
@@ -91,10 +95,10 @@ The term $\lambda\left(b_i - a_i\right)$ can be interpreted as the expected numb
 happening in $\left(a_i, b_i\right]$.
 
 It is common practice in the $\pintext$ literature to specify the intensities of Poisson processes for
-buys and sells, $\intensuninf$ and $\intensinf$, as expected arrivals per trading day.
+buys and sells, $\intensuninfbuys$, $\intensuninfsells$ and $\intensinf$, as expected arrivals per trading day.
 Hence, the half-bounded interval $\left(a_i, b_i\right]$ in equation \\ref{eq:poissonprocess}
 simplifies to an interval of length 1 and
-we can adopt equation \\ref{eq:poissonprocess} for usage in the EKOP model for a trading day $\daysym$,
+we can adopt equation \\ref{eq:poissonprocess} for usage in the EHO model for a trading day $\daysym$,
 $$
 \begin{align}
   \prsym\left\{N_{\daysym} = n\right\} =
@@ -103,13 +107,13 @@ $$
 \end{align}
 $$
 with the number of buys or sells $n \in \{B_{\daysym}, S_{\daysym}\}$ on trading day $\daysym$ and
-the buys or sells Poisson process $N_{\daysym}$,
-$\lambda$ displays the buys or sells arrivals rate.
+the buys' or sells' Poisson process $N_{\daysym}$,
+$\lambda$ displays the arrival rate of buys or sells.
 
 The different types of trading trades must be taken into account.
 If on trading day $\daysym$ no private information hit the market,
 it is free from information-based traders.
-Both point processes for buys and sells have identical intensities which equal $\intensuninf$.
+<!-- Both point processes for buys and sells have identical intensities which equal $\intensuninf$. -->
 According to equation \\ref{eq:poissonprocessekop} the notation of the separated probabilities of
 observing $B_{\daysym}$ buys and $S_{\daysym}$ sells on a no-news day $\daysym$ is straightforward.
 Hence, due to the independence of the latent Poisson processes, the probability of
@@ -118,8 +122,8 @@ product of the single probabilities,
 $$
 \begin{align}
   \label{eq:probseqno}
-  \underbrace{\exp\left(-\intensuninf \right)\dfrac{\intensuninf^{B_{\daysym}}}{B_{\daysym}!}}_{\text{Buys}}
-  \underbrace{\exp\left(-\intensuninf \right)\dfrac{\intensuninf^{S_{\daysym}}}{S_{\daysym}!}}_{\text{Sells}}.
+  \underbrace{\exp\left(-\intensuninfbuys \right)\dfrac{\intensuninfbuys^{B_{\daysym}}}{B_{\daysym}!}}_{\text{Buys}}
+  \underbrace{\exp\left(-\intensuninfsells \right)\dfrac{\intensuninfsells^{S_{\daysym}}}{S_{\daysym}!}}_{\text{Sells}}.
 \end{align}
 $$
 On a good-news day $\daysym$ informed traders are active and buy equities which yields to
@@ -128,8 +132,8 @@ captured by parameter $\intensinf$,
 $$
 \begin{align}
   \label{eq:probseqgo}
-  \underbrace{\exp\left(-(\intensuninf + \intensinf) \right)\dfrac{(\intensuninf + \intensinf)^{B_{\daysym}}}{B_{\daysym}!}}_{\text{Buys}}
-  \underbrace{\exp\left(-\intensuninf \right)\dfrac{\intensuninf^{S_{\daysym}}}{S_{\daysym}!}}_{\text{Sells}}.
+  \underbrace{\exp\left(-(\intensuninfbuys + \intensinf) \right)\dfrac{(\intensuninfbuys + \intensinf)^{B_{\daysym}}}{B_{\daysym}!}}_{\text{Buys}}
+  \underbrace{\exp\left(-\intensuninfsells \right)\dfrac{\intensuninfsells^{S_{\daysym}}}{S_{\daysym}!}}_{\text{Sells}}.
 \end{align}
 $$
 Likewise to good-news days, the intensity of seller-initiated trades increase
@@ -137,8 +141,8 @@ on a bad-news day $\daysym$,
 $$
 \begin{align}
   \label{eq:probseqbad}
-  \underbrace{\exp\left(-\intensuninf \right)\dfrac{\intensuninf^{B_{\daysym}}}{B_{\daysym}!}}_{\text{Buys}}
-  \underbrace{\exp\left(-(\intensuninf + \intensinf) \right)\dfrac{(\intensuninf + \intensinf)^{S_{\daysym}}}{S_{\daysym}!}}_{\text{Sells}}.
+  \underbrace{\exp\left(-\intensuninfbuys \right)\dfrac{\intensuninfbuys^{B_{\daysym}}}{B_{\daysym}!}}_{\text{Buys}}
+  \underbrace{\exp\left(-(\intensuninfsells + \intensinf) \right)\dfrac{(\intensuninfsells + \intensinf)^{S_{\daysym}}}{S_{\daysym}!}}_{\text{Sells}}.
 \end{align}
 $$
 The likelihood function of observing a sequence of $B_{\daysym}$ buys and $S_{\daysym}$ sells
@@ -149,67 +153,68 @@ on a trading day $\daysym$ can be formulated as
 $$
 \begin{align}
   \label{eq:dailylikelihoodEKOP}
-  \likelihood\left( \thetaekopshort \mid (B_{\daysym},S_{\daysym}) \right) &=
-  \left(1-\probinfevent\right)\left(\exp\left(-\intensuninf \right)\dfrac{\intensuninf^{B_{\daysym}}}{B_{\daysym}!}
-  \exp\left(-\intensuninf \right)\dfrac{\intensuninf^{S_{\daysym}}}{S_{\daysym}!}\right) \notag \\
-  & + \probinfevent \left(1-\probbadnews\right) \left(\exp\left(-(\intensuninf + \intensinf) \right)\dfrac{(\intensuninf + \intensinf)^{B_{\daysym}}}{B_{\daysym}!}
-  \exp\left(-\intensuninf \right)\dfrac{\intensuninf^{S_{\daysym}}}{S_{\daysym}!}\right) \notag \\
-  & + \probinfevent \probbadnews \left(\exp\left(-\intensuninf \right)\dfrac{\intensuninf^{B_{\daysym}}}{B_{\daysym}!}
-  \exp\left(-(\intensuninf + \intensinf) \right)\dfrac{(\intensuninf + \intensinf)^{S_{\daysym}}}{S_{\daysym}!}\right).
+  \likelihood\left( \thetaeho \mid (B_{\daysym},S_{\daysym}) \right) &=
+  \left(1-\probinfevent\right)\left(\exp\left(-\intensuninfbuys \right)\dfrac{\intensuninfbuys^{B_{\daysym}}}{B_{\daysym}!}
+  \exp\left(-\intensuninfsells \right)\dfrac{\intensuninfsells^{S_{\daysym}}}{S_{\daysym}!}\right) \notag \\
+  & + \probinfevent \left(1-\probbadnews\right) \left(\exp\left(-(\intensuninfbuys + \intensinf) \right)\dfrac{(\intensuninfbuys + \intensinf)^{B_{\daysym}}}{B_{\daysym}!}
+  \exp\left(-\intensuninfsells \right)\dfrac{\intensuninfsells^{S_{\daysym}}}{S_{\daysym}!}\right) \notag \\
+  & + \probinfevent \probbadnews \left(\exp\left(-\intensuninfbuys \right)\dfrac{\intensuninfbuys^{B_{\daysym}}}{B_{\daysym}!}
+  \exp\left(-(\intensuninfsells + \intensinf) \right)\dfrac{(\intensuninfsells + \intensinf)^{S_{\daysym}}}{S_{\daysym}!}\right).
 \end{align}
 $$
 Utilizing the independence of trading days,
 the probability of observing $\datasymbs = \left(B_d, S_d\right)_{d = 1}^{\totaldays}$
-for $\daysym = 1, \dots, \totaldays$ trading days can be written as
+for $\daysym = 1, \dots, \totaldays$ trading days can be written as 
 product of daily likelihoods,
 $$
 \begin{align}
   \label{eq:likelihoodEKOP}
-  \likelihood\left(\thetaekopshort \mid \datasymbs \right) = \prod\limits_{d=1}^{\totaldays}
-                                            \likelihood\left(\thetaekopshort \mid (B_d,S_d)\right).
+  \likelihood\left(\thetaehoshort \mid \datasymbs \right) = \prod\limits_{d=1}^{\totaldays}
+                                            \likelihood\left(\thetaehoshort \mid (B_d,S_d)\right).
 \end{align}
 $$
 Hence, the log likelihood function for a total of $\totaldays$ trading days can be formulated as
 $$
 \begin{align}
   \label{eq:loglikelihoodEKOP}
-  \log \likelihood\left(\thetaekopshort \mid \datasymbs  \right) = \sum\limits_{d=1}^{\totaldays}
-                                                \log \likelihood\left(\thetaekopshort \mid (B_{\daysym},S_{\daysym})\right),
+  \log \likelihood\left(\thetaehoshort \mid \datasymbs  \right) = \sum\limits_{d=1}^{\totaldays}
+                                                \log \likelihood\left(\thetaehoshort \mid (B_{\daysym},S_{\daysym})\right),
 \end{align}
 $$
 which yields the concrete notation,
 $$
 \begin{align}
-  \log \likelihood\left(\thetaekopshort \mid \datasymbs \right) = &\sum\limits_{d=1}^{\totaldays}
-  \log \Biggl( \left(1-\probinfevent\right) \left(\exp\left(-\intensuninf \right)\dfrac{\intensuninf^{B_{\daysym}}}{B_{\daysym}!}
-  \exp\left(-\intensuninf \right)\dfrac{\intensuninf^{S_{\daysym}}}{S_{\daysym}!}\right) \notag \\
-  & + \probinfevent \left(1-\probbadnews\right) \left(\exp\left(-(\intensuninf + \intensinf) \right)\dfrac{(\intensuninf + \intensinf) ^{B_{\daysym}}}{B_{\daysym}!}
-  \exp\left(-\intensuninf \right)\dfrac{\intensuninf^{S_{\daysym}}}{S_{\daysym}!}\right) \notag \\
-  & + \probinfevent\probbadnews \left(\exp\left(-\intensuninf \right)\dfrac{\intensuninf^{B_{\daysym}}}{B_{\daysym}!}
-  \exp\left(-(\intensuninf + \intensinf) \right)\dfrac{(\intensuninf + \intensinf)^{S_{\daysym}}}{S_{\daysym}!}\right) \Biggr). \label{eq:loglikelihoodEKOPconcrete}
+  \log \likelihood\left(\thetaehoshort \mid \datasymbs \right) = &\sum\limits_{d=1}^{\totaldays}
+  \log \Biggl( \left(1-\probinfevent\right) \left(\exp\left(-\intensuninfbuys \right)\dfrac{\intensuninfbuys^{B_{\daysym}}}{B_{\daysym}!}
+  \exp\left(-\intensuninfsells \right)\dfrac{\intensuninfsells^{S_{\daysym}}}{S_{\daysym}!}\right) \notag \\
+  & + \probinfevent \left(1-\probbadnews\right) \left(\exp\left(-(\intensuninfbuys + \intensinf) \right)\dfrac{(\intensuninfbuys + \intensinf)^{B_{\daysym}}}{B_{\daysym}!}
+  \exp\left(-\intensuninfsells \right)\dfrac{\intensuninfsells^{S_{\daysym}}}{S_{\daysym}!}\right) \notag \\
+  & + \probinfevent\probbadnews \left(\exp\left(-\intensuninfbuys \right)\dfrac{\intensuninfbuys^{B_{\daysym}}}{B_{\daysym}!}
+  \exp\left(-(\intensuninfsells + \intensinf) \right)\dfrac{(\intensuninfsells + \intensinf)^{S_{\daysym}}}{S_{\daysym}!}\right) \Biggr). \label{eq:loglikelihoodEHOconcrete}
 \end{align}
 $$
-In general, likelihood functions are very rarely used in optimization compared to their
-logarithmic transformations.
-Therefore, for the remainder of this vignette we will refer to the log likelihood function as likelihood function.
+<!-- In general, likelihood functions are very rarely used in optimization compared to their -->
+<!-- logarithmic transformations. -->
+<!-- Therefore, for the remainder of this vignette we will refer to the log likelihood function as likelihood function. -->
 
-The formulation shown in equation \\ref{eq:loglikelihoodEKOPconcrete}
+The formulation shown in equation \\ref{eq:loglikelihoodEHOconcrete}
 is very inefficient in terms of computation time and often raises overflow errors.^[
 Overflow errors occur if the calculated number is too big in magnitude
 so that it can not be longer represented
 by the machine/software.]
-In computations of equation \\ref{eq:loglikelihoodEKOPconcrete} factorials of daily buys
+In computations of equation \\ref{eq:loglikelihoodEHOconcrete} factorials of daily buys
 and sells need to be evaluated. 
 Since the number of daily buys and sells can easily exceed values of several hundreds or thousands,
 calculations can easily get infeasible.
 Even if the number of daily buys or sells is small enough 
 leading to computable factorial terms,
 finite values of the likelihood are not ensured.
-Additionally, the terms $\intensuninf^{B_{\daysym}}$, $\intensuninf^{S_{\daysym}}$,
-$(\intensuninf + \intensinf)^{B_{\daysym}}$ and $(\intensuninf + \intensinf)^{S_{\daysym}}$
+Additionally, the terms $\intensuninfbuys^{B_{\daysym}}$, $\intensuninfsells^{S_{\daysym}}$,
+$(\intensuninfbuys + \intensinf)^{B_{\daysym}}$ and $(\intensuninfsells + \intensinf)^{S_{\daysym}}$
 are potential sources of overflow errors.
 Furthermore, single terms may be finite but products of those may not. 
 In contrast to overflow errors induced by large values for daily buys and sells,
 the exponential terms in the likelihood function my introduce underflow errors,^[
 Underflow errors occur if the number to represent is too small and vanishes to zero.]
-i.e.~$\exp\left(-\intensuninf \right)$ and $\exp\left(-(\intensuninf + \intensinf) \right)$.
+i.e. $\exp\left(-\intensuninfbuys \right)$, $\exp\left(-\intensuninfsells \right)$,
+$\exp\left(-(\intensuninfbuys + \intensinf) \right)$ and $\exp\left(-(\intensuninfsells + \intensinf) \right)$.

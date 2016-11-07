@@ -1,4 +1,4 @@
-#### Grid Search Algorithm
+### Grid Search Algorithm
 
 @YanZhang present a methodology to generate initial values by grid search technique.
 We need five starting values for the EHO model.

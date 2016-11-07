@@ -1,11 +1,11 @@
-### Likelihood Factorizations
+## Likelihood Factorizations
 
-Computation of equations \\ref{eq:loglikelihoodEKOPconcrete} and \\ref{eq:loglikelihoodEHOconcrete} often fails
+Computation of equation \\ref{eq:loglikelihoodEHOconcrete} often fails
 even for infrequently traded stocks.
 For historical data which has its origin decades ago and therefore the number of daily buys and sells is very small,
 these formulations of likelihood functions probably return
 reasonable results (i.e. finite and non-`NaN`).
-However, for any recent data with number of daily buys and sells often higher than \num{1000} shares,
+However, for any recent data with number of daily buys and sells often higher than 1000 shares,
 more stable implementations are essential to achieve finite function values.
 
 The $\pintext$ literature provides two widely used likelihood factorization which try to minimize

@@ -1,4 +1,4 @@
-### Initial Values
+## Initial Values
 
 The previous sections give options
 to evaluate likelihood functions in the EKOP and EHO model in a stable and effective way.

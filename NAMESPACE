@@ -2,11 +2,13 @@
 
 export(initial_vals)
 export(pin_calc)
+export(pin_confint)
 export(pin_est)
 export(pin_est_core)
 export(pin_ll)
 export(qpin)
 export(qpin_plot)
+export(simulate_data)
 import(doParallel)
 import(foreach)
 import(parallel)

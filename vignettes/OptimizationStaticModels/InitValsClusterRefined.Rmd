@@ -1,98 +1,53 @@
-#### Refined HAC Algorithm
+### Refined HAC Algorithm
 
 A third option for generating initial values for maximization of the likelihood function in the EHO model
-is presented by \textcite{Ersan}.
+is presented by @Ersan.
 The authors claim that their method in combination with the Lin-Ke likelihood factorization
 yields unbiased estimates for the probability of informed trading
-and the five model parameters \parencite[see][]{Ersan}.
+and the five model parameters. <!-- \parencite[see][]{Ersan}.-->
 
-Similar to the algorithm discussed in section \ref{sec:inithac} hierarchical agglomerative clustering is utilized
+Similar to the HAC algorithm hierarchical agglomerative clustering is utilized
 for generating starting values.
-However, instead of stopping the HAC algorithm once three clusters are left,
+However, instead of stopping the clustering once three clusters are left,
 the number of groups is not predetermined per se.
 The refined HAC algorithm is stopped when $j + 1$ clusters are left,
-whereat $j$ can be any positive integer.\footnote{%
-In the work by \textcite{Ersan} $j$ is chosen to be an integer in the range from 1 to 10.}
+whereat $j$ can be any positive integer.^[
+In the work by @Ersan $j$ is chosen to be an integer in the range from 1 to 10.]
 
-In contrast to the HAC algorithm by \textcite{Cluster}, the daily absolute order imbalance is used
+In contrast to the HAC algorithm by @Cluster, the daily absolute order imbalance is used
 to assign trading days to one of the $j + 1$ groups.
 The clusters are then ordered by their average absolute order imbalance and distributed to a
-\textsl{no-event} and \textsl{event} cluster.
+*no-event* and *event* cluster.
 To achieve multiple vectors of starting values instead of a single one,
 the two types of groups are build as follows,
-
+$$
 \begin{align}
-  CL_i^{\nosymb} &= \bigcup\limits_{k = 1}^{i} CL_k, \notag \\
+  CL_i^{\nonews} &= \bigcup\limits_{k = 1}^{i} CL_k, \notag \\
   CL_i^{\eventsymb} &= \bigcup\limits_{k = i + 1}^{j + 1} CL_k, \notag
 \end{align}
-
-where $i = 1, \dots, j$ and  $CL_i^{\nosymb}$ represents the no-event cluster and
+$$
+where $i = 1, \dots, j$ and  $CL_i^{\nonews}$ represents the no-event cluster and
  $CL_i^{\eventsymb}$ the event cluster.
 At this point, we are able to obtain  $\probinfevent^0$ and $\intensinf^0$.
 The initial guess for the probability of an information event is calculated, in a very similar way to
-the HAC algorithm by \textcite{Cluster}, as proportion the event cluster $CL_i^{\eventsymb}$
+the HAC algorithm by @Cluster, as proportion the event cluster $CL_i^{\eventsymb}$
 occupies from the total number of trading days $\totaldays$.
 The initial intensity of informed trading equals the difference in averages of
-the absolute order imbalances of no-event and event group.\footnote{%
-In the work by \textcite{Ersan} this relation is not directly mentioned.
+the absolute order imbalances of no-event and event group.^[
+In the work by @Ersan this relation is not directly mentioned.
 However, at this point in the algorithm , we solely have information about
 the two groups of trading days and the absolute order imbalance at hand.
 Since the EHO model does not separate informed buy rate from informed sell rate,
 the difference in averages of
 the absolute order imbalances of no-event and event group is appropriate to
-capture the intensity of trading due to private information.}
+capture the intensity of trading due to private information.]
 
 In the next step, $CL_i^{\eventsymb}$ is splitted according to the signs of the average order imbalances of its members
 in a good-news and bad-news group.
 The remaining starting values for the two intensities $\intensuninfbuys$ and $\intensuninfsells$
-and the probability $\probbadnews$ are calculated according to section \ref{sec:inithac}
+and the probability $\probbadnews$ are calculated according to HAC algorithm.
 
 Hence, we get a total of $j$ vectors of initial values.
 For each of the $j$ vectors the likelihood is evaluated and
 the set which yields the maximum function value is chosen.
-% Again, we use the simulated dataset from section \ref{sec:ehofactr} for demonstration.
-According to the results in the work of \textcite{Ersan} a value of $j = 5$ is a good compromise between accuracy and speed.
-
-<<Initial values by refinded HAC algorithm, eval = FALSE, include = FALSE>>=
-# 'num_clust' arguments takes the number 'j' of clusters
-hac_ref_init_demo <- initial_vals(numbuys = buys_eho_fail,
-                                  numsells = sells_eho_fail,
-                                  method = "HAC_Ref",
-                                  num_clust = 5)
-@
-
-
-<<clusterrefineddemo, echo = FALSE, eval = FALSE, include = FALSE>>=
-hac_ref_demo <- initial_vals(numbuys = buys_eho_fail, numsells = sells_eho_fail,
-                             method = "HAC_Ref", num_clust = 5, details = TRUE)
-@
-
-<<clusterrefineddemotable, echo = FALSE, results='asis', eval = FALSE, include = FALSE>>=
-colnames(hac_ref_demo) <- c("$\\probinfevent^0$", "$\\probbadnews^0$", "$\\intensuninfbuys^0$",
-                           "$\\intensuninfsells^0$", "$\\intensinf^0$", "ll")
-
-hac_ref_demo <- formatC(hac_ref_demo, format = "f", digits = decimal_digits)
-
-print.xtable(xtable(hac_ref_demo,
-            caption = c(paste0("Set of initial values for the simulated dataset ",
-                               "with intensities $\\intensuninfbuys = ",epsilon_b_eho,"$, ",
-                               "$\\intensuninfsells = ",epsilon_s_eho,"$ and ",
-                               "$\\intensinf = ",mu_eho, "$ ",
-                               "from section \\ref{sec:ehofactr}, generated by refined HAC algorithm. ",
-                               "In addition the associated likelihood values are reported which serve as a criterion ",
-                               "for selecting the best set of initial values which is then used for optimization."),
-                        paste0("Set of initial values generated by refined HAC algorithm")),
-                  digits = decimal_digits,
-                  label = "tab:initclusterref"),
-      caption.placement = xtable_caption_placement, scalebox = "1.0",
-      include.rownames = FALSE,
-      sanitize.colnames.function = function(x) {x})
-@
-
-% The results in table \ref{tab:initclusterref} show that the maximum likelihood function value
-% %equals \Sexpr{hac_ref_demo[3, "ll"]} and
-% is achived for the set of starting values reported in the third row.
-% Therefore the initial values used for optimization are
-% $\probinfevent^0 = \Sexpr{hac_ref_demo[3,1]}$, $\probbadnews^0 = \Sexpr{hac_ref_demo[3,2]}$,
-% $\intensuninfbuys^0 = \Sexpr{hac_ref_demo[3,3]}$, $\intensuninfsells^0 = \Sexpr{hac_ref_demo[3,4]}$ and
-% $\intensinf^0 = \Sexpr{hac_ref_demo[3,5]}$.
+According to the results in the work of @Ersan a value of $j = 5$ is a good compromise between accuracy and speed.

@@ -1,5 +1,5 @@
 ---
-title: "pinbasic: R Package for Fast and Stable Estimation of Static Models for the Probability of Informed Trading"
+title: "pinbasic: An R Package for Fast and Stable Estimation of Static Models for the Probability of Informed Trading"
 author: "Andreas Recktenwald"
 date: "`r Sys.Date()`"
 output:
@@ -10,6 +10,7 @@ output:
     md_extensions: +raw_tex+latex_macros
     fig_caption: false
     toc_float: true
+    df_print: paged
 bibliography: references.bib
 vignette: >
   %\VignetteIndexEntry{pinbasic: R Package for Fast and Stable Estimation of Static Models for the Probability of Informed Trading}
@@ -37,10 +38,10 @@ TeX: { equationNumbers: { autoNumber: "AMS" } }
 
 \newcommand{\prsym}{\operatorname{Pr}}
 
-\newcommand{\thetaekop}{\theta = \left(\probinfevent, \probbadnews,\intensuninf, \intensinf \right)}
-\newcommand{\thetaekopshort}{\theta}
-\newcommand{\thetaeho}{\theta_{\text{ext}} = \left(\probinfevent, \probbadnews,\intensuninfbuys, \intensuninfsells, \intensinf \right)}
-\newcommand{\thetaehoshort}{\theta_{\text{ext}}}
+<!-- \newcommand{\thetaekop}{\theta = \left(\probinfevent, \probbadnews,\intensuninf, \intensinf \right)} -->
+<!-- \newcommand{\thetaekopshort}{\theta} -->
+\newcommand{\thetaeho}{\theta = \left(\probinfevent, \probbadnews,\intensuninfbuys, \intensuninfsells, \intensinf \right)}
+\newcommand{\thetaehoshort}{\theta}
 \newcommand{\sgn}{\operatorname{sgn}}
 \newcommand{\expect}{\mathbb{E}}
 
@@ -70,11 +71,10 @@ TeX: { equationNumbers: { autoNumber: "AMS" } }
 \newcommand{\likelihood}{\mathcal{L}}
 \newcommand{\datasymbs}{\mathcal{M}}
 
-\newcommand{\thetaeho}{\theta_{\text{ext}} = \left(\probinfevent, \probbadnews, \intensuninfbuys, \intensuninfsells, \intensinf \right)}
-\newcommand{\thetaehoshort}{\theta_{\text{ext}}}
-\newcommand{\thetaehoinishort}{\theta_{\text{ext}}^0}
+\newcommand{\thetaehoinishort}{\theta^0}
 \newcommand{\orderimb}{\operatorname{OI}_d}
 \newcommand{\statesset}{\{\mathcal{N}, \mathcal{G}, \mathcal{B}\}}
+\newcommand{\eventsymb}{\mathcal{E}}
 
 ```{r insert_fun, echo = FALSE}
 library(knitr)
@@ -90,10 +90,14 @@ insert_fun = function(name, env = parent.frame()) {
 ```{r intro, child = "GenAssumptions.Rmd"}
 ```
 
-```{r static, child = "staticPINmodels/StaticModels.Rmd"}
+```{r static, child = "staticPINmodels/StaticEHOshort.Rmd"}
 ```
 
 ```{r opt, child = "OptimizationStaticModels/OptimizationStaticModels.Rmd"}
 ```
+
+```{r examples, child = "Examples.Rmd"}
+```
+
 
 ## References

@@ -1,16 +1,18 @@
-## Static Models
+## EHO Model
 
-This section describes static models for estimating the probability of
-informed trading.
-As mentioned before, the word *static* takes into account that these
-models assume constant arrival rates for daily buys and sells.
-Additionally, the probability parameters are also assumed to be constant over the whole range spanned
+This section describes the static model for estimating the probability of
+informed trading developed by @EHO.
+<!-- As mentioned before, the word *static* takes into account that these -->
+<!-- models assume constant arrival rates for daily buys and sells. -->
+Arrival rates of buys and sells as well as
+probability parameters are assumed to be constant over the whole range spanned
 by the data.
-Therefore the usage of these models do not enable to estimate the probability of informed trading
+Therefore the usage of this models do not enable to estimate the probability of informed trading
 on a daily basis.
 
-The static models have several assumptions in common.
-Firstly, the sequence of trading days is assumed to be discrete and independent,
+<!-- The static models have several assumptions in common. -->
+<!-- Firstly,  -->
+The sequence of trading days is assumed to be discrete and independent,
 whereas the time during a trading day is continuous.
 Conditions of trading days are not observable and determined by nature before the market opening.
 *Information events*, days on which private, price-relevant information enter the market, occur
@@ -27,38 +29,41 @@ $$
 $$
 Furthermore, buys and sells are supposed
 to follow latent independent Poisson processes with constant intensities.
-A Poisson process is point process which is often defined on the positive line.
+A Poisson process is a point process which is often defined on the positive line.
 According to @daley2003,
 
 > we shall understand by a point process some method of randomly allocating points to the real line.
 
 However, in terms of arrivals of buys and sells, we assume the Poisson processes in the static $\pintext$ models
-to be defined on the positive half-line.
+to be defined on the positive half-line.^[
 Poisson processes are directly related to the corresponding discrete Poisson distribution which is defined by the
 following cumulative distribution function (cdf) and probability mass fun
 $$
 \begin{align}
   \text{cdf}: \:\:  F\left(\lambda;n\right) = \exp\left(-\lambda\right)
-                \sum\limits_{k=0}^n \dfrac{\lambda^k}{k!} \qquad \qquad
+                \sum\limits_{k=0}^n \dfrac{\lambda^k}{k!} \qquad \text{and} \qquad
   \text{pmf}: \:\:  f\left(\lambda;k\right) = \exp\left(-\lambda\right)
                 \dfrac{\lambda^k}{k!} \notag ,
 \end{align}
 $$
-with the number of arrivals $n$, the intensity parameter $\lambda$ and $k \in \mathbb{N}$.
-The mean and variance of the Poisson distribution are equal and given by the parameter $\lambda$.
-Waiting times or interarrival times between two consecutive buys or sells are exponentially distributed.
+with the number of arrivals $n$, the intensity parameter $\lambda$ and $k \in \mathbb{N}$.]
+<!-- The mean and variance of the Poisson distribution are equal and given by the parameter $\lambda$.] -->
+Waiting times or interarrival times between two consecutive buys or sells are exponentially distributed.^[
 The exponential distribution is a continuous distribution which has cdf and probability density function (pdf) given below,
 $$
 \begin{align}
-  \text{cdf}: \:\:  F\left(\lambda;x\right) = 1 - \exp\left(-\lambda x\right) \qquad \qquad
-  \text{pdf}: \:\:  f\left(\lambda;x\right) = \lambda \exp\left(-\lambda x\right) \notag .
+  \text{cdf}: \:\:  F\left(\lambda;x\right) = 1 - \exp\left(-\lambda x\right) \qquad \text{and} \qquad
+  \text{pdf}: \:\:  f\left(\lambda;x\right) = \lambda \exp\left(-\lambda x\right) \notag ,
 \end{align}
 $$
+with rate parameter $\lambda$.]
 On information events, the intensity of the Poisson process for buys or sells is increased by a positive constant parameter $\intensinf$,
 depending on the direction of information.
 The arrivals of transactions, which are indeed observable, can be interpreted
-as a merging of both latent point processes.
-The observable arrivals of transactions $N_{O}$ are the outcome of a competition between the
+as a merging of both latent point processes.^[
+The merging of two homogeneous independent Poisson processes
+again yields a Poisson process, e.g. see @firstcourse.]
+The observable arrivals of transactions $N_{O}$ are the outcome of a competition between 
 the latent Poisson processes for buys and sells, $N_{B}$ and $N_{S}$,
 which is the first to arrive.
 The waiting times of the latent Poisson processes determines the direction of the next trade.
@@ -71,97 +76,47 @@ After observing a transaction the waiting times of both latent point processes a
 and the race of buys and sells process begins anew.
 
 
-![Exemplary paths of the latent Poisson processes for buys and sells and the observable (merged) Poisson process for transactions.](poissonrace.png)
+<!-- ![Exemplary paths of the latent Poisson processes for buys and sells and the observable (merged) Poisson process for transactions.](poissonrace.png) -->
 
-
-<!-- \begin{figure} -->
-<!--   \centering -->
-<!--   \includegraphics[width=\textwidth]{tikzfigs/poissonrace.tikz} -->
-<!--   \caption[Exemplary paths of the latent Poisson processes for buys and sells and -->
-<!--            the observable (merged) Poisson process for transactions] -->
-<!--            {Exemplary paths of the latent Poisson processes for buys and sells and -->
-<!--            the observable (merged) Poisson process for transactions. -->
-<!--            The green-(red-)colored path represents the latent counting measure -->
-<!--            for buys (sells). The counting measure for the observable point process is displayed by the blue path. -->
-<!--            The combination of non-filled and filled circles are drawn whenever a trade arrived, -->
-<!--            which means that either the counting measure for buys or sells makes a jump. -->
-<!--            The non-filled square are drawn when the waiting time of the point process is resetted -->
-<!--            which involves a jump of the opposite trade direction. -->
-<!--            $N_0$ increases by 1 every time a trade is observed, $N_B$ and $N_S$ only if the competition of waiting times is won.} -->
-<!--   \label{fig:poissonrace} -->
-<!-- \end{figure} -->
-
-<!-- The following theorem states that  -->
-The merging of two homogeneous independent Poisson processes
-again yields a Poisson process.^[The theorem together with its proof
-can be found in @firstcourse]
+<!-- Hence, we can write down the probabilities of observing a buyer- -->
+<!-- or seller-initiated transaction for all three possible states of a trading day $\daysym$. -->
+<!-- For a no-news day the probabilities of observing a buy or sell at each point in time -->
+<!-- can be written incorporating the corresponding intensities of the point processes of buys and sells, -->
 <!-- $$ -->
-<!-- \begin{theorem} -->
-<!--   \thlabel{th:poissonmerge} -->
-<!--   \begin{itemize} -->
-<!--       \item[(a)] -->
-<!--         Suppose that $\{N_1(t), t \geq 0 \}$ and $\{N_2(t), t \geq 0 \}$ are independent -->
-<!--         Poisson processes with respective rates $\lambda_1$ and $\lambda_2$, where the process $\{N_i(t)\}$ -->
-<!--         corresponds to type i arrivals. Let $N(t) = N_1(t) + N_2(t), t \geq 0$. Then the merged -->
-<!--         process $\{N(t), t \geq 0\}$ is a Poisson process with rate $\lambda = \lambda_1 + \lambda_2$. -->
-<!--         Denoting by $Z_k$ the interarrival time between the $(k-1)$-th and $k$-th arrival in the merged process -->
-<!--         and letting $I_k = i$ if the $k$-th arrival in the merged process is a type $i$ arrival, then -->
-<!--         for any $k = 1, 2,... $, -->
-<!--       \begin{align*} -->
-<!--         \prsym\left(I_k = i \mid Z_k = t\right) = \dfrac{\lambda_i}{\lambda_1 + \lambda_2}, \:\: i = 1,2, -->
-<!--       \end{align*} -->
-<!--         independently of $t$. -->
-<!--       \item[(b)] -->
-<!--         Let $\{N(t), t \geq 0 \}$ be a Poisson process with rate $\lambda$. -->
-<!--         Suppose that each arrival of the process is classified as being -->
-<!--         a type 1 arrival or type 2 arrival with respective probabilities $p_1$ and $p_2$, -->
-<!--         independently of all other arrivals. -->
-<!--         Let $N_i(t)$ be the number of type $i$ arrivals up to time $t$. -->
-<!--         Then $\{N_1(t)\}$ and $\{N_2(t)\}$ are two independent Poisson -->
-<!--         processes having respective rates $\lambda p_1$ and $\lambda p_2$. -->
-<!--   \end{itemize} -->
-<!-- \end{theorem} -->
+<!-- \begin{aligned} -->
+<!--     \prsym\left(I_{k,d} = \text{Buy} \right) &= \dfrac{\lambdabuysconst} -->
+<!--                                            {\lambdabuysconst + \lambdasellsconst} \\ \\ -->
+<!--     \prsym\left(I_{k,d} = \text{Sell} \right) &= \dfrac{\lambdasellsconst} -->
+<!--                                                    {\lambdabuysconst + \lambdasellsconst}, -->
+<!-- \end{aligned} -->
 <!-- $$ -->
-<!-- Using \thref{th:poissonmerge}  -->
-Hence, we can write down the probabilities of observing a buyer-
-or seller-initiated transaction for all three possible states of a trading day $\daysym$.
-For a no-news day the probabilities of observing a buy or sell at each point in time
-can be written incorporating the corresponding intensities of the point processes of buys and sells,
-$$
-\begin{aligned}
-    \prsym\left(I_{k,d} = \text{Buy} \right) &= \dfrac{\lambdabuysconst}
-                                           {\lambdabuysconst + \lambdasellsconst} \\ \\
-    \prsym\left(I_{k,d} = \text{Sell} \right) &= \dfrac{\lambdasellsconst}
-                                                   {\lambdabuysconst + \lambdasellsconst},
-\end{aligned}
-$$
-where $I_k$ is the $k$-th observation of the merged Poisson process of transactions and $k$ equals any integer smaller
-than the total number of transactions on trading day $\daysym$.
-On a good-news day informed traders enter the market but only act as buyers,
-therefore the rate of informed buys must be taken into account,
-$$
-\begin{aligned}
-  \prsym\left(I_{k,d} = \text{Buy} \right) &= \prsym\left(I_{k,d} = \text{uninf. Buy} \right) + \prsym\left(I_{k,d} = \text{inf. Buy} \right) \\
-                                       &= \dfrac{\lambdabuysconst + \lambdabuysinfconst}
-                                         {\lambdabuysconst + \lambdasellsconst + \lambdabuysinfconst} \\ \\
-  \prsym\left(I_{k,d} = \text{Sell} \right) &= \dfrac{\lambdasellsconst}
-                                                 {\lambdabuysconst + \lambdasellsconst + \lambdabuysinfconst}. 
-\end{aligned}
-$$
-Informed sellers solely occur on a bad-news day.
-Similar to good-news days, the rate of informed sells must be incorporated in probabilities,
-$$
-  \begin{aligned}
-    \prsym\left(I_{k,d} = \text{Buy} \right) &= \dfrac{\lambdabuysconst}
-                                           {\lambdabuysconst + \lambdasellsconst + \lambdasellsinfconst} \\ \\
-    \prsym\left(I_{k,d} = \text{Sell} \right) &= \prsym\left(I_{k,d} = \text{uninf. Sell} \right) + \prsym\left(I_{k,d} = \text{inf. Sell} \right) \\
-                                          &= \dfrac{\lambdasellsconst + \lambdasellsinfconst}
-                                             {\lambdabuysconst + \lambdasellsconst + \lambdasellsinfconst}. 
-  \end{aligned}
-$$
+<!-- where $I_k$ is the $k$-th observation of the merged Poisson process of transactions and $k$ equals any integer smaller -->
+<!-- than the total number of transactions on trading day $\daysym$. -->
+<!-- On a good-news day informed traders enter the market but only act as buyers, -->
+<!-- therefore the rate of informed buys must be taken into account, -->
+<!-- $$ -->
+<!-- \begin{aligned} -->
+<!--   \prsym\left(I_{k,d} = \text{Buy} \right) &= \prsym\left(I_{k,d} = \text{uninf. Buy} \right) + \prsym\left(I_{k,d} = \text{inf. Buy} \right) \\ -->
+<!--                                        &= \dfrac{\lambdabuysconst + \lambdabuysinfconst} -->
+<!--                                          {\lambdabuysconst + \lambdasellsconst + \lambdabuysinfconst} \\ \\ -->
+<!--   \prsym\left(I_{k,d} = \text{Sell} \right) &= \dfrac{\lambdasellsconst} -->
+<!--                                                  {\lambdabuysconst + \lambdasellsconst + \lambdabuysinfconst}.  -->
+<!-- \end{aligned} -->
+<!-- $$ -->
+<!-- Informed sellers solely occur on a bad-news day. -->
+<!-- Similar to good-news days, the rate of informed sells must be incorporated in probabilities, -->
+<!-- $$ -->
+<!--   \begin{aligned} -->
+<!--     \prsym\left(I_{k,d} = \text{Buy} \right) &= \dfrac{\lambdabuysconst} -->
+<!--                                            {\lambdabuysconst + \lambdasellsconst + \lambdasellsinfconst} \\ \\ -->
+<!--     \prsym\left(I_{k,d} = \text{Sell} \right) &= \prsym\left(I_{k,d} = \text{uninf. Sell} \right) + \prsym\left(I_{k,d} = \text{inf. Sell} \right) \\ -->
+<!--                                           &= \dfrac{\lambdasellsconst + \lambdasellsinfconst} -->
+<!--                                              {\lambdabuysconst + \lambdasellsconst + \lambdasellsinfconst}.  -->
+<!--   \end{aligned} -->
+<!-- $$ -->
 
-```{r ekop, child='EKOP.Rmd'}
+```{r ekop, child='StaticEHOshort.Rmd'}
 ```
 
-```{r eho, child='EHO.Rmd'}
-```
+<!-- ```{r eho, child='EHO.Rmd'} -->
+<!-- ``` -->

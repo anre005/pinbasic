@@ -15,7 +15,7 @@ Likewise, the upper bound $\closemarket$ of the official trading interval may al
 to the marketplace under consideration.
 Each trading day can reside in one of three possible states of the set $\states$.
 The elements of the set $\statesabbrv$, which represent the conditions of trading days,
-are no-news ($\nonews$), good-news ($goodnews$) and bad-news ($badnews$).
+are no-news ($\nonews$), good-news ($\goodnews$) and bad-news ($\badnews$).
 Trading days on which private information influence the market activities are called *information events*.
 
 Market participants can be splitted in two disjoint groups, informed and uninformed traders.

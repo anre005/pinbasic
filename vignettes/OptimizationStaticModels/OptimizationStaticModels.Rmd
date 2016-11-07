@@ -1,4 +1,4 @@
-## Optimization in Static Models
+<!-- ## Optimization in Static Models -->
 
 ```{r introfactr, child = "Introfactr.Rmd"}
 ```

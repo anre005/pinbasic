@@ -1,10 +1,26 @@
+#' Simulate trading data
+#' 
+#' Simulates a matrix consisting of synthetic data for daily buys and sells
+#' 
+#' If names are not set for \code{param} or one or more of the vector names do not match the valid choices, they are internally set to
+#' \code{'alpha'}, \code{'delta'}, \code{'epsilon_b'}, \code{'epsilon_s'}, \code{'mu'} (in this order).
+#' 
+#' @return \emph{numeric}: Matrix with \code{days} rows and two columns which are named \code{'Buys'} and \code{'Sells'}.
+#' 
+#' @inheritParams pin_ll
+#' @param seed \emph{interpretted as integer}: setting seed for RNG, defaults to \code{NULL}; for more detail see 
+#'             \code{\link[base]{set.seed}}
+#' @param ndays \emph{integer}: Number of trading days for which amount of buys and sells is simulated, defaults to 60
 #' @import foreach
 #' @import doParallel
 #' @import parallel
 #' @import stats
+#' 
+#' @export simulate_data
 
-simulate_data <- function(param = NULL, seed = NULL, days = 60) {
+simulate_data <- function(param = NULL, seed = NULL, ndays = 60) {
   if(!is.null(seed)) set.seed(seed)
+  days <- as.integer(ndays)
   # actual sampling
   param <- param_check(param)
   states <- sample(c("no", "good", "bad"),
@@ -40,66 +56,4 @@ simulate_data <- function(param = NULL, seed = NULL, days = 60) {
   res <- cbind(buys, sells)
   colnames(res) <- c("Buys", "Sells")
   res
-}
-
-pin_confint <- function(param = NULL, numbuys = NULL, numsells = NULL,
-                        lower = rep(0, 5), upper = c(1,1, rep(Inf, 3)),
-                        n = 1000, seed = NULL, level = 0.95, ncores = detectCores()) {
-  if(!is.numeric(ncores) && ncores < 1) stop("No valid 'ncores' argument!")
-  if(!is.null(seed)) set.seed(seed)
-  sim_pin <- numeric(n)
-
-  ndays <- length(numbuys)
-
-  fn <- function(x, buys, sells) {
-    pin_ll(param = x,
-           numbuys = buys, numsells = sells,
-           factorization = "Lin_Ke")
-  }
-
-  if(is.null(param)) {
-    init_vals <- initial_vals(numbuys = numbuys, numsells = numsells,
-                              method = "HAC")
-
-    tmp <- nlminb(start = init_vals[1,], objective = function(x) -fn(x, numbuys, numsells),
-                  lower = lower, upper = upper)
-
-    param_dat <- tmp$par
-  } else param_dat <- param
-
-  if(ncores == 1) {
-    buys_ind <- 1:ndays
-    sells_ind <- (ndays + 1):(2*ndays)
-    init_ind <- (2*ndays + 1):(2*ndays + 5)
-    sim_dat <- replicate(n, simulate_data(param = param_dat, seed = NULL, days = ndays), simplify = "matrix")
-
-    initial_mat <- apply(sim_dat, 2, function(x) {initial_vals(numbuys = x[buys_ind],
-                                                               numsells = x[sells_ind],
-                                                               method = "HAC")})
-    comb <- rbind(sim_dat, initial_mat)
-
-    param <- apply(comb, 2, function(z) { nlminb(start = z[init_ind],
-                                                 objective = function(x) -fn(x, z[buys_ind], z[sells_ind]),
-                                                 lower = lower, upper = upper)$par})
-
-    sim_pin <- apply(param, 2, pin_calc)
-  } else {
-    cl <- makeCluster(ncores)
-    registerDoParallel(cl)
-
-    sim_pin <- foreach(i = 1:n, .combine = "c") %dopar% {
-      sim_dat <- simulate_data(param = param_dat, seed = NULL, days = ndays)
-
-        init_vals <- initial_vals(numbuys = sim_dat[,"Buys"], numsells = sim_dat[,"Sells"],
-                                  method = "HAC")
-
-        param <- nlminb(start = init_vals[1,], objective = function(x) -fn(x, sim_dat[,"Buys"], sim_dat[,"Sells"]),
-                        lower = lower, upper = upper)$par
-
-        pin_calc(param)
-    }
-    stopCluster(cl)
-  }
-  conf <- quantile(sim_pin, probs = c((1-level)/2, 1 - (1-level)/2))
-  conf
 }

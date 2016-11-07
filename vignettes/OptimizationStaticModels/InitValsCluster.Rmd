@@ -1,4 +1,4 @@
-#### Hierarchical Agglomerative Clustering
+### HAC Algorithm
 
 Another methodology which utilizes hierarchical agglomerative clustering (HAC)
 to generate starting values 

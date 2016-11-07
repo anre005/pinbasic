@@ -1,4 +1,4 @@
-#### Lin and Ke Factorization
+### Lin and Ke Factorization
 
 An even more stable and accurate formulation of the likelihood function is presented in the
 work of @LinKe.
@@ -67,23 +67,22 @@ $e_{3,\daysym} = -\intensinf - B_{\daysym}\log\left(1 + \dfrac{\intensinf}{\inte
 $e_{\max, \daysym} = \max\left(e_{1,\daysym}, e_{2,\daysym}, e_{3,\daysym} \right)$.
 Again, the constant term $-\log(B!S!)$ is dropped.
 
-We can transfer the
-stable likelihood formulation to the EKOP model as
-$$
-\begin{align}
-  \label{eq:linkefactr4par}
-  \log \likelihood\left(\thetaehoshort \mid \datasymbs \right) =
-  &\sum\limits_{\daysym=1}^{\totaldays} \Biggl( -2\intensuninf +
-    \left(B_{\daysym} + S_{\daysym}\right) \log \left(\intensinf + \intensuninf\right) +
-    e_{\max, i}\Biggr) \notag \\
-  & + \sum\limits_{\daysym=1}^{\totaldays}
-  \log \Biggl( \left(1-\probinfevent\right) \exp\left(e_{1,\daysym} - e_{\max, \daysym} \right)
-  + \probinfevent \left(1-\probbadnews\right)  \exp\left(e_{2,\daysym} - e_{\max, \daysym} \right) \notag \\
-  & + \probinfevent\probbadnews \exp\left(e_{3,\daysym} - e_{\max, \daysym} \right)  \Biggr),
-\end{align}
-$$
-where $e_{1,\daysym} = -\left(B_{\daysym} + S_{\daysym} \right) \log\left(1 + \dfrac{\intensinf}{\intensuninf} \right)$, $e_{2,\daysym} = -\intensinf - S_{\daysym}\log\left(1 + \dfrac{\intensinf}{\intensuninf} \right)$, $e_{3,\daysym} = -\intensinf - B_{\daysym}\log\left(1 + \dfrac{\intensinf}{\intensuninf} \right)$ and $e_{\max, \daysym} = \max\left(e_{1,\daysym}, e_{2,\daysym}, e_{3,\daysym} \right)$.
-
+<!-- We can transfer the -->
+<!-- stable likelihood formulation to the EKOP model as -->
+<!-- $$ -->
+<!-- \begin{align} -->
+<!--   \label{eq:linkefactr4par} -->
+<!--   \log \likelihood\left(\thetaehoshort \mid \datasymbs \right) = -->
+<!--   &\sum\limits_{\daysym=1}^{\totaldays} \Biggl( -2\intensuninf + -->
+<!--     \left(B_{\daysym} + S_{\daysym}\right) \log \left(\intensinf + \intensuninf\right) + -->
+<!--     e_{\max, i}\Biggr) \notag \\ -->
+<!--   & + \sum\limits_{\daysym=1}^{\totaldays} -->
+<!--   \log \Biggl( \left(1-\probinfevent\right) \exp\left(e_{1,\daysym} - e_{\max, \daysym} \right) -->
+<!--   + \probinfevent \left(1-\probbadnews\right)  \exp\left(e_{2,\daysym} - e_{\max, \daysym} \right) \notag \\ -->
+<!--   & + \probinfevent\probbadnews \exp\left(e_{3,\daysym} - e_{\max, \daysym} \right)  \Biggr), -->
+<!-- \end{align} -->
+<!-- $$ -->
+<!-- where $e_{1,\daysym} = -\left(B_{\daysym} + S_{\daysym} \right) \log\left(1 + \dfrac{\intensinf}{\intensuninf} \right)$, $e_{2,\daysym} = -\intensinf - S_{\daysym}\log\left(1 + \dfrac{\intensinf}{\intensuninf} \right)$, $e_{3,\daysym} = -\intensinf - B_{\daysym}\log\left(1 + \dfrac{\intensinf}{\intensuninf} \right)$ and $e_{\max, \daysym} = \max\left(e_{1,\daysym}, e_{2,\daysym}, e_{3,\daysym} \right)$. -->
 
 With the Lin-Ke formulation we have a stable methodology to estimate $\pintext$ even for heavily traded stocks.
 Besides its the stability, the Lin-Ke factorization also speeds up the likelihood computation.

@@ -1,4 +1,4 @@
-#### EHO Factorization
+### EHO Factorization
 \label{sec:ehofactr}
 @EHO2010 reformulated the likelihood function in the static
 model with different intensities for uninformed buys and uninformed sells.
@@ -31,22 +31,22 @@ However, if the number of buyer- or seller-initiated transactions is very high f
 evaluations of the terms $x_b^{-M_d}$ and $x_s^{-M_d}$ can be problematic and may result in infinite values.
 Hence, diminishing the frequency of over- and underflow errors is essential in calculating $\pintext$ for (very) frequently traded stocks.
 
-Since the EKOP model is nested in the EHO model,
-we can also apply the structure of the more stable formulation
-to the likelihood function of the simpler $\pintext$ model,
-$$
-\begin{align}
-  \label{eq:ekopehofactr}
-  \log \likelihood\left(\datasymbs \mid \thetaekopshort \right) =
-  &\sum\limits_{\daysym=1}^{\totaldays} \Biggl( -2\intensuninf + M_{\daysym} 2\log x +
-    \left( B_{\daysym} + S_{\daysym} \right) \log \left(\intensinf + \intensuninf\right) \Biggr) \notag \\
-  & + \sum\limits_{\daysym=1}^{\totaldays}
-  \log \Biggl( \left(1-\probinfevent\right) x^{S_{\daysym} + B_{\daysym} - 2 M_{\daysym}}
-  + \probinfevent \left(1-\probbadnews\right)  \exp\left(-\intensinf \right) x^{S_{\daysym} - 2 M_{\daysym}} \notag \\
-  & + \probinfevent\probbadnews \exp\left(-\intensinf \right) x^{B_{\daysym} - 2 M_{\daysym}} \Biggr),
-\end{align}
-$$
-where $x = \dfrac{\intensuninf}{\intensuninf + \intensinf}$ and $M_{\daysym}$ given in equation \\ref{eq:ehofactr5par}.
+<!-- Since the EKOP model is nested in the EHO model, -->
+<!-- we can also apply the structure of the more stable formulation -->
+<!-- to the likelihood function of the simpler $\pintext$ model, -->
+<!-- $$ -->
+<!-- \begin{align} -->
+<!--   \label{eq:ekopehofactr} -->
+<!--   \log \likelihood\left(\datasymbs \mid \thetaekopshort \right) = -->
+<!--   &\sum\limits_{\daysym=1}^{\totaldays} \Biggl( -2\intensuninf + M_{\daysym} 2\log x + -->
+<!--     \left( B_{\daysym} + S_{\daysym} \right) \log \left(\intensinf + \intensuninf\right) \Biggr) \notag \\ -->
+<!--   & + \sum\limits_{\daysym=1}^{\totaldays} -->
+<!--   \log \Biggl( \left(1-\probinfevent\right) x^{S_{\daysym} + B_{\daysym} - 2 M_{\daysym}} -->
+<!--   + \probinfevent \left(1-\probbadnews\right)  \exp\left(-\intensinf \right) x^{S_{\daysym} - 2 M_{\daysym}} \notag \\ -->
+<!--   & + \probinfevent\probbadnews \exp\left(-\intensinf \right) x^{B_{\daysym} - 2 M_{\daysym}} \Biggr), -->
+<!-- \end{align} -->
+<!-- $$ -->
+<!-- where $x = \dfrac{\intensuninf}{\intensuninf + \intensinf}$ and $M_{\daysym}$ given in equation \\ref{eq:ehofactr5par}. -->
 
 @LinKe state that the $\pintext$ computation is downward-biased if the EHO likelihood formulation is used for
 stocks with a large transaction number.
