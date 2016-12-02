@@ -1,4 +1,4 @@
-## Version 0.2.0
+## pinbasic v0.2.0 (Release Date: 2016-12-02)
 
 ### New Functions
 
@@ -14,6 +14,6 @@
 * Vignette was added
     
 
-## Version 0.1.0
+## pinbasic v0.1.0 (Release Date: 2016-10-25)
 
-initial release
+* initial release
