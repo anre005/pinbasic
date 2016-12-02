@@ -1,11 +1,6 @@
-## Resubmission
-This is a resubmission. I added:
-  * DOIs for references in DESCRIPTION file
-  * DOIs for references in manual pages
-
 ## Test environments
-  * local linux install (Manjaro Linux [16.10, Kernel 4.8.4-1]), R 3.3.1
-  * OS X (on travis-ci), oldrel: R 3.2.4, release: R 3.3.1
+  * local linux install (Manjaro Linux [16.10, Kernel 4.8.9-1]), R 3.3.2
+  * OS X (on travis-ci), oldrel: R 3.2.4, release: R 3.3.2
   * win-builder (devel and release)
 
 ## R CMD check results
@@ -13,4 +8,4 @@ There were no ERRORs or WARNINGs.
 
 There was 1 NOTE: checking CRAN incoming feasibility
 
-This is the first submission of the pinbasic package.
+This submission updates the pinbasic package to version 0.2.0.

@@ -7,6 +7,7 @@
 
 ### Changes
 
+* `pin_est_core`, `pin_est` and `qpin` gained two new argument: `confint` and `ci_control` 
 * updated plotting structure for `qpin_plot`, facets are now grouped by probability parameters, 
   intensity parameters and the probability of informed trading
 * `initial_vals` together with `method = "HAC_Ref"` now returns a number of sets of initial values depending 
