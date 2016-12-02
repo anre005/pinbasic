@@ -26,5 +26,8 @@ License: GPL-3 | file LICENSE
 LazyData: true
 RoxygenNote: 5.0.1
 Suggests: knitr,
-    rmarkdown
+    rmarkdown,
+    formatR,
+    utils
+BugReports: https://github.com/anre005/pinbasic/issues
 VignetteBuilder: knitr

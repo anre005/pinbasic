@@ -5,7 +5,7 @@
 \title{Quarterly PIN estimates}
 \usage{
 qpin(numbuys = NULL, numsells = NULL, dates = NULL, lower = rep(0, 5),
-  upper = c(1, 1, rep(Inf, 3)), confint = FALSE)
+  upper = c(1, 1, rep(Inf, 3)), confint = FALSE, ci_control = list())
 }
 \arguments{
 \item{numbuys}{\emph{numeric} vector of daily buys}
@@ -20,6 +20,8 @@ qpin(numbuys = NULL, numsells = NULL, dates = NULL, lower = rep(0, 5),
 
 \item{confint}{\emph{logical} Compute confidence intervals for PIN?
 Defaults to \code{FALSE}}
+
+\item{ci_control}{\emph{list} see \code{\link{pin_est_core}}}
 }
 \value{
 A list of lists. The length of the outer list equals the number of available quarters in the data.
@@ -34,6 +36,7 @@ The inner list is structured as follows:
  \item{message}{Convergence message returned by the nlminb optimizer}
  \item{iterations}{Number of iterations until convergence of nlminb optimizer}
  \item{init_vals}{Vector of initial values}
+ \item{confint}{If \code{confint = TRUE}; confidence interval for the probability of informed trading}
  }
 }
 \description{
@@ -41,7 +44,7 @@ Estimation of model parameters and probability of informed trading for quarterly
 }
 \details{
 Wrapper around \code{\link{pin_est}} function and therefore inherits its settings for optimization.
-Data is splitted into quarters with the \code{\link[lubridate]{quarter}} function from \pkg{lubridate} package.
+Data is split into quarters with the \code{\link[lubridate]{quarter}} function from \pkg{lubridate} package.
 According to the help page of this function \code{dates} argument must be \cr
 \emph{a date-time object of class POSIXct, POSIXlt, Date, chron, yearmon, yearqtr, zoo, zooreg,
  timeDate, xts, its, ti, jul, timeSeries, fts or anything else that can be converted with as.POSIXlt}. \cr

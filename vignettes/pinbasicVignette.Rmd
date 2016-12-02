@@ -79,15 +79,19 @@ TeX: { equationNumbers: { autoNumber: "AMS" } }
 ```{r insert_fun, echo = FALSE}
 library(knitr)
 library(pinbasic)
+library(formatR)
+
 insert_fun = function(name, env = parent.frame()) {
   read_chunk(lines = capture.output(dump(name, '', envir = env)), labels = paste(name, 'source', sep = '-'))
 }
+
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-```{r intro, child = "Introduction.Rmd"}
+```{r intro, child = "Introduction/Introduction.Rmd"}
 ```
 
-```{r intro, child = "GenAssumptions.Rmd"}
+```{r intro, child = "General/GenAssumptions.Rmd"}
 ```
 
 ```{r static, child = "staticPINmodels/StaticEHOshort.Rmd"}
@@ -96,7 +100,7 @@ insert_fun = function(name, env = parent.frame()) {
 ```{r opt, child = "OptimizationStaticModels/OptimizationStaticModels.Rmd"}
 ```
 
-```{r examples, child = "Examples.Rmd"}
+```{r examples, child = "Examples/Examples.Rmd"}
 ```
 
 

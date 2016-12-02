@@ -8,7 +8,7 @@ pin_calc(param = NULL)
 }
 \arguments{
 \item{param}{\emph{numeric}: (named) vector of model parameters
-(valid names: \code{'alpha'}, \code{'delta'}, \code{'epsilon_b'}, \code{'epsilon_s'}, \code{'mu'}), 
+(valid names: \code{'alpha'}, \code{'delta'}, \code{'epsilon_b'}, \code{'epsilon_s'}, \code{'mu'}),
 length must equal 5}
 }
 \value{

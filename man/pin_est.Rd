@@ -5,7 +5,7 @@
 \title{Estimating PIN}
 \usage{
 pin_est(numbuys = NULL, numsells = NULL, lower = rep(0, 5), upper = c(1,
-  1, rep(Inf, 3)), confint = FALSE)
+  1, rep(Inf, 3)), confint = FALSE, ci_control = list())
 }
 \arguments{
 \item{numbuys}{\emph{numeric} vector of daily buys}
@@ -18,9 +18,11 @@ pin_est(numbuys = NULL, numsells = NULL, lower = rep(0, 5), upper = c(1,
 
 \item{confint}{\emph{logical} Compute confidence intervals for PIN?
 Defaults to \code{FALSE}}
+
+\item{ci_control}{\emph{list} see \code{\link{pin_est_core}}}
 }
 \value{
-A list with seven components:
+A list with the following components:
 \describe{
 \item{Results}{Matrix containing the parameter estimates as well as their estimated standard errors,
  t-values and p-values.}
@@ -30,6 +32,7 @@ A list with seven components:
  \item{message}{Convergence message returned by the nlminb optimizer}
  \item{iterations}{Number of iterations until convergence of nlminb optimizer}
  \item{init_vals}{Vector of initial values}
+ \item{confint}{If \code{confint = TRUE}; confidence interval for the probability of informed trading}
  }
 }
 \description{

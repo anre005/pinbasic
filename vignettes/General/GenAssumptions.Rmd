@@ -8,7 +8,7 @@ The market maker determines and updates the bid and ask prices utilizing the inf
 so far for a trading day.
 Trading with the market maker is possible
 at every timestamp $t$ during regular market hours starting at $\originmarket$ and ending at $\closemarket$,
-i.e.~$t \in \left[\originmarket,\closemarket\right]$ with finite $\closemarket$.
+i.e. $t \in \left[\originmarket,\closemarket\right]$ with finite $\closemarket$.
 The beginning of official trading may vary depending on the chosen bourse $m$, i.e. the New York Stock Exchange
 starts regular trading at 9:30 am, whereas the German electronic marketplace XETRA opens earlier at 9:00 am.
 Likewise, the upper bound $\closemarket$ of the official trading interval may also vary according
@@ -18,21 +18,13 @@ The elements of the set $\statesabbrv$, which represent the conditions of tradin
 are no-news ($\nonews$), good-news ($\goodnews$) and bad-news ($\badnews$).
 Trading days on which private information influence the market activities are called *information events*.
 
-Market participants can be splitted in two disjoint groups, informed and uninformed traders.
+Market participants can be split in two disjoint groups, informed and uninformed traders.
 Traders holding private information are solely active on information events.
 In addition, they are assumed to be risk neutral and competitive.
 They buy (sell) if positive (negative) signals hit the market,
 which is the case on good-news (bad-news) trading days.
 The contrary group of traders, the uninformed market attendees,
 are active on every trading day for various reasons (diversification, liquidity reasons, $\dots$).
-<!-- % -->
-<!-- \begin{figure} -->
-<!--   \centering -->
-<!--   \includegraphics{tikzfigs/Pinframenew.tikz} -->
-<!--   \caption{Distribution of transactions on trading days with respect to the different days' conditions.} -->
-<!--   \label{fig:trading} -->
-<!-- \end{figure} -->
-<!-- % -->
 
 ![Distribution of transactions on trading days with respect to the different days' conditions.](Pinframenew.png)
 
@@ -42,6 +34,6 @@ transactions due to private information to the expected total number of trades,
 $$
 \begin{align}
 \label{eq:pingeneral}
-\pintext = \dfrac{\text{Expected number of information-based transactions}}{\text{Expected number of total transactions}}
+\pintext = \dfrac{\text{Expected number of information-based transactions}}{\text{Expected total number of transactions}}
 \end{align}
 $$

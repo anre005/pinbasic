@@ -5,7 +5,7 @@
 pinbasic: Fast and Stable Estimation of the Probability of Informed Trading (PIN)
 =================================================================================
 
-Utilities for fast and stable estimation of the probability of informed trading (PIN) in the model introduced by Easley, Hvidkjaer and O'Hara (EHO, 2002) are implemented. Since the model developed by Easley, Kiefer, O'Hara and Paperman (EKOP, 1996) is nested in the EHO model due to equating the intensity of uninformed buys and sells, functionalities can also be be applied to this simpler model structure, if needed. State-of-the-art factorization of the model likelihood function as well as hierarchical agglomerative clustering algorithm for generating initial values for optimizations are provided. In total, two different likelihood factorizations and three methodologies generating starting values are implemented. The probability of informed trading can be estimated for arbitrary length of daily buys and sells data with `pin_est` function which is a wrapper around the workhorse function `pin_est_core`. No information about the time span of the underlying data is needed to perform optimizations. However, recommendation given in the literature is using at least data for 60 trading days to ensure convergence of the likelihood maximization. The `qpin` function delivers quarterly estimates. The number of available quarters in the data are detected utilizing functions from the **lubridate** package. Quarterly estimates can be visualized with the `qpin_plot` function.
+Utilities for fast and stable estimation of the probability of informed trading (PIN) in the model introduced by Easley, Hvidkjaer and O'Hara (EHO, 2002) are implemented. Since the model developed by Easley, Kiefer, O'Hara and Paperman (EKOP, 1996) is nested in the EHO model due to equating the intensity of uninformed buys and sells, functionalities can also be be applied to this simpler model structure, if needed. State-of-the-art factorization of the model likelihood function as well as hierarchical agglomerative clustering algorithm for generating initial values for optimizations are provided. In total, two different likelihood factorizations and three methodologies generating starting values are implemented which are implemented in functions `pin_ll` and `initial_vals`, respectively. The probability of informed trading can be estimated for arbitrary length of daily buys and sells data with `pin_est` function which is a wrapper around the workhorse function `pin_est_core`. No information about the time span of the underlying data is required to perform optimizations. However, recommendation given in the literature is using at least data for 60 trading days to ensure convergence of the likelihood maximization. The `qpin` function delivers quarterly estimates. The number of available quarters in the data are detected utilizing functions from the **lubridate** package. Quarterly estimates can be visualized with the `qpin_plot` function. Datasets of daily aggregated numbers of buys and sells can be simulated with `simulateBS`. Calculation of confidence intervals for the probability of informed trading can be enabled by `confint` argument in optimization routines (`pin_est_core`, `pin_est` and `qpin`) or by calling `pin_confint` directly.
 
 Examples
 --------
@@ -32,8 +32,7 @@ pin_est(numbuys = BSfrequent[,"Buys"], numsells = BSfrequent[,"Sells"])
 #> 0.03296587 
 #> 
 #> $conv
-#> Convergence 
-#>           0 
+#> NULL
 #> 
 #> $message
 #> [1] "relative convergence (4)"

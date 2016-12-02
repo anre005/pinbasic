@@ -36,7 +36,7 @@ Defaults to \code{FALSE}}
 \item{ci_control}{\emph{list} see \strong{Details}}
 }
 \value{
-If \code{num_best_res} = 1, a list with seven elements is returned:
+If \code{num_best_res} = 1, a list with following elements is returned:
 \describe{
 \item{Results}{Matrix containing the parameter estimates as well as their estimated standard errors,
  t-values and p-values.}
@@ -46,6 +46,7 @@ If \code{num_best_res} = 1, a list with seven elements is returned:
  \item{message}{Convergence message returned by the nlminb optimizer}
  \item{iterations}{Number of iterations until convergence of nlminb optimizer}
  \item{init_vals}{Vector of initial values}
+ \item{confint}{If \code{confint = TRUE}; confidence interval for the probability of informed trading}
  }
 
  If \code{num_best_res} > 1, a named list of lists is returned. Each component of the outer list

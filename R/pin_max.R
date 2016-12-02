@@ -88,7 +88,7 @@
 #' @importFrom stats nlminb
 #'
 #' @return
-#' If \code{num_best_res} = 1, a list with seven elements is returned:
+#' If \code{num_best_res} = 1, a list with following elements is returned:
 #' \describe{
 #' \item{Results}{Matrix containing the parameter estimates as well as their estimated standard errors,
 #'  t-values and p-values.}
@@ -98,6 +98,7 @@
 #'  \item{message}{Convergence message returned by the nlminb optimizer}
 #'  \item{iterations}{Number of iterations until convergence of nlminb optimizer}
 #'  \item{init_vals}{Vector of initial values}
+#'  \item{confint}{If \code{confint = TRUE}; confidence interval for the probability of informed trading}
 #'  }
 #'
 #'  If \code{num_best_res} > 1, a named list of lists is returned. Each component of the outer list
@@ -240,7 +241,7 @@ pin_est_core <- function(numbuys = NULL, numsells = NULL,
                                                                  numbuys = numbuys, numsells = numsells,
                                                                  lower = lower, upper = upper,
                                                                  n = ci_con$n, seed = ci_con$seed,
-                                                                 level = ci_con$level, ncores = ci_con$ncores)$conf_int
+                                                                 level = ci_con$level, ncores = ci_con$ncores)
       }
     }
   } else {
@@ -263,7 +264,6 @@ pin_est_core <- function(numbuys = NULL, numsells = NULL,
 
     mat_list[["ll"]] <- mat[1,"loglike"]
     mat_list[["pin"]] <- mat[1,"PIN"]
-    mat_list[["conv"]] <- mat[1,"Convergence"]
     mat_list[["message"]] <- opt_message[1]
     mat_list[["iterations"]] <- mat[1,"Iterations"]
     mat_list[["init_vals"]] <- start_vals[1,]
@@ -273,7 +273,7 @@ pin_est_core <- function(numbuys = NULL, numsells = NULL,
                                            numbuys = numbuys, numsells = numsells,
                                            lower = lower, upper = upper,
                                            n = ci_con$n, seed = ci_con$seed,
-                                           level = ci_con$level, ncores = ci_con$ncores)$conf_int
+                                           level = ci_con$level, ncores = ci_con$ncores)
     }
   }
   mat_list

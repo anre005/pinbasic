@@ -10,7 +10,7 @@ the maximization to end in the global maximum for every optimization run.
 One possibility would be to perform an appropriate number of maximization runs with
 different sets of random starting values.
 This procedure can be cumbersome because it is unclear how many runs are really needed to reach the
-global maxima, instead of landing in one of possibly several local maxima.
+global maximum, instead of landing in one of possibly several local maxima.
 Furthermore, running several hundred or even thousands of optimizations can be very time-consuming.
 
 The next sections discuss three methods which aim to solve the problem

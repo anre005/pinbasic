@@ -2,16 +2,17 @@
 
 A third option for generating initial values for maximization of the likelihood function in the EHO model
 is presented by @Ersan.
-The authors claim that their method in combination with the Lin-Ke likelihood factorization
+The authors claim that their method in combination with Lin-Ke likelihood factorization
 yields unbiased estimates for the probability of informed trading
-and the five model parameters. <!-- \parencite[see][]{Ersan}.-->
+and the five model parameters.^[
+The term *unbiased* refers to computing bias and not the statistical understanding.] 
 
 Similar to the HAC algorithm hierarchical agglomerative clustering is utilized
 for generating starting values.
 However, instead of stopping the clustering once three clusters are left,
 the number of groups is not predetermined per se.
 The refined HAC algorithm is stopped when $j + 1$ clusters are left,
-whereat $j$ can be any positive integer.^[
+whereat $j$ can be any positive integer which is limited only by the available number of trading days ($j \leq \totaldays - 1$).^[
 In the work by @Ersan $j$ is chosen to be an integer in the range from 1 to 10.]
 
 In contrast to the HAC algorithm by @Cluster, the daily absolute order imbalance is used
@@ -30,7 +31,7 @@ where $i = 1, \dots, j$ and  $CL_i^{\nonews}$ represents the no-event cluster an
  $CL_i^{\eventsymb}$ the event cluster.
 At this point, we are able to obtain  $\probinfevent^0$ and $\intensinf^0$.
 The initial guess for the probability of an information event is calculated, in a very similar way to
-the HAC algorithm by @Cluster, as proportion the event cluster $CL_i^{\eventsymb}$
+the HAC algorithm by @Cluster, as the proportion the event cluster $CL_i^{\eventsymb}$
 occupies from the total number of trading days $\totaldays$.
 The initial intensity of informed trading equals the difference in averages of
 the absolute order imbalances of no-event and event group.^[
@@ -42,12 +43,12 @@ the difference in averages of
 the absolute order imbalances of no-event and event group is appropriate to
 capture the intensity of trading due to private information.]
 
-In the next step, $CL_i^{\eventsymb}$ is splitted according to the signs of the average order imbalances of its members
+In the next step, $CL_i^{\eventsymb}$ is split according to the signs of the average order imbalances of its members
 in a good-news and bad-news group.
 The remaining starting values for the two intensities $\intensuninfbuys$ and $\intensuninfsells$
 and the probability $\probbadnews$ are calculated according to HAC algorithm.
 
 Hence, we get a total of $j$ vectors of initial values.
-For each of the $j$ vectors the likelihood is evaluated and
-the set which yields the maximum function value is chosen.
+Maximum likelihood estimation (MLE) is performed for each of the $j$ vectors and
+the best result among all maximization runs is kept while discarding the remaining.
 According to the results in the work of @Ersan a value of $j = 5$ is a good compromise between accuracy and speed.

@@ -7,7 +7,7 @@ so we can maximize the algebraically equivalent but more stable and robust facto
 
 $$
 \begin{align}
-  \log \likelihood\left(\datasymbs \mid \thetaehoshort \right) =
+  \log \likelihood\left( \thetaehoshort \mid \datasymbs \right) =
   &\sum\limits_{\daysym=1}^{\totaldays} \Biggl( -\intensuninfbuys - \intensuninfsells + M_{\daysym} \left(\log x_b + \log x_s\right) +
     B_{\daysym} \log \left(\intensinf + \intensuninfbuys\right) + S_{\daysym} \log \left(\intensinf + \intensuninfsells\right) \Biggr) \notag \\
   & + \sum\limits_{\daysym=1}^{\totaldays}

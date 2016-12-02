@@ -31,12 +31,15 @@ vcov_car <- function(param = NULL, numbuys = NULL, numsells = NULL,
   param.bound <- param[bound.hit]
   join_param <- function(x) c(param.bound,x)[names.param]
 
-  hess <- stats::optimHess(fn = function(x) fun(join_param(x)), par = param[!bound.hit])
+  hess <- tryCatch(stats::optimHess(fn = function(x) fun(join_param(x)), par = param[!bound.hit]),
+                   error = function(e) e)
+  if(is.matrix(hess)) {
+    if(any(is.nan(hess)) | any(is.na(hess)) | any(is.infinite(hess))) {
+      warning("NaN, NA or infinite values in Hesse matrix")
+      return(NULL)
+    }
+  } else return(NULL)
 
-  if(any(is.nan(hess)) | any(is.na(hess)) | any(is.infinite(hess))) {
-    warning("NaN, NA or infinite values in Hesse matrix")
-    return(NULL)
-  }
   hess_eigen <- abs(eigen(hess, symmetric = TRUE, only.values = TRUE)$values)
   vcov_mat <- matrix(0, length(param[!bound.hit]), length(param[!bound.hit]))
   rownames(vcov_mat) <- colnames(vcov_mat) <- names(param[!bound.hit])

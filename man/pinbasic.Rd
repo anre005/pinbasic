@@ -16,7 +16,7 @@ for generating initial values for optimization routines are provided.
 In total, two different likelihood factorizations and three methodologies generating starting values are implemented.
 The probability of informed trading can be estimated for arbitrary length of daily buys and sells data with
 \code{\link{pin_est}} function which is a wrapper around the workhorse function \code{\link{pin_est_core}}.
-No information about the time span of the underlying data is needed to perform optimizations.
+No information about the time span of the underlying data is required to perform optimizations.
 However, recommendation given in the literature is using at least data for 60 trading days to ensure convergence of the
 likelihood maximization.
 The \code{\link{qpin}} function delivers quarterly estimates.
@@ -29,6 +29,7 @@ Quarterly estimates can be visualized with the \code{\link{qpin_plot}} function.
  \item{\code{\link{initial_vals}}}{Generating initial values by brute force grid search, hierarchical agglomerative clustering algorithm or
                                    refined hierarchical agglomerative clustering technique.}
  \item{\code{\link{pin_calc}}}{Computing the probability of informed trading (PIN).}
+ \item{\code{\link{pin_confint}}}{Calculation of confidence intervals for the probability of informed trading.}
  \item{\code{\link{pin_est_core}}}{Core function of maximization routines for PIN likelihood function. It grants the most control over optimization procedure.
                                  However, the settings chosen in \code{\link{pin_est}} will be sufficient in most applications.}
  \item{\code{\link{pin_est}}}{User-friendly wrapper around \code{\link{pin_est_core}}. Default method for creating initial values is set to
@@ -39,6 +40,7 @@ Quarterly estimates can be visualized with the \code{\link{qpin_plot}} function.
  \item{\code{\link{qpin}}}{Returns quarterly estimates, function is a wrapper around \code{\link{pin_est}} and
                            inherits its optimization settings.}
  \item{\code{\link{qpin_plot}}}{Visualization method for results of \code{\link{qpin}}.}
+ \item{\code{\link{simulateBS}}}{Simulate datasets of aggregated daily buys and sells.}
 }
 }
 

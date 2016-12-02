@@ -1,0 +1,161 @@
+## Examples
+The `pinbasic` packages is equipped with four synthetic datasets of daily buys and sells, 
+`BSinfrequent`, `BSfrequent`, `BSfrequent2015` and `BSheavy`. 
+The represent infrequently, frequently and heavily traded equities, respectively. 
+The datasets `BSinfrequent`, `BSfrequent` and `BSheavy` cover 60 trading days, whereas 
+`BSfrequent2015` contains simulated daily buys and sells for business days in 2015. 
+The datasets can be loaded with `data` function.
+
+```{r dataloading}
+data("BSinfrequent")
+data("BSfrequent")
+data("BSfrequent2015")
+data("BSheavy")
+
+summary(BSinfrequent)
+summary(BSfrequent)
+summary(BSfrequent2015)
+summary(BSheavy)
+```
+
+For estimating the probability of informed trading $\pintext$ `pin_est` function can be utilized. 
+Exemplary, $\pintext$ for `BSheavy` dataset is estimated.
+
+```{r pinest, eval = FALSE}
+# using default values for lower and upper bounds
+# confidence interval computation enabled
+pin_bsheavy <- pin_est(numbuys = BSheavy[,"Buys"],
+                       numsells = BSheavy[,"Sells"], 
+                       confint = TRUE)
+```
+
+```{r loadpinest, echo = FALSE}
+pin_bsheavy <- readRDS("../RDSfiles/pin_bsheavy.rds")
+```
+
+```{r strpinheavy}
+# structure of returned list
+str(pin_bsheavy)
+
+# convert matrix to data.frame for prettier output in the vignette
+as.data.frame(pin_bsheavy$Results)
+```
+
+If model parameter estimates and therefore estimates of $\pintext$ on a quarterly basis 
+are required, `qpin` function which 
+takes care of automatic dataset splitting is an appropriate choice.  
+The `BSfrequent2015` dataset covers four quarters and a total of `r nrow(BSfrequent2015)` trading days. 
+Dates of trading days are stored in its rownames, so they can be passed to the `dates` argument of `qpin`.
+
+```{r qpin}
+# dates stored in rownames of dataset
+head(rownames(BSfrequent2015))
+```
+
+```{r qpin2015, eval = FALSE}
+# quarterly PIN estimates
+# confidence interval computation enabled:
+#   * using only 1000 simulated datasets
+#   * confidence level set to 0.9
+#   * seed set to 287
+
+qpin2015 <- qpin(numbuys = BSfrequent2015[,"Buys"],
+                 numsells = BSfrequent2015[,"Sells"],
+                 dates = as.Date(rownames(BSfrequent2015), format = "%Y-%m-%d"),
+                 confint = TRUE, ci_control = list(n = 1000, level = 0.9, seed = 287))
+```
+
+```{r qpin2015rds, echo = FALSE}
+qpin2015 <- readRDS("../RDSfiles/qpin2015.rds")
+```
+
+```{r qpin2015sum}
+# list of length 4 is returned
+names(qpin2015)
+
+# confidence intervals for all four quarters
+ci_quarters <- lapply(qpin2015, function(x) x$confint)
+ci_quarters
+
+# each list element has the same structure as results from pin_est function
+# convert matrices to data.frames for prettier output in the vignette
+qpin2015_res <- lapply(qpin2015, function(x) as.data.frame(x$Results))
+
+qpin2015_res[[1]]
+qpin2015_res[[4]]
+```
+
+Results returned by `qpin` can be visualized with `qpin_plot`.
+```{r}
+qpin_plot(qpin2015)
+```
+
+Datasets of daily buys and sells can be simulated with `simulateBS` function which offers three arguments. 
+Values of model parameters can be set via `param` argument, 
+to ensure reproducibility `seed` should be specified and `ndays` determines the number 
+of trading which are simulated. 
+The probability parameters $\probinfevent$ and $\probbadnews$ are used to sample trading days' conditions. 
+Once the sequence of states is computed, number of buys and sells for each trading day are drawn from 
+Poisson distributions with intensities according to the scenario tree presented in EHO model section.
+
+We use the estimated parameters of `pin_bsheavy` to simulate data for 100 trading days.
+
+```{r simBS}
+# getting the estimates
+heavy_est <- pin_bsheavy$Results[,"Estimate"]
+
+# simulate buys and sells data
+sim_heavy <- simulateBS(param = heavy_est, seed = 123, ndays = 100)
+
+# summary of simulated data
+summary(sim_heavy)
+```
+
+Computation of confidence intervals for $\pintext$ can either be enabled by `confint` argument of the optimization routines 
+(`confint = TRUE` in `pin_est_core`, `pin_est`, `qpin`) or performed with `pin_confint` directly which incorporates `simulateBS` for 
+simulation of `n` datasets with the given parameter vector `param`. 
+MLE is done for each simulated dataset to receive a total of `n` $\pintext$ estimates.
+Quantiles, induced by `level` argument, of this series are calculated by `quantile` function from **stats** package.
+
+We use the simulated `sim_heavy` data together with the corresponding parameter estimates to calculate a confidence interval for the probability 
+of informed trading. 
+In addition, we compare the execution times of single-core vs. parallel computation.^[
+All computations were done on an Intel Core i5-4590 with four physical cores.] 
+The higher the number of simulation runs `n` the more the computation benefits from parallel execution.
+
+```{r confint1, eval = FALSE}
+# n = 10000 simulation runs, 
+# level = 0.95 (confidence level)
+
+system.time(heavy_ci <- pin_confint(param = heavy_est, 
+                                    numbuys = sim_heavy[,"Buys"],
+                                    numsells = sim_heavy[,"Sells"],
+                                    seed = 321, ncores = 1))
+```
+
+```{r confintsystime1, echo = FALSE}
+systime1 <- readRDS("../RDSfiles/systimeci1.rds")
+heavy_ci <- readRDS("../RDSfiles/ci1.rds")
+systime1
+```
+
+```{r confint4, eval = FALSE}
+# same setting but 4 cpu cores
+system.time(heavy_ci4 <- pin_confint(param = heavy_est, 
+                                     numbuys = sim_heavy[,"Buys"],
+                                     numsells = sim_heavy[,"Sells"],
+                                     seed = 321, ncores = 4))
+```
+
+```{r confintsystime4, echo = FALSE}
+systime4 <- readRDS("../RDSfiles/systimeci4.rds")
+heavy_ci4 <- readRDS("../RDSfiles/ci4.rds")
+systime4
+```
+
+```{r compare}
+heavy_ci
+heavy_ci4
+```
+
+

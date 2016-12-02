@@ -1,0 +1,67 @@
+## Introduction
+
+The framework for estimating the probability of informed trading ($\pintext$) was first established by @EKOP (EKOP) and 
+extended in the paper by @EHO (EHO). 
+Both models assume constant arrival rates for buys and sells as well as constant probabilities of the 
+trading days' condition. 
+In the EKOP and EHO setting, trading days can reside in three different states: no-news, good-news and bad-news. 
+The probability of informed trading is estimated using daily aggregates of buy and sell orders, 
+whereat buys and sells are supposed to follow independent latent Poisson point processes. 
+The static models distinguish between uninformed and informed trading intensities. 
+In the EKOP setting uninformed buyer and seller participate in the market with identical intensities. 
+However, the EHO setup relaxes this assumption and the expected number of uninformed buys and sells per day are unique. 
+This model structure leads to the EKOP model being nested in the EHO model.
+
+$\pintext$ is a widely used measure in many empirical applications. 
+@henry2006 investigates the relationship between short selling and information-based trading, 
+The connection between investor protection, adverse selection and $\pintext$ is analysed by @Brockman2008. 
+How the probability of informed trading influences herding is studied in the work by @herding. 
+@Aslan employ $\pintext$ to investigate the linkage of microstructure, accounting, and asset pricing and intend 
+to determine firms which have high information risk. 
+Seasonality of $\pintext$ estimates are examined in the work by @Kang. 
+Additionally, various papers link the probability of informed trading to illiquidity measures, e.g. @Duarte and @LIYAN, 
+and bid-ask spreads, e.g. @LeiWu and @ChungLi.
+
+Due to the widespread usage of the $\pintext$ measure in the literature, many researchers focussed on analysing its 
+(technical) properties in detail. 
+Recently, several papers were published proposing improvements in the estimation of model parameters and 
+the probability of informed trading. 
+The original factorizations of (log) likelihood functions in static $\pintext$ models are very inefficient in terms of  
+stability and execution time. 
+Furthermore, the probability of informed trading can only be estimated for ancient trading data or very infrequently traded stocks. 
+@EHO2010 present a more robust formulation of the likelihood function which reduces the occurrence of over- and underflow 
+errors for moderately traded equities. 
+The most recent likelihood factorization for the $\pintext$ framework assuming static arrival rates 
+by @LinKe can even handle daily buys and sells data of very heavily traded stocks and increases 
+speed and accuracy of function evaluations.
+In addition, @LinKe showed by simulation that the factorization by @EHO2010 is based if used with high numbers of daily buys and sells. 
+Hence, all publications incorporating this formulation of the model's likelihood function may exhibit biased estimates of the 
+probability of informed trading. 
+
+@YanZhang, @Cluster and @Ersan study the generation of appropriate initial values for the optimization routine in static $\pintext$ models.
+A brute force grid search technique which delivers several sets of starting values is established by @YanZhang. 
+Despite its simplicity this method is very time-consuming. 
+The proposed methodologies by @Cluster and @Ersan harness hierarchical agglomerative clustering (HAC) to determine initial choices for the model parameters.
+
+The `pinbasic` package ships utilities for fast and stable estimation of the probability of informed trading in the static $\pintext$ framework.
+The function design is chosen to fit the extended EHO model setup but can also be applied to the simpler EKOP model 
+by equating the intensities of uninformed buys and sells. 
+State-of-the-art factorization of the model likelihood function as well as
+most recent algorithms for generating initial values for optimization routines are implemented.
+Likelihood functions are evaluated with `pin_ll` and sets of starting values are returned by `initial_vals`.
+The probability of informed trading can be estimated for arbitrary length of daily buys and sells data with `pin_est` 
+which is a wrapper around the workhorse function `pin_est_core`.
+No information about the time span of the underlying data is required to perform optimizations with `pin_est`.
+However, the recommendation given in the literature is using at least data for 60 trading days to ensure convergence
+of the likelihood maximization [e.g. see @EKOP, p. 1416].
+Quarterly estimates are returned by `qpin` which can be visualized with `qpin_plot`. 
+Datasets of daily aggregated numbers of buys and sells can be simulated with `simulateBS`. 
+Calculation of confidence intervals for the probability of informed trading can be enabled by `confint` argument in 
+optimization routines (`pin_est_core`, `pin_est` and `qpin`) or by calling `pin_confint` directly.
+
+The remainder of this work is structured as follows: <br>
+The second chapter examines the general framework of models for the probability of informed trading in more detail. 
+Properties of the extended $\pintext$ model by @EHO are discussed in the third section. 
+Stable factorizations for the likelihood function and algorithms for generating reliable sets of initial values are presented in the 
+fourth and fifth section. Some examples of the `pinbasic` functionalities are given in the last section.
+<!-- Development version of the package can be found at and installed from [Github](https://github.com/anre005/pinbasic). -->

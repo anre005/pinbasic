@@ -1,29 +1,28 @@
 ### Package Interface
-The package is equipped with the `pin_ll` function.
-It computes likelihood functions in the static $\pintext$ models,
+`pin_ll` computes likelihood functions in static $\pintext$ models,
 either incorporating the factorization by @EHO2010 or @LinKe.
 The function is designed for the extended EHO model, but can also be applied to the simple model structure
 for equal values of $\intensuninfbuys$ and $\intensuninfsells$.
 
-```{r insert-pin_ll, echo=FALSE, cache = FALSE, include = FALSE}
-insert_fun('pin_ll')
-```{r pin_ll-source, eval=FALSE}
+```{r pinll, code = formatR::usage(pin_ll), eval = FALSE}
 ```
 
-The `pin_ll` function receives trading data via the arguments `numbuys` and `numsells`,
+Trading data is passed with the arguments `numbuys` and `numsells`,
 which take numeric vectors of equal length for daily buys and sells.
-Model parameters can be passed with `param` argument. % but the length of the vector needs to equal 5 or an
-error is thrown to the console and computation is aborted.
-For the `factorization` argument the user can choose between `"Lin_Ke"` and `"EHO"` strings.
-The numeric vector passed to `param` argument is pre-checked with `param_check` function.
+Model parameters can be specified by `param` argument. 
+The numeric vector passed to `param` is pre-checked. <!-- with `param_check` function.-->
 It is verified that the length of the vector equals 5,
-otherwise an error is thrown to the console and computation is aborted.
-Either `param` has to be a named vector or sorting of entries needs to be done properly.
+otherwise an error is thrown to the console and computation is aborted. 
+Either `param` has to be a named vector (accepted names are: `"alpha"`, `"delta"`, `"epsilon_b"`, `"epsilon_s"` and `"mu"`) 
+or sorting of entries needs to be done properly.
 If names are not set or one or more names do not match the valid choices, `param` is silently renamed with
-strings `"alpha"`, `"delta"`, `"epsilon_b"`, `"epsilon_s"` and `"mu"` (in this order).
+strings `"alpha"`, `"delta"`, `"epsilon_b"`, `"epsilon_s"` and `"mu"` (in this order). 
+<!-- but the length of the vector needs to equal 5 or an -->
+<!-- error is thrown to the console and computation is aborted. -->
+For the `factorization` argument the user can choose between `"Lin_Ke"` and `"EHO"` strings.
 
-Function `param_check` as well as
-the two specialized functions for computing likelihood function values,
-`pin_ll_lin_ke_5par` and `pin_ll_eho_5par`, are not exported.^[
-If a user insists on using this functions directly, function calls of the form `pinbasic:::pin_ll_lin_ke_5par` and
-`pinbasic:::pin_ll_eho_5par` are sufficient.]
+<!-- Function `param_check` as well as -->
+<!-- the two specialized functions for computing likelihood function values, -->
+<!-- `pin_ll_lin_ke_5par` and `pin_ll_eho_5par`, are not exported.^[ -->
+<!-- If a user insists on using this functions directly, function calls of the form `pinbasic:::pin_ll_lin_ke_5par` and -->
+<!-- `pinbasic:::pin_ll_eho_5par` are sufficient.] -->

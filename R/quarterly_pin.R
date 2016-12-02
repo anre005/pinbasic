@@ -3,7 +3,7 @@
 #' Estimation of model parameters and probability of informed trading for quarterly data.
 #'
 #' Wrapper around \code{\link{pin_est}} function and therefore inherits its settings for optimization.
-#' Data is splitted into quarters with the \code{\link[lubridate]{quarter}} function from \pkg{lubridate} package.
+#' Data is split into quarters with the \code{\link[lubridate]{quarter}} function from \pkg{lubridate} package.
 #' According to the help page of this function \code{dates} argument must be \cr
 #' \emph{a date-time object of class POSIXct, POSIXlt, Date, chron, yearmon, yearqtr, zoo, zooreg,
 #'  timeDate, xts, its, ti, jul, timeSeries, fts or anything else that can be converted with as.POSIXlt}. \cr
@@ -15,6 +15,8 @@
 #' @param dates see \strong{Details}
 #' @inheritParams pin_ll
 #' @inheritParams pin_est_core
+#' @inheritParams pin_confint
+#' @param ci_control \emph{list} see \code{\link{pin_est_core}}
 #'
 #' @seealso \code{\link{nlminb}},
 #'          \code{\link{initial_vals}}
@@ -36,6 +38,7 @@
 #'  \item{message}{Convergence message returned by the nlminb optimizer}
 #'  \item{iterations}{Number of iterations until convergence of nlminb optimizer}
 #'  \item{init_vals}{Vector of initial values}
+#'  \item{confint}{If \code{confint = TRUE}; confidence interval for the probability of informed trading}
 #'  }
 #'
 #' @references
@@ -96,7 +99,7 @@
 
 qpin <- function(numbuys = NULL, numsells = NULL, dates = NULL,
                  lower = rep(0,5), upper = c(1,1,rep(Inf,3)),
-                 confint = FALSE) {
+                 confint = FALSE, ci_control = list()) {
   if(is.null(numbuys)) stop("Missing data for 'numbuys'")
   if(is.null(numsells)) stop("Missing data for 'numsells'")
   if(is.null(dates)) stop("Missing 'dates'")
@@ -131,10 +134,6 @@ qpin <- function(numbuys = NULL, numsells = NULL, dates = NULL,
   res <- lapply(quarter_list,
                 function(x) pin_est(numbuys = x[,1], numsells = x[,2],
                                     lower = lower, upper = upper,
-                                    confint = confint))
+                                    confint = confint, ci_control = ci_control))
   res
 }
-
-
-
-

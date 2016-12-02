@@ -1,24 +1,21 @@
 #' Simulate trading data
-#' 
+#'
 #' Simulates a matrix consisting of synthetic data for daily buys and sells
-#' 
+#'
 #' If names are not set for \code{param} or one or more of the vector names do not match the valid choices, they are internally set to
 #' \code{'alpha'}, \code{'delta'}, \code{'epsilon_b'}, \code{'epsilon_s'}, \code{'mu'} (in this order).
-#' 
-#' @return \emph{numeric}: Matrix with \code{days} rows and two columns which are named \code{'Buys'} and \code{'Sells'}.
-#' 
+#'
+#' @return \emph{numeric}: Matrix with \code{ndays} rows and two columns which are named \code{'Buys'} and \code{'Sells'}.
+#'
 #' @inheritParams pin_ll
-#' @param seed \emph{interpretted as integer}: setting seed for RNG, defaults to \code{NULL}; for more detail see 
+#' @param seed \emph{interpretted as integer}: setting seed for RNG, defaults to \code{NULL}; for more detail see
 #'             \code{\link[base]{set.seed}}
-#' @param ndays \emph{integer}: Number of trading days for which amount of buys and sells is simulated, defaults to 60
-#' @import foreach
-#' @import doParallel
-#' @import parallel
+#' @param ndays \emph{integer}: Number of trading days for which aggregated buys and sells are simulated, defaults to 60
 #' @import stats
-#' 
-#' @export simulate_data
+#'
+#' @export simulateBS
 
-simulate_data <- function(param = NULL, seed = NULL, ndays = 60) {
+simulateBS <- function(param = NULL, seed = NULL, ndays = 60) {
   if(!is.null(seed)) set.seed(seed)
   days <- as.integer(ndays)
   # actual sampling

@@ -13,17 +13,16 @@ initial_vals(numbuys = NULL, numsells = NULL, method = c("Grid", "HAC",
 \item{numsells}{\emph{numeric} vector of daily sells}
 
 \item{method}{\emph{character} Switch between algorithms for generating initial values,
-valid choices are: 'Grid', 'HAC' and 'HAC_Ref', defaults to 'HAC'}
+valid choices are: 'Grid', 'HAC' and 'HAC_Ref'}
 
 \item{length}{\emph{numeric} length of equidistant sequence from 0.1 to 0.9 for parameters of grid search algorithm,
 defaults to 5, irrelevant for HAC and refined HAC method}
 
-\item{num_clust}{\emph{numeric} only relevant for refined HAC method, total number of clusters trading data is grouped in,
+\item{num_clust}{\emph{numeric} only relevant for refined HAC method, total number of clusters trading data is grouped into
 equals \code{num_clust} + 1}
 
-\item{details}{\emph{logical} only relevant for grid search and refined HAC algorithm, 
-if \code{TRUE} and \code{method = 'Grid'} the number of infeasible sets of initial values are returned, 
-if \code{TRUE} and \code{method = 'HAC_Ref'} detailed information about likelihood function evaluations are returned}
+\item{details}{\emph{logical} only relevant for grid search,
+if \code{TRUE} and \code{method = 'Grid'} the number of infeasible sets of initial values are returned,}
 }
 \value{
 Matrix with set(s) of initial values for PIN model optimization.
@@ -34,8 +33,6 @@ Matrix with set(s) of initial values for PIN model optimization.
  \item{irr_mu}{Number of infeasible sets due to intensity of informed trading larger than any daily buys and sells data}
  \item{rem}{Total number of removed sets of initial values}
  }
- If \code{method = 'HAC_Ref'} and \code{details = TRUE} a matrix with six columns and \code{num_clust} rows is returned.
- Columns give information about (potential) initial values for model parameters and corresponding likelihood function value.
 }
 \description{
 Generates set(s) of initial values which can be used in PIN optimization routines.
@@ -52,7 +49,7 @@ data("BSheavy")
 grid <- initial_vals(numbuys = BSinfrequent[,"Buys"],
                      numsells = BSinfrequent[,"Sells"],
                      method = "Grid")
-                     
+
 # Grid Search: Detailed Output
 
 grid_detailed <- initial_vals(numbuys = BSinfrequent[,"Buys"],
@@ -70,12 +67,6 @@ hac <- initial_vals(numbuys = BSfrequent[,"Buys"],
 hac_ref <- initial_vals(numbuys = BSheavy[,"Buys"],
                         numsells = BSheavy[,"Sells"],
                         method = "HAC_Ref")
-                        
-# Refined HAC: Detailed Output
-
-hac_ref_detailed <- initial_vals(numbuys = BSheavy[,"Buys"],
-                                 numsells = BSheavy[,"Sells"],
-                                 method = "HAC_Ref", details = TRUE)
 
 }
 \references{

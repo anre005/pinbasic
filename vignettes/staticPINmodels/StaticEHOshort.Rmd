@@ -1,9 +1,122 @@
+## EHO Model
+
+This section describes the static model for estimating the probability of
+informed trading developed by @EHO.
+Arrival rates of buys and sells as well as
+probability parameters are assumed to be constant over the whole range spanned
+by the data.
+Therefore the usage of this models do not enable to estimate the probability of informed trading
+on a daily basis.
+
+The sequence of trading days is assumed to be discrete and independent,
+whereas the time during a trading day is continuous.
+Conditions of trading days are not observable and determined by nature before the market opening.
+*Information events*, days on which private, price-relevant information enter the market, occur
+with probability $\probinfevent$.
+These are good information with probability $1 - \probbadnews$ and news with negative direction
+with probability $\probbadnews$.
+Hence, the probabilities of no-news, good-news and bad-news days are given by:
+$$
+\begin{align}
+  \prsym(\nonews) &= 1 - \probinfevent  \\
+  \prsym(\goodnews) &= \probinfevent  ( 1 - \probbadnews)  \\
+  \prsym(\badnews) &= \probinfevent  \probbadnews 
+\end{align}
+$$
+Furthermore, buys and sells are supposed
+to follow latent independent Poisson processes with constant intensities.
+A Poisson process is a point process which is often defined on the positive line.
+According to @daley2003,
+
+> we shall understand by a point process some method of randomly allocating points to the real line.
+
+However, in terms of arrivals of buys and sells, we assume the Poisson processes in the static $\pintext$ models
+to be defined on the positive half-line.^[
+Poisson processes are directly related to the corresponding discrete Poisson distribution which is defined by the
+following cumulative distribution function (cdf) and probability mass fun
+$$
+\begin{align}
+  \text{cdf}: \:\:  F\left(\lambda;n\right) = \exp\left(-\lambda\right)
+                \sum\limits_{k=0}^n \dfrac{\lambda^k}{k!} \quad \text{and} \quad
+  \text{pmf}: \:\:  f\left(\lambda;n\right) = \exp\left(-\lambda\right)
+                \dfrac{\lambda^n}{n!} \notag ; \:\: \text{with}\:\:  x \in \mathbb{R}^+
+\end{align}
+$$
+with the number of arrivals $n$, the intensity parameter $\lambda \in \mathbb{R}^+$ and $n \in \mathbb{N}_0$.
+The mean and variance of the Poisson distribution are equal and given by the parameter $\lambda$.]
+Waiting times or interarrival times between two consecutive buys or sells are exponentially distributed.^[
+The exponential distribution is a continuous distribution which has cdf and probability density function (pdf) given below,
+$$
+\begin{align}
+  \text{cdf}: \:\:  F\left(\lambda;x\right) = 1 - \exp\left(-\lambda x\right) \quad \text{and} \quad
+  \text{pdf}: \:\:  f\left(\lambda;x\right) = \lambda \exp\left(-\lambda x\right) \notag; \:\: \text{with}\:\:  x \in \mathbb{R}^+
+\end{align}
+$$
+with rate parameter $\lambda$.]
+On information events, the intensity of the Poisson process either for buys or sells is 
+increased by a positive constant parameter, <!--$\intensinf$,-->
+depending on the direction of information.
+The arrivals of transactions, which are indeed observable, can be interpreted
+as a merging of both latent point processes.^[
+The merging of two homogeneous independent Poisson processes
+again yields a Poisson process, e.g. see @firstcourse.]
+The observable arrivals of transactions $N_{O}$ are the outcome of a competition between 
+the latent Poisson processes for buys and sells, $N_{B}$ and $N_{S}$,
+which is the first to arrive.
+The waiting times of the latent Poisson processes determine the direction of the next trade.
+Assuming that the current waiting time of the buys' point process is less than the sells' interarrival time,
+the observed transaction will be buyer-initiated and $N_{B}$ increases by 1 as well as $N_{O}$, whereas
+$N_{S}$ remains unchanged.^[For most exchanges no data is available about the direction of transactions.
+Due to this reason algorithms like *Lee & Ready* are used to try to detect if
+a transaction is buyer- or seller-initiated [see @LeeReady].]
+After observing a transaction the waiting times of both latent point processes are reset
+and the race of buys and sells process begins anew.
+
+
+<!-- ![Exemplary paths of the latent Poisson processes for buys and sells and the observable (merged) Poisson process for transactions.](poissonrace.png) -->
+
+<!-- Hence, we can write down the probabilities of observing a buyer- -->
+<!-- or seller-initiated transaction for all three possible states of a trading day $\daysym$. -->
+<!-- For a no-news day the probabilities of observing a buy or sell at each point in time -->
+<!-- can be written incorporating the corresponding intensities of the point processes of buys and sells, -->
+<!-- $$ -->
+<!-- \begin{aligned} -->
+<!--     \prsym\left(I_{k,d} = \text{Buy} \right) &= \dfrac{\lambdabuysconst} -->
+<!--                                            {\lambdabuysconst + \lambdasellsconst} \\ \\ -->
+<!--     \prsym\left(I_{k,d} = \text{Sell} \right) &= \dfrac{\lambdasellsconst} -->
+<!--                                                    {\lambdabuysconst + \lambdasellsconst}, -->
+<!-- \end{aligned} -->
+<!-- $$ -->
+<!-- where $I_k$ is the $k$-th observation of the merged Poisson process of transactions and $k$ equals any integer smaller -->
+<!-- than the total number of transactions on trading day $\daysym$. -->
+<!-- On a good-news day informed traders enter the market but only act as buyers, -->
+<!-- therefore the rate of informed buys must be taken into account, -->
+<!-- $$ -->
+<!-- \begin{aligned} -->
+<!--   \prsym\left(I_{k,d} = \text{Buy} \right) &= \prsym\left(I_{k,d} = \text{uninf. Buy} \right) + \prsym\left(I_{k,d} = \text{inf. Buy} \right) \\ -->
+<!--                                        &= \dfrac{\lambdabuysconst + \lambdabuysinfconst} -->
+<!--                                          {\lambdabuysconst + \lambdasellsconst + \lambdabuysinfconst} \\ \\ -->
+<!--   \prsym\left(I_{k,d} = \text{Sell} \right) &= \dfrac{\lambdasellsconst} -->
+<!--                                                  {\lambdabuysconst + \lambdasellsconst + \lambdabuysinfconst}.  -->
+<!-- \end{aligned} -->
+<!-- $$ -->
+<!-- Informed sellers solely occur on a bad-news day. -->
+<!-- Similar to good-news days, the rate of informed sells must be incorporated in probabilities, -->
+<!-- $$ -->
+<!--   \begin{aligned} -->
+<!--     \prsym\left(I_{k,d} = \text{Buy} \right) &= \dfrac{\lambdabuysconst} -->
+<!--                                            {\lambdabuysconst + \lambdasellsconst + \lambdasellsinfconst} \\ \\ -->
+<!--     \prsym\left(I_{k,d} = \text{Sell} \right) &= \prsym\left(I_{k,d} = \text{uninf. Sell} \right) + \prsym\left(I_{k,d} = \text{inf. Sell} \right) \\ -->
+<!--                                           &= \dfrac{\lambdasellsconst + \lambdasellsinfconst} -->
+<!--                                              {\lambdabuysconst + \lambdasellsconst + \lambdasellsinfconst}.  -->
+<!--   \end{aligned} -->
+<!-- $$ -->
 <!-- ### EKOP Model -->
 
 <!-- In the model introduced by @EKOP the arrival rates of buys and sells are assumed to be identical. -->
 <!-- However, the model distinguishes between uninformed and informed transactions. -->
-The Poisson processes for uninformed buys and uninformed sells
-are assumed to have unique intensities.
+For each of the Poisson processes of uninformed buys and uninformed sells
+a unique intensity is assumed.
 The expected number of uninformed buys equals $\intensuninfbuys$, whereas
 the expected amount of uninformed sells is $\intensuninfsells$.
 <!-- Uninformed buys and sells appear with rate $\intensuninf$,  -->
@@ -13,7 +126,6 @@ All model parameters representing trading intensities are assumed to be positive
 <!-- no assumption is made about their relation in magnitude. -->
 <!-- Hence, it is possible that $\intensinf$, describing the intensity of informed traders, in certain cases -->
 <!-- can stride the rate of uninformed trading $\intensuninf$. -->
-
 <!-- The intensity for the observable merged Poisson process varies with the states of -->
 <!-- trading days. -->
 <!-- On a no-news day the rate of arrivals equals $2\intensuninf$ and on days with private information -->
@@ -41,10 +153,10 @@ $$
 \end{align}
 $$
 where $\pintext$ and the model parameters are constant over the whole range of the underlying data.
-We can think of the arrivals of buys and sells on no-news days as
-flipping a (fair) coin with equal probabilities for the two potential outcomes.
-Instead of seeing heads or tails when tossing the coin,
-the result will be either the arrival of buys or sells.
+<!-- We can think of the arrivals of buys and sells on no-news days as -->
+<!-- flipping a (fair) coin with equal probabilities for the two potential outcomes. -->
+<!-- Instead of seeing heads or tails when tossing the coin, -->
+<!-- the result will be either the arrival of buys or sells. -->
 
 On information events the probability for an arrival of buys or sells increases
 depending on the direction of the private information.
@@ -73,7 +185,7 @@ the different trading days' conditions can be read directly from the graph.
 <!--   \label{fig:EKOPtree} -->
 <!-- \end{figure} -->
 
-![EKOP Scenario Tree](EHOtree.png)
+![EHO Scenario Tree](EHOtree.png)
 
 
 For deriving the (log) likelihood function in the EHO setting we can utilize standard theory for
@@ -106,9 +218,9 @@ $$
   \exp\left(-\lambda\right), \label{eq:poissonprocessekop}
 \end{align}
 $$
-with the number of buys or sells $n \in \{B_{\daysym}, S_{\daysym}\}$ on trading day $\daysym$ and
-the buys' or sells' Poisson process $N_{\daysym}$,
-$\lambda$ displays the arrival rate of buys or sells.
+with the buys' or sells' Poisson process $N_{\daysym}$, 
+the number of buys or sells $n \in \mathbb{N}_0$ on trading day $\daysym$ and 
+$\lambda$ displays the arrival rate of buys or sells, respectively.
 
 The different types of trading trades must be taken into account.
 If on trading day $\daysym$ no private information hit the market,
@@ -211,10 +323,13 @@ leading to computable factorial terms,
 finite values of the likelihood are not ensured.
 Additionally, the terms $\intensuninfbuys^{B_{\daysym}}$, $\intensuninfsells^{S_{\daysym}}$,
 $(\intensuninfbuys + \intensinf)^{B_{\daysym}}$ and $(\intensuninfsells + \intensinf)^{S_{\daysym}}$
-are potential sources of overflow errors.
+are potential sources of overflow errors. 
 Furthermore, single terms may be finite but products of those may not. 
 In contrast to overflow errors induced by large values for daily buys and sells,
 the exponential terms in the likelihood function my introduce underflow errors,^[
 Underflow errors occur if the number to represent is too small and vanishes to zero.]
 i.e. $\exp\left(-\intensuninfbuys \right)$, $\exp\left(-\intensuninfsells \right)$,
 $\exp\left(-(\intensuninfbuys + \intensinf) \right)$ and $\exp\left(-(\intensuninfsells + \intensinf) \right)$.
+
+Since the EKOP model is nested in the EHO setting for equal intensities of uninformed buys and sells ($\intensuninfbuys = \intensuninfsells$), 
+we forego to explain the simpler model structure. 

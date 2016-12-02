@@ -9,7 +9,7 @@ pin_ll(param = NULL, numbuys = NULL, numsells = NULL,
 }
 \arguments{
 \item{param}{\emph{numeric}: (named) vector of model parameters
-(valid names: \code{'alpha'}, \code{'delta'}, \code{'epsilon_b'}, \code{'epsilon_s'}, \code{'mu'}), 
+(valid names: \code{'alpha'}, \code{'delta'}, \code{'epsilon_b'}, \code{'epsilon_s'}, \code{'mu'}),
 length must equal 5}
 
 \item{numbuys}{\emph{numeric} vector of daily buys}
@@ -27,7 +27,7 @@ or Lin and Ke (2011).
 }
 \details{
 If names are not set for \code{param} or one or more of the vector names do not match the valid choices, they are internally set to
-\code{'alpha'}, \code{'delta'}, \code{'epsilon_b'}, \code{'epsilon_s'}, \code{'mu'} (in this order). 
+\code{'alpha'}, \code{'delta'}, \code{'epsilon_b'}, \code{'epsilon_s'}, \code{'mu'} (in this order).
 Vectors for \code{numbuys} and \code{numsells} need to have same length.
 }
 \references{

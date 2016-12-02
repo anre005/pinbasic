@@ -4,14 +4,13 @@
 #'
 #' @inheritParams pin_ll
 #' @param method \emph{character} Switch between algorithms for generating initial values,
-#'               valid choices are: 'Grid', 'HAC' and 'HAC_Ref', defaults to 'HAC'
+#'               valid choices are: 'Grid', 'HAC' and 'HAC_Ref'
 #' @param length \emph{numeric} length of equidistant sequence from 0.1 to 0.9 for parameters of grid search algorithm,
 #'               defaults to 5, irrelevant for HAC and refined HAC method
-#' @param num_clust \emph{numeric} only relevant for refined HAC method, total number of clusters trading data is grouped in,
+#' @param num_clust \emph{numeric} only relevant for refined HAC method, total number of clusters trading data is grouped into
 #'                   equals \code{num_clust} + 1
-#' @param details \emph{logical} only relevant for grid search and refined HAC algorithm, 
-#'                if \code{TRUE} and \code{method = 'Grid'} the number of infeasible sets of initial values are returned, 
-#'                if \code{TRUE} and \code{method = 'HAC_Ref'} detailed information about likelihood function evaluations are returned 
+#' @param details \emph{logical} only relevant for grid search,
+#'                if \code{TRUE} and \code{method = 'Grid'} the number of infeasible sets of initial values are returned,
 #'
 #' @return
 #'  Matrix with set(s) of initial values for PIN model optimization.
@@ -22,45 +21,37 @@
 #'  \item{irr_mu}{Number of infeasible sets due to intensity of informed trading larger than any daily buys and sells data}
 #'  \item{rem}{Total number of removed sets of initial values}
 #'  }
-#'  If \code{method = 'HAC_Ref'} and \code{details = TRUE} a matrix with six columns and \code{num_clust} rows is returned.
-#'  Columns give information about (potential) initial values for model parameters and corresponding likelihood function value.
 #'
 #' @examples
 #' # Loading simulated datasets
-#' 
+#'
 #' data("BSinfrequent")
 #' data("BSfrequent")
 #' data("BSheavy")
 #'
 #' # Grid Search
-#' 
+#'
 #' grid <- initial_vals(numbuys = BSinfrequent[,"Buys"],
 #'                      numsells = BSinfrequent[,"Sells"],
 #'                      method = "Grid")
-#'                      
+#'
 #' # Grid Search: Detailed Output
-#' 
+#'
 #' grid_detailed <- initial_vals(numbuys = BSinfrequent[,"Buys"],
 #'                               numsells = BSinfrequent[,"Sells"],
 #'                               method = "Grid", details = TRUE)
 #'
 #' # HAC
-#' 
+#'
 #' hac <- initial_vals(numbuys = BSfrequent[,"Buys"],
 #'                     numsells = BSfrequent[,"Sells"],
 #'                     method = "HAC")
 #'
 #' # Refined HAC
-#' 
+#'
 #' hac_ref <- initial_vals(numbuys = BSheavy[,"Buys"],
 #'                         numsells = BSheavy[,"Sells"],
 #'                         method = "HAC_Ref")
-#'                         
-#' # Refined HAC: Detailed Output
-#' 
-#' hac_ref_detailed <- initial_vals(numbuys = BSheavy[,"Buys"],
-#'                                  numsells = BSheavy[,"Sells"],
-#'                                  method = "HAC_Ref", details = TRUE)
 #'
 #' @export
 #'
@@ -89,7 +80,7 @@ initial_vals <- function(numbuys = NULL, numsells = NULL,
   if(is.null(numbuys)) stop("Missing data for 'numbuys'")
   if(is.null(numsells)) stop("Missing data for 'numsells'")
 
-  meth <- match.arg(method)
+  meth <- match.arg(method, choices = c("HAC", "HAC_Ref", "Grid"))
 
   res <- switch(meth,
                 Grid = {
@@ -101,7 +92,7 @@ initial_vals <- function(numbuys = NULL, numsells = NULL,
                 },
                 HAC_Ref = {
                   init_hac_ref(numbuys = numbuys, numsells = numsells,
-                               j = num_clust, details = details)
+                               j = num_clust)
                 }
   )
   res
@@ -220,14 +211,14 @@ init_hac <- function(numbuys = NULL, numsells = NULL) {
   res
 }
 
-init_hac_ref <- function(numbuys = NULL, numsells = NULL, j = 5, details = FALSE) {
+init_hac_ref <- function(numbuys = NULL, numsells = NULL, j = 5) {
   N <- length(numbuys)
   ordered_clusters <- vector("list", j + 1)
   order_imb <- numbuys - numsells
   abs_order_imb <- abs(order_imb)
 
-  res <- matrix(data = NA, nrow = j, ncol = 6)
-  colnames(res) <- c("alpha", "delta", "epsilon_b", "epsilon_s", "mu", "ll")
+  res <- matrix(data = NA, nrow = j, ncol = 5)
+  colnames(res) <- c("alpha", "delta", "epsilon_b", "epsilon_s", "mu")#, "ll")
 
   clust <- fastcluster::hclust(stats::dist(abs_order_imb), method = "complete")
   clustj <- stats::cutree(clust, k = j + 1)
@@ -307,17 +298,11 @@ init_hac_ref <- function(numbuys = NULL, numsells = NULL, j = 5, details = FALSE
 
     res[k,1:5] <- c(alpha, delta, eps_b, eps_s, mu)
 
-    ll_k <- pin_ll(param = res[k, 1:5], numbuys = numbuys, numsells = numsells,
-                   factorization = "Lin_Ke")
-
-    res[k, 6] <- ll_k
+    # ll_k <- pin_ll(param = res[k, 1:5], numbuys = numbuys, numsells = numsells,
+    #                factorization = "Lin_Ke")
+    #
+    # res[k, 6] <- ll_k
   }
 
-  if(details) return(res)
-  else{
-    max_ind <- which.max(res[,"ll"])
-    ret <- matrix(res[max_ind,1:5], ncol = 5)
-    colnames(ret) <- colnames(res)[1:5]
-    ret
-  }
+  return(res)
 }

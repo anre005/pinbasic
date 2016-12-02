@@ -12,6 +12,8 @@
 #'
 #' @inheritParams pin_ll
 #' @inheritParams pin_est_core
+#' @inheritParams pin_confint
+#' @param ci_control \emph{list} see \code{\link{pin_est_core}}
 #'
 #' @seealso \code{\link{nlminb}},
 #'          \code{\link{initial_vals}}
@@ -56,7 +58,7 @@
 #' \doi{10.1016/j.jbankfin.2011.08.003}
 #'
 #' @return
-#' A list with seven components:
+#' A list with the following components:
 #' \describe{
 #' \item{Results}{Matrix containing the parameter estimates as well as their estimated standard errors,
 #'  t-values and p-values.}
@@ -66,6 +68,7 @@
 #'  \item{message}{Convergence message returned by the nlminb optimizer}
 #'  \item{iterations}{Number of iterations until convergence of nlminb optimizer}
 #'  \item{init_vals}{Vector of initial values}
+#'  \item{confint}{If \code{confint = TRUE}; confidence interval for the probability of informed trading}
 #'  }
 #'
 #' @examples
@@ -81,20 +84,18 @@
 
 pin_est <- function(numbuys = NULL, numsells = NULL,
                     lower = rep(0,5), upper = c(1,1,rep(Inf,3)),
-                    confint = FALSE) {
+                    confint = FALSE,
+                    ci_control = list()) {
   if(is.null(numbuys)) stop("Missing data for 'numbuys'")
   if(is.null(numsells)) stop("Missing data for 'numsells'")
 
   init_vals <- initial_vals(numbuys = numbuys, numsells = numsells, method = "HAC")
-
-  ci_con <- list(ncores = detectCores())
 
   res <- pin_est_core(numbuys = numbuys, numsells = numsells,
                       factorization = "Lin_Ke",
                       init_vals = init_vals, lower = lower, upper = upper,
                       num_best_res = 1,
                       only_converged = TRUE,
-                      confint = confint, ci_control = ci_con)
-
+                      confint = confint, ci_control = ci_control)
   res
 }

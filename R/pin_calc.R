@@ -24,10 +24,10 @@
 
 pin_calc <- function(param = NULL) {
   param <- param_check(param)
-
+  
   res <- (param["alpha"] * param["mu"])/
          (param["alpha"] * param["mu"] + param["epsilon_b"] + param["epsilon_s"])
-
+  
   names(res) <- NULL
   res
 }

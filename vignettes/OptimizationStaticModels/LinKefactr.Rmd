@@ -17,7 +17,7 @@ To fortify the usefulness of these two principles the authors give the following
 Say, one intends to compute $\log\left(\exp(x)\exp(y) + \exp(z)\right)$
 with $x = 800$, $y = -400$ and $z = 900$.
 A threshold for the inputs for exponential function lies at 710, meaning
-that any larger value bigger gets the exponential function to overflow and return
+that any larger value gets the exponential function to overflow and return
 infinite results.
 
 At first, $\exp(x)\exp(y)$ would lead to an overflow error due to the fact that one input for
@@ -28,21 +28,22 @@ However, the expression $\exp(z)$ would still produce an infinite value and ther
 the expression  $\log\left(\exp(x + y) + \exp(z)\right)$ is still not computable.
 The second principle states that one should avoid large input values for the exponential
 and small positive input values for the logarithmic function.
-Hence, $\log\left(\exp(x + y - m) + \exp(z - m)\right)$ with $m = \max(x + y, z) = 900$
+Hence, $m + \log\left(\exp(x + y - m) + \exp(z - m)\right)$ with $m = \max(x + y, z) = 900$
 is a more stable and accurate expression.
 Irrelevant of the specified values for $x,y$ and $z$, one of the terms $x + y - m$ and $z - m$
-is always zero, whereas % depending on the magnitude of the terms.
-the remaining term is always less than 0.
-This yields to small input values for the exponential function which in turn is always bigger than 1.
+is always zero, whereas the remaining term is always less than 0.
+This yields small input values for the exponential functions, 
+which in turn always sum up to a value greater than 1. 
 Thus, we have no small positive input values for the natural logarithm.
 Using $x,y$ and $z$ as specified before we can compute the expression
 $\log\left(\exp(x)\exp(y) + \exp(z)\right)$, incorporating the `R` function
 `log1p`, as
 $$
 \begin{align}
-  & \log\left(\exp(x + y - \max(x + y, z)) + \exp(z - m)\right) = \notag \\
-  & \log\left(\exp(800 - 400 - \max(400, 900)) + \exp(900 - 900)\right) = \notag \\
-  & \log\left(\exp(-500) + 1 \right) = `r log1p(exp(400 - 900))` \notag
+  & m + \log\left(\exp(x + y - \max(x + y, z)) + \exp(z - m)\right) = \notag \\
+  & 900 + \log\left(\exp(800 - 400 - \max(400, 900)) + \exp(900 - 900)\right) = \notag \\
+  & 900 + \log\left(\exp(-500) + 1 \right) \notag \\
+  & \text{with} \log\left(\exp(-500) + 1 \right) = `r log1p(exp(400 - 900))` \notag
 \end{align}
 $$
 Following the two principles mentioned by @LinKe, a stable and efficient
@@ -54,7 +55,7 @@ $$
   &\sum\limits_{\daysym=1}^{\totaldays} \Biggl( -\intensuninfbuys - \intensuninfsells +
     B_{\daysym} \log \left(\intensinf + \intensuninfbuys\right) +
     S_{\daysym} \log \left(\intensinf + \intensuninfsells\right) +
-    e_{\max, i}\Biggr) \notag \\
+    e_{\max, \daysym}\Biggr) \notag \\
   & + \sum\limits_{\daysym=1}^{\totaldays}
   \log \Biggl( \left(1-\probinfevent\right) \exp\left(e_{1,\daysym} - e_{\max, \daysym} \right)
   + \probinfevent \left(1-\probbadnews\right)  \exp\left(e_{2,\daysym} - e_{\max, \daysym} \right) \notag \\

@@ -7,13 +7,13 @@ The daily order imbalance $\orderimb, \daysym = 1, \dots, \totaldays$, serves as
 to three clusters representing no-news, good-news and bad-news trading days.
 HAC is a bottom-up clustering technique in which at the beginning of the algorithm
 all order imbalances $\orderimb$ illustrate a cluster of their own,
-e.g. if quarterly data is used to estimate the probability of informed trading
-around 60 clusters exist when the algorithm is initialized.
+e.g. if trading data for one quarter of a year is used to estimate the probability of informed trading
+roughly 60 clusters exist when the algorithm is initialized.
 
 @Cluster use the complete-linkage clustering to sequentially merge
 the small clusters to bigger ones.
 Two clusters with the shortest distance are combined in each step.
-The definition of *shortest distance* distinguish between the
+The definition of *shortest distance* distinguishes between
 several available agglomerative clustering methods.^[
 @Cluster mention that they tested different agglomerative clustering methods
 but that the complete-linkage method performed marginally better than the others.
@@ -81,8 +81,8 @@ $$
                         \dfrac{w_{\badnews}}{w_{\goodnews} + w_{\badnews}} \intensinf_s^0 \notag
       \end{align}
 $$
-7. Cluster sizes are utilized to compute starting values for the probability of an information event \probinfevent
-   and the probability of bad news given that private information enter the market \probbadnews{}.
+7. Cluster sizes are utilized to compute starting values for the probability of an information event $\probinfevent$
+   and the probability of bad news given that private information enter the market $\probbadnews$.
 $$
       \begin{align}
         \probinfevent^0 &= w_{\goodnews} + w_{\badnews} \notag \notag \\
