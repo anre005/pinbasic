@@ -83,19 +83,16 @@
 #' @export
 
 pin_est <- function(numbuys = NULL, numsells = NULL,
-                    lower = rep(0,5), upper = c(1,1,rep(Inf,3)),
-                    confint = FALSE,
-                    ci_control = list()) {
+                    confint = FALSE, ci_control = list()) {
   if(is.null(numbuys)) stop("Missing data for 'numbuys'")
   if(is.null(numsells)) stop("Missing data for 'numsells'")
+  if(length(numbuys) != length(numsells)) stop("Unequal lengths for 'numbuys' and 'numsells'")
 
   init_vals <- initial_vals(numbuys = numbuys, numsells = numsells, method = "HAC")
 
   res <- pin_est_core(numbuys = numbuys, numsells = numsells,
                       factorization = "Lin_Ke",
-                      init_vals = init_vals, lower = lower, upper = upper,
-                      num_best_res = 1,
-                      only_converged = TRUE,
+                      init_vals = init_vals,
                       confint = confint, ci_control = ci_control)
   res
 }

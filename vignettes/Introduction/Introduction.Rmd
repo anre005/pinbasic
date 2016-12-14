@@ -54,10 +54,11 @@ which is a wrapper around the workhorse function `pin_est_core`.
 No information about the time span of the underlying data is required to perform optimizations with `pin_est`.
 However, the recommendation given in the literature is using at least data for 60 trading days to ensure convergence
 of the likelihood maximization [e.g. see @EKOP, p. 1416].
-Quarterly estimates are returned by `qpin` which can be visualized with `qpin_plot`. 
+Quarterly estimates are returned by `qpin` which can be visualized with `ggplot`. 
 Datasets of daily aggregated numbers of buys and sells can be simulated with `simulateBS`. 
 Calculation of confidence intervals for the probability of informed trading can be enabled by `confint` argument in 
 optimization routines (`pin_est_core`, `pin_est` and `qpin`) or by calling `pin_confint` directly.
+Additionally, posterior probabilities for conditions of trading days can be computed with `posterior` and plotted with `ggplot`.
 
 The remainder of this work is structured as follows: <br>
 The second chapter examines the general framework of models for the probability of informed trading in more detail. 

@@ -13,7 +13,7 @@ output:
     df_print: paged
 bibliography: references.bib
 vignette: >
-  %\VignetteIndexEntry{pinbasic: R Package for Fast and Stable Estimation of Static Models for the Probability of Informed Trading}
+  %\VignetteIndexEntry{pinbasic: An R Package for Fast and Stable Estimation of Static Models for the Probability of Informed Trading}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -76,6 +76,8 @@ TeX: { equationNumbers: { autoNumber: "AMS" } }
 \newcommand{\statesset}{\{\mathcal{N}, \mathcal{G}, \mathcal{B}\}}
 \newcommand{\eventsymb}{\mathcal{E}}
 
+\newcommand{\midcond}{\;\middle\vert\;}
+
 ```{r insert_fun, echo = FALSE}
 library(knitr)
 library(pinbasic)
@@ -98,6 +100,9 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
 ```{r opt, child = "OptimizationStaticModels/OptimizationStaticModels.Rmd"}
+```
+
+```{r postprob, child = "PostProbs/PostProbs.Rmd"}
 ```
 
 ```{r examples, child = "Examples/Examples.Rmd"}

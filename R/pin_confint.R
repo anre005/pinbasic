@@ -20,13 +20,16 @@
 #' @import foreach
 #' @import doParallel
 #' @import parallel
+#' @importFrom iterators iter
 #'
 #' @export pin_confint
 #'
 pin_confint <- function(param = NULL, numbuys = NULL, numsells = NULL,
                         lower = rep(0, 5), upper = c(1,1, rep(Inf, 3)),
                         n = 10000, seed = NULL, level = 0.95, ncores = detectCores()) {
+  param <- param_check(param)
   if(!is.numeric(ncores) && ncores < 1) stop("No valid 'ncores' argument!")
+  if(length(numbuys) != length(numsells)) stop("Unequal lengths for 'numbuys' and 'numsells'")
   if(!is.null(seed)) {
     set.seed(seed)
   } else {
@@ -68,21 +71,22 @@ pin_confint <- function(param = NULL, numbuys = NULL, numsells = NULL,
                                                              method = "HAC")})
 
     for(i in 1:n) {
-      par_est[[i]] <- nlminb(start = initial_mat[[i]][1,],
+      par_est[[i]] <- nlminb(start = initial_mat[i,],
                              objective = function(x) -fn(x, sim_dat[[i]][,"Buys"], sim_dat[[i]][,"Sells"]),
                              lower = lower, upper = upper)$par
     }
 
     sim_pin <- unlist(lapply(par_est, function(x) pin_calc(x)))
   } else {
+    itx <- iter(sim_dat)
     cl <- makeCluster(ncores)
     registerDoParallel(cl)
 
-    sim_pin <- foreach(i = 1:n, .combine = "c") %dopar% {
-      init_vals <- initial_vals(numbuys = sim_dat[[i]][,"Buys"], numsells = sim_dat[[i]][,"Sells"],
+    sim_pin <- foreach(i = itx, .combine = "c") %dopar% {
+      init_vals <- initial_vals(numbuys = i[,"Buys"], numsells = i[,"Sells"],
                                 method = "HAC")
 
-      param <- nlminb(start = init_vals[1,], objective = function(x) -fn(x, sim_dat[[i]][,"Buys"], sim_dat[[i]][,"Sells"]),
+      param <- nlminb(start = init_vals[1,], objective = function(x) -fn(x, i[,"Buys"], i[,"Sells"]),
                       lower = lower, upper = upper)$par
 
       pin_calc(param)

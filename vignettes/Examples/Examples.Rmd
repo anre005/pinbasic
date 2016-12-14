@@ -85,9 +85,10 @@ qpin2015_res[[1]]
 qpin2015_res[[4]]
 ```
 
-Results returned by `qpin` can be visualized with `qpin_plot`.
+Results returned by `qpin` can be visualized with `ggplot`.
 ```{r}
-qpin_plot(qpin2015)
+library(ggplot2)
+ggplot(qpin2015)
 ```
 
 Datasets of daily buys and sells can be simulated with `simulateBS` function which offers three arguments. 
@@ -156,6 +157,35 @@ systime4
 ```{r compare}
 heavy_ci
 heavy_ci4
+```
+
+Posterior probabilities of trading days' condition are returned by `posterior` and can be displayed with `ggplot`. 
+Exemplary, we compute posteriors for `BSheavy` dataset and use corresponding parameter estimates stored in `heavy_est`.
+
+```{r post}
+# Calculating posterior probabilities
+post_heavy <- posterior(param = heavy_est,
+                        numbuys = BSheavy[,"Buys"], numsells = BSheavy[,"Sells"])
+
+# Plotting                        
+ggplot(post_heavy)
+```
+
+If x axis should show dates, names of `numbuys` and `numsells` need to be either in `"%Y-%m-%d"` or `"%Y/%m/%d"` format which can be converted with `as.Date`. 
+The following code chunk shows how posterior probabilities for `BSfrequent2015` in the third quarter can be visualized. 
+```{r postdates}
+# Corresponding parameter estimates
+freq_2015.3 <- qpin2015$'2015.3'$Results[,"Estimate"]
+
+# Subsetting data
+third_quarter <- subset(BSfrequent2015, subset = lubridate::quarter(rownames(BSfrequent2015)) == 3)
+
+# Calculating posterior probabilities
+post_third <- posterior(param = freq_2015.3, 
+                        numbuys = third_quarter[,"Buys"], numsells = third_quarter[,"Sells"])
+
+# Plotting
+ggplot(post_third)
 ```
 
 

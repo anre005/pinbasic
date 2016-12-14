@@ -26,7 +26,7 @@
 #'          \code{\link[lubridate]{year}}
 #'
 #' @return
-#' A list of lists. The length of the outer list equals the number of available quarters in the data.
+#' A list of lists with class 'qpin'. The length of the outer list equals the number of available quarters in the data.
 #' Naming scheme for the outer list is 'Year.QuarterNumber', where QuarterNumber equals an integer from 1 to 4.
 #' The inner list is structured as follows:
 #' \describe{
@@ -98,11 +98,11 @@
 #' @export
 
 qpin <- function(numbuys = NULL, numsells = NULL, dates = NULL,
-                 lower = rep(0,5), upper = c(1,1,rep(Inf,3)),
                  confint = FALSE, ci_control = list()) {
   if(is.null(numbuys)) stop("Missing data for 'numbuys'")
   if(is.null(numsells)) stop("Missing data for 'numsells'")
   if(is.null(dates)) stop("Missing 'dates'")
+  if(length(numbuys) != length(numsells)) stop("Unequal lengths for 'numbuys' and 'numsells'")
 
   quarters <- lubridate::quarter(dates, with_year = TRUE)
   quarters_char <- as.character(quarters)
@@ -133,7 +133,7 @@ qpin <- function(numbuys = NULL, numsells = NULL, dates = NULL,
 
   res <- lapply(quarter_list,
                 function(x) pin_est(numbuys = x[,1], numsells = x[,2],
-                                    lower = lower, upper = upper,
                                     confint = confint, ci_control = ci_control))
+  class(res) <- c("list", "qpin")
   res
 }

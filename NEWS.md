@@ -1,4 +1,19 @@
-## pinbasic v0.2.0.9000 
+## pinbasic v0.2.1.9000 
+
+### New Functions
+
+* `posterior`: calculates posterior probabilities for trading days' conditions
+* `ggplot.posterior`: Method for `ggplot` function for handling objects with class 'posterior' (Results from `posterior` function)
+
+### Changes
+
+* `pin_confint`: using `iter` function from `iterators` package to iterate over list of simulated datasets if executed in parallel 
+                 which gains little speed-up in execution time
+* `qpin_plot` changed to `ggplot.qpin`: Method for `ggplot` function for handling objects with class 'qpin' (Results from `qpin` function)
+
+### Fixes
+
+* fixed missing convergence code in optimization routines if `num_best_res = 1` 
 
 ## pinbasic v0.2.0 (Release Date: 2016-12-02)
 
@@ -9,7 +24,7 @@
 
 ### Changes
 
-* `pin_est_core`, `pin_est` and `qpin` gained two new argument: `confint` and `ci_control` 
+* `pin_est_core`, `pin_est` and `qpin` gained two new arguments: `confint` and `ci_control` 
 * updated plotting structure for `qpin_plot`, facets are now grouped by probability parameters, 
   intensity parameters and the probability of informed trading
 * `initial_vals` together with `method = "HAC_Ref"` now returns a number of sets of initial values depending 

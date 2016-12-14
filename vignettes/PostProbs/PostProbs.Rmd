@@ -1,0 +1,58 @@
+## Posterior Probabilities for Trading Days' States
+
+Due to constant model parameters, the static EHO model do not enable to compute $\pintext$ on a daily basis.
+Nevertheless, we can harness Bayes' theorem and construct formulas for posterior probabilities
+(e.g. see @Bayes) of
+trading days' conditions.
+
+Incorporating the independence of of buys' and sells' Poisson processes, we can write the probability that a trading day $\daysym$ resides in no-news state given that we have observed $B_{\daysym}$ buys and $S_{\daysym}$ sells as
+
+$$
+\begin{align} 
+  \prsym \left(\nonews \mid (B_{\daysym}, S_{\daysym}) \right) &=
+    \dfrac{\prsym\left( B_{\daysym} \mid \nonews \right) \prsym\left( S_{\daysym} \mid \nonews \right) \prsym\left(\nonews\right)}
+    {\prsym\left(B_{\daysym}\right) \prsym\left(S_{\daysym}\right)} \notag \\
+    &= \dfrac{1 - \probinfevent}{(1 - \probinfevent) + \exp(-\intensinf)
+        \left[\probinfevent(1 - \probbadnews) \left(1 + \dfrac{\intensinf}{\intensuninfbuys}\right)^{B_{\daysym}} +
+              \probinfevent\probbadnews \left(1 + \dfrac{\intensinf}{\intensuninfsells}\right)^{S_{\daysym}}\right]}. \label{eq:postno}
+\end{align}
+$$
+
+Likewise, posterior probabilities for a good-news and bad-news trading day are given by
+
+$$
+\begin{align} 
+  \prsym \left(\goodnews \mid (B_{\daysym}, S_{\daysym}) \right) &=
+    \dfrac{\prsym\left( B_{\daysym} \mid \goodnews \right) \prsym\left( S_{\daysym} \mid \goodnews \right) \prsym\left(\nonews\right)}
+    {\prsym\left(B_{\daysym}\right) \prsym\left(S_{\daysym}\right)} \notag \\
+    &= \dfrac{\probinfevent (1 - \probbadnews) \exp(-\intensinf) \left(1 + \dfrac{\intensinf}{\intensuninfbuys}\right)^{B_{\daysym}}}{(1 - \probinfevent) + \exp(-\intensinf)
+        \left[\probinfevent(1 - \probbadnews) \left(1 + \dfrac{\intensinf}{\intensuninfbuys}\right)^{B_{\daysym}} +
+              \probinfevent\probbadnews \left(1 + \dfrac{\intensinf}{\intensuninfsells}\right)^{S_{\daysym}}\right]} \label{eq:postgood}
+\end{align}
+$$
+
+and
+
+$$
+\begin{align} 
+  \prsym \left(\badnews \mid (B_{\daysym}, S_{\daysym}) \right) &=
+    \dfrac{\prsym\left( B_{\daysym} \mid \badnews \right) \prsym\left( S_{\daysym} \mid \badnews \right) \prsym\left(\nonews\right)}
+    {\prsym\left(B_{\daysym}\right) \prsym\left(S_{\daysym}\right)} \notag \\
+    &= \dfrac{\probinfevent \probbadnews \exp(-\intensinf) \left(1 + \dfrac{\intensinf}{\intensuninfsells}\right)^{S_{\daysym}}}{(1 - \probinfevent) + \exp(-\intensinf)
+        \left[\probinfevent(1 - \probbadnews) \left(1 + \dfrac{\intensinf}{\intensuninfbuys}\right)^{B_{\daysym}} +
+              \probinfevent\probbadnews \left(1 + \dfrac{\intensinf}{\intensuninfsells}\right)^{S_{\daysym}}\right]}. \label{eq:postbad}
+\end{align}
+$$ 
+
+To the best of our knowledge, Bayes' posterior probabilities for conditions of trading days were not used before in the field of
+the probability of informed trading.
+While we can calculate the number of trading days static models predict to reside in each of the three possible states,
+posteriors allow to assign each trading day probabilities of no-news, good-news and bad-news condition.
+
+Exemplary, assuming low probability parameters $\probinfevent$ and $\probbadnews$, we can interpret this as few trading days in the sample period
+on which insiders triggered by positive private information enter the market.
+However, we are not able to relate information events to specific trading days in the datasource.
+Utilizing equations \\ref{eq:postno} - \\ref{eq:postbad} we can identify good-news days according to the magnitude of
+$\prsym \left(\goodnews \mid (B_{\daysym}, S_{\daysym}) \right)$ for each trading day.
+Hence, posterior probabilities deliver useful additional insights in classification of trading days and help to improve
+analyses of the EHO model.

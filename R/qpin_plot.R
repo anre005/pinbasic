@@ -4,9 +4,13 @@
 #'
 #' Facets are grouped by probability parameters, intensity parameters and the probability of informed trading.
 #'
-#' @param qpin_obj List returned by \code{\link{qpin}}
+#' @param x List returned by \code{\link{qpin}}
 #'
 #' @seealso \code{\link{qpin}}
+#'
+#' @import ggplot2
+#' @import scales
+#' @import reshape2
 #'
 #' @examples
 #' # Loading one year of simulated daily buys and sells
@@ -20,8 +24,8 @@
 #'                   dates = as.Date(rownames(BSfrequent2015), format = "%Y-%m-%d"))
 #'
 #' # Visualization of quarterly estimates
-#'
-#' qpin_plot(qpin_list)
+#' library(ggplot2)
+#' ggplot(qpin_list)
 #'
 #' @references
 #' Wickham, Hadley (2009) \cr
@@ -38,9 +42,11 @@
 #' scales: Scale Functions for Visualization \cr
 #' \emph{R package version 0.4.0}
 #'
-#' @export qpin_plot
+#' @method ggplot qpin
+#' @return An object of class \code{\link[ggplot2]{ggplot}}.
+#' @export
 #'
-qpin_plot <- function(qpin_obj) {
+ggplot.qpin <- function(x) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("ggplot2 is required for this function to work. Please install it.",
          call. = FALSE)
@@ -52,18 +58,18 @@ qpin_plot <- function(qpin_obj) {
   alpha <- delta <- epsilon_b <-
     epsilon_s <- mu <- pin <- numeric()
 
-  quat <- names(qpin_obj)
+  quat <- names(x)
 
-  alpha <- sapply(qpin_obj, function(x) x$Results["alpha", "Estimate"])
-  delta <- sapply(qpin_obj, function(x) x$Results["delta", "Estimate"])
-  epsilon_b <- sapply(qpin_obj, function(x) x$Results["epsilon_b", "Estimate"])
-  epsilon_s <- sapply(qpin_obj, function(x) x$Results["epsilon_s", "Estimate"])
-  mu <- sapply(qpin_obj, function(x) x$Results["mu", "Estimate"])
-  pin <- sapply(qpin_obj, function(x) x$pin)
+  alpha <- sapply(x, function(x) x$Results["alpha", "Estimate"])
+  delta <- sapply(x, function(x) x$Results["delta", "Estimate"])
+  epsilon_b <- sapply(x, function(x) x$Results["epsilon_b", "Estimate"])
+  epsilon_s <- sapply(x, function(x) x$Results["epsilon_s", "Estimate"])
+  mu <- sapply(x, function(x) x$Results["mu", "Estimate"])
+  pin <- sapply(x, function(x) x$pin)
 
   qpin_df <- data.frame(Quarter = quat, alpha = alpha, delta = delta, epsilon_b = epsilon_b,
                         epsilon_s = epsilon_s, mu = mu, PIN = pin)
-  qpin_df <- reshape2::melt(qpin_df, id.vars = "Quarter")
+  qpin_df <- melt(qpin_df, id.vars = "Quarter")
 
   ID <- character(nrow(qpin_df))
   ID[qpin_df[,"variable"] %in% c("alpha", "delta")] <- "Probability Parameters"
@@ -76,15 +82,15 @@ qpin_plot <- function(qpin_obj) {
                                              "Intensity Parameters",
                                              "Prob. of Informed Trading"))
 
-  p <- ggplot2::ggplot(data = qpin_df, ggplot2::aes_string(x = "Quarter", y = "value", group = "variable")) +
-    ggplot2::facet_grid(facet_ordered~., scales = "free_y") +
-    ggplot2::geom_line(ggplot2::aes_string(colour = "variable", x = "Quarter", y = "value")) +
-    ggplot2::geom_point(shape = 19, size = 1.25, ggplot2::aes_string(colour = "variable")) +
-    # ggplot2::xlab("\n Quarter") +
-    ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(n = 3)) +
-    ggplot2::theme(legend.position="right",
-                   axis.title.y = ggplot2::element_blank(),
-                   axis.title.x = ggplot2::element_blank(),
-                   legend.title = ggplot2::element_blank())
+  p <- ggplot(data = qpin_df, aes_string(x = "Quarter", y = "value", group = "variable")) +
+    facet_grid(facet_ordered~., scales = "free_y") +
+    geom_line(aes_string(colour = "variable", x = "Quarter", y = "value")) +
+    geom_point(shape = 19, size = 1.25, aes_string(colour = "variable")) +
+    # xlab("\n Quarter") +
+    scale_y_continuous(breaks = pretty_breaks(n = 3)) +
+    theme(legend.position="right",
+                   axis.title.y = element_blank(),
+                   axis.title.x = element_blank(),
+                   legend.title = element_blank())
   p
 }

@@ -22,6 +22,9 @@
 #'  \item{rem}{Total number of removed sets of initial values}
 #'  }
 #'
+#'  @importFrom stats dist, cutree
+#'  @importFrom fastcluster hclust
+#'
 #' @examples
 #' # Loading simulated datasets
 #'
@@ -79,6 +82,7 @@ initial_vals <- function(numbuys = NULL, numsells = NULL,
                          length = 5, num_clust = 5, details = FALSE) {
   if(is.null(numbuys)) stop("Missing data for 'numbuys'")
   if(is.null(numsells)) stop("Missing data for 'numsells'")
+  if(length(numbuys) != length(numsells)) stop("Unequal lengths for 'numbuys' and 'numsells'")
 
   meth <- match.arg(method, choices = c("HAC", "HAC_Ref", "Grid"))
 
@@ -141,8 +145,8 @@ init_grid_search <- function(numbuys = NULL, numsells = NULL,
 init_hac <- function(numbuys = NULL, numsells = NULL) {
   N <- length(numbuys)
   order_imb <- numbuys - numsells
-  clust <- fastcluster::hclust(stats::dist(order_imb), method = "complete")
-  clust3 <- stats::cutree(clust, k = 3)
+  clust <- hclust(dist(order_imb), method = "complete")
+  clust3 <- cutree(clust, k = 3)
 
   cluster_means <- numeric(3)
 
@@ -220,8 +224,8 @@ init_hac_ref <- function(numbuys = NULL, numsells = NULL, j = 5) {
   res <- matrix(data = NA, nrow = j, ncol = 5)
   colnames(res) <- c("alpha", "delta", "epsilon_b", "epsilon_s", "mu")#, "ll")
 
-  clust <- fastcluster::hclust(stats::dist(abs_order_imb), method = "complete")
-  clustj <- stats::cutree(clust, k = j + 1)
+  clust <- hclust(dist(abs_order_imb), method = "complete")
+  clustj <- cutree(clust, k = j + 1)
 
   cluster_means <- numeric(j + 1)
   for(k in 1:(j + 1)){

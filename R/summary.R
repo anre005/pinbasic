@@ -33,6 +33,7 @@ vcov_car <- function(param = NULL, numbuys = NULL, numsells = NULL,
 
   hess <- tryCatch(stats::optimHess(fn = function(x) fun(join_param(x)), par = param[!bound.hit]),
                    error = function(e) e)
+
   if(is.matrix(hess)) {
     if(any(is.nan(hess)) | any(is.na(hess)) | any(is.infinite(hess))) {
       warning("NaN, NA or infinite values in Hesse matrix")

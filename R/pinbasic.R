@@ -15,12 +15,20 @@
 #' likelihood maximization.
 #' The \code{\link{qpin}} function delivers quarterly estimates.
 #' The number of available quarters in the data are detected utilizing functions from the \code{\link[lubridate]{lubridate}} package.
-#' Quarterly estimates can be visualized with the \code{\link{qpin_plot}} function.
+#' Quarterly estimates can be visualized with the \code{\link[ggplot2]{ggplot}} function.
+#' Datasets of daily aggregated numbers of buys and sells can be simulated with \code{\link{simulateBS}}.
+#' Calculation of confidence intervals for the probability of informed trading can be enabled by \code{confint} argument in
+#' optimization routines (\code{\link{pin_est_core}}, \code{\link{pin_est}} and \code{\link{qpin}}) or by calling \code{\link{pin_confint}} directly.
+#' Additionally, posterior probabilities for conditions of trading days can be computed with \code{\link{posterior}} and
+#' plotted with \code{\link[ggplot2]{ggplot}}.
 #'
 #' @section Functions:
 #' \describe{
+#'  \item{\code{\link{ggplot.posterior}}}{Visualization method for results of \code{\link{posterior}} with ggplot2.}
+#'  \item{\code{\link{ggplot.qpin}}}{Visualization method for results of \code{\link{qpin}} with ggplot2.}
 #'  \item{\code{\link{initial_vals}}}{Generating initial values by brute force grid search, hierarchical agglomerative clustering algorithm or
 #'                                    refined hierarchical agglomerative clustering technique.}
+#'  \item{\code{\link{posterior}}}{Calculation of posterior probabilities of trading days' conditions.}
 #'  \item{\code{\link{pin_calc}}}{Computing the probability of informed trading (PIN).}
 #'  \item{\code{\link{pin_confint}}}{Calculation of confidence intervals for the probability of informed trading.}
 #'  \item{\code{\link{pin_est_core}}}{Core function of maximization routines for PIN likelihood function. It grants the most control over optimization procedure.
@@ -32,7 +40,6 @@
 #'                              Lin and Ke (2011).}
 #'  \item{\code{\link{qpin}}}{Returns quarterly estimates, function is a wrapper around \code{\link{pin_est}} and
 #'                            inherits its optimization settings.}
-#'  \item{\code{\link{qpin_plot}}}{Visualization method for results of \code{\link{qpin}}.}
 #'  \item{\code{\link{simulateBS}}}{Simulate datasets of aggregated daily buys and sells.}
 #' }
 #'

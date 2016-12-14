@@ -39,6 +39,7 @@
 #'          \code{\link{qpin}}
 #'
 #' @import parallel
+#' @importFrom stats nlminb
 #'
 #' @references
 #' Easley, David et al. (2002) \cr
@@ -84,8 +85,6 @@
 #' An improved estimation method and empirical properties of the probability of informed trading \cr
 #' \emph{Journal of Banking & Finance}, Volume 36, Issue 2, pp. 454 - 467 \cr
 #' \doi{10.1016/j.jbankfin.2011.08.003}
-#'
-#' @importFrom stats nlminb
 #'
 #' @return
 #' If \code{num_best_res} = 1, a list with following elements is returned:
@@ -158,6 +157,7 @@ pin_est_core <- function(numbuys = NULL, numsells = NULL,
                          confint = FALSE, ci_control = list()) {
   if(is.null(init_vals)) stop("No initial values provided!")
   if(is.null(lower) || is.null(upper)) stop("Lower or upper bounds missing!")
+  if(length(numbuys) != length(numsells)) stop("Unequal lengths for 'numbuys' and 'numsells'")
 
   factr <- match.arg(factorization)
 
@@ -264,6 +264,7 @@ pin_est_core <- function(numbuys = NULL, numsells = NULL,
 
     mat_list[["ll"]] <- mat[1,"loglike"]
     mat_list[["pin"]] <- mat[1,"PIN"]
+    mat_list[["conv"]] <- mat[1,"Convergence"]
     mat_list[["message"]] <- opt_message[1]
     mat_list[["iterations"]] <- mat[1,"Iterations"]
     mat_list[["init_vals"]] <- start_vals[1,]

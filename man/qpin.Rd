@@ -4,8 +4,8 @@
 \alias{qpin}
 \title{Quarterly PIN estimates}
 \usage{
-qpin(numbuys = NULL, numsells = NULL, dates = NULL, lower = rep(0, 5),
-  upper = c(1, 1, rep(Inf, 3)), confint = FALSE, ci_control = list())
+qpin(numbuys = NULL, numsells = NULL, dates = NULL, confint = FALSE,
+  ci_control = list())
 }
 \arguments{
 \item{numbuys}{\emph{numeric} vector of daily buys}
@@ -14,17 +14,13 @@ qpin(numbuys = NULL, numsells = NULL, dates = NULL, lower = rep(0, 5),
 
 \item{dates}{see \strong{Details}}
 
-\item{lower}{\emph{numeric} lower bounds for optimization, must have length of 5}
-
-\item{upper}{\emph{numeric} upper bounds for optimization, must have length of 5}
-
 \item{confint}{\emph{logical} Compute confidence intervals for PIN?
 Defaults to \code{FALSE}}
 
 \item{ci_control}{\emph{list} see \code{\link{pin_est_core}}}
 }
 \value{
-A list of lists. The length of the outer list equals the number of available quarters in the data.
+A list of lists with class 'qpin'. The length of the outer list equals the number of available quarters in the data.
 Naming scheme for the outer list is 'Year.QuarterNumber', where QuarterNumber equals an integer from 1 to 4.
 The inner list is structured as follows:
 \describe{

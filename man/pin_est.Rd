@@ -4,17 +4,13 @@
 \alias{pin_est}
 \title{Estimating PIN}
 \usage{
-pin_est(numbuys = NULL, numsells = NULL, lower = rep(0, 5), upper = c(1,
-  1, rep(Inf, 3)), confint = FALSE, ci_control = list())
+pin_est(numbuys = NULL, numsells = NULL, confint = FALSE,
+  ci_control = list())
 }
 \arguments{
 \item{numbuys}{\emph{numeric} vector of daily buys}
 
 \item{numsells}{\emph{numeric} vector of daily sells}
-
-\item{lower}{\emph{numeric} lower bounds for optimization, must have length of 5}
-
-\item{upper}{\emph{numeric} upper bounds for optimization, must have length of 5}
 
 \item{confint}{\emph{logical} Compute confidence intervals for PIN?
 Defaults to \code{FALSE}}
