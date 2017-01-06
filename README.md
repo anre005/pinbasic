@@ -5,16 +5,22 @@
 pinbasic: Fast and Stable Estimation of the Probability of Informed Trading (PIN)
 =================================================================================
 
-Utilities for fast and stable estimation of the probability of informed trading (PIN) in the model introduced by Easley, Hvidkjaer and O'Hara (EHO, 2002) are implemented. Since the model developed by Easley, Kiefer, O'Hara and Paperman (EKOP, 1996) is nested in the EHO model due to equating the intensity of uninformed buys and sells, functionalities can also be be applied to this simpler model structure, if needed. State-of-the-art factorization of the model likelihood function as well as hierarchical agglomerative clustering algorithm for generating initial values for optimizations are provided. In total, two different likelihood factorizations and three methodologies generating starting values are implemented which are implemented in functions `pin_ll` and `initial_vals`, respectively. The probability of informed trading can be estimated for arbitrary length of daily buys and sells data with `pin_est` function which is a wrapper around the workhorse function `pin_est_core`. No information about the time span of the underlying data is required to perform optimizations. However, recommendation given in the literature is using at least data for 60 trading days to ensure convergence of the likelihood maximization. The `qpin` function delivers quarterly estimates. The number of available quarters in the data are detected utilizing functions from the **lubridate** package. Quarterly estimates can be visualized with the `qpin_plot` function. Datasets of daily aggregated numbers of buys and sells can be simulated with `simulateBS`. Calculation of confidence intervals for the probability of informed trading can be enabled by `confint` argument in optimization routines (`pin_est_core`, `pin_est` and `qpin`) or by calling `pin_confint` directly.
+The `pinbasic` package ships utilities for fast and stable estimation of the probability of informed trading in the static \(\pintext\) framework. The function design is chosen to fit the extended EHO model setup but can also be applied to the simpler EKOP model by equating the intensities of uninformed buys and sells. State-of-the-art factorization of the model likelihood function as well as most recent algorithms for generating initial values for optimization routines are implemented. In total, two likelihood factorizations and three methodologies for starting values are included. Likelihood functions are evaluated with `pin_ll` and sets of starting values are returned by `initial_vals`. The probability of informed trading can be estimated for arbitrary length of daily buys and sells data with `pin_est` which is a wrapper around the workhorse function `pin_est_core`. No information about the time span of the underlying data is required to perform optimizations with `pin_est`. However, the recommendation given in the literature is using at least data for 60 trading days to ensure convergence of the likelihood maximization. Quarterly estimates are returned by `qpin` which can be visualized with `ggplot`. Datasets of daily aggregated numbers of buys and sells can be simulated with `simulateBS`. Calculation of confidence intervals for the probability of informed trading can be enabled by `confint` argument in optimization routines (`pin_est_core`, `pin_est` and `qpin`) or by calling `pin_confint` directly. Additionally, posterior probabilities for conditions of trading days can be computed with `posterior` and plotted with `ggplot`.
 
 Examples
 --------
 
+The dataset `BSfrequent` cover 60 trading days and represent a frequently traded equity. Model parameters and the probability of informed trading can be estimated with `pin_est`.
+
 ``` r
 library(pinbasic)
 
+# Loading data
 data("BSfrequent")
-pin_est(numbuys = BSfrequent[,"Buys"], numsells = BSfrequent[,"Sells"])
+
+# Estimation
+pin_freq <- pin_est(numbuys = BSfrequent[,"Buys"], numsells = BSfrequent[,"Sells"])
+pin_freq
 #> $Results
 #>            Estimate  Std. error    t value      Pr(> t)
 #> alpha        0.2000  0.05163873   3.873062 0.0001074766
@@ -32,7 +38,8 @@ pin_est(numbuys = BSfrequent[,"Buys"], numsells = BSfrequent[,"Sells"])
 #> 0.03296587 
 #> 
 #> $conv
-#> NULL
+#> Convergence 
+#>           0 
 #> 
 #> $message
 #> [1] "relative convergence (4)"
@@ -46,21 +53,69 @@ pin_est(numbuys = BSfrequent[,"Buys"], numsells = BSfrequent[,"Sells"])
 #>    0.2000    0.5000 1805.4259 1700.6852  597.6111
 ```
 
+`BSfrequent2015` contains simulated daily buys and sells for a frequently traded equity for business days in 2015. `qpin` returns quarterly estimates which can be visualized with `ggplot`.
+
 ``` r
-# Quarterly Estimates and Visualization for one year of synthetic data
+# Quarterly PIN estimates
+# Confidence interval computation enabled:
+#   * using only 1000 simulated datasets
+#   * confidence level set to 0.95
+#   * seed set to 123
+
 data('BSfrequent2015')
 qpin2015 <- qpin(numbuys = BSfrequent2015[,"Buys"], numsells = BSfrequent2015[,"Sells"],
-                 dates = as.Date(rownames(BSfrequent2015), format = "%Y-%m-%d"))
+                 dates = as.Date(rownames(BSfrequent2015), format = "%Y-%m-%d"),
+                 confint = TRUE, ci_control = list(n = 1000, seed = 123))
 
-qpin_plot(qpin2015)
+# Print confidence intervals for all four quarters
+ci_quarters <- lapply(qpin2015, function(x) x$confint)
+ci_quarters
+#> $`2015.1`
+#>       2.5%      97.5% 
+#> 0.02793563 0.06111148 
+#> 
+#> $`2015.2`
+#>        2.5%       97.5% 
+#> 0.008006271 0.033372790 
+#> 
+#> $`2015.3`
+#>       2.5%      97.5% 
+#> 0.03784720 0.07340393 
+#> 
+#> $`2015.4`
+#>       2.5%      97.5% 
+#> 0.01032233 0.03707366
+
+# Visualization of estimated parameters
+library(ggplot2)
+ggplot(qpin2015)
 ```
 
-![](README-quarterly_pin-1.png)
+![](README-unnamed-chunk-3-1.png)
+
+Posterior probabilities of trading days' condition are returned by `posterior` and can be displayed with `ggplot`. The following code chunk shows how posterior probabilities for `BSfrequent2015` in the third quarter can be calculated and visualized.
+
+``` r
+# Corresponding parameter estimates
+freq_2015.3 <- qpin2015$'2015.3'$Results[,"Estimate"]
+
+# Subsetting data
+third_quarter <- subset(BSfrequent2015, subset = lubridate::quarter(rownames(BSfrequent2015)) == 3)
+
+# Calculating posterior probabilities
+post_third <- posterior(param = freq_2015.3, 
+                        numbuys = third_quarter[,"Buys"], numsells = third_quarter[,"Sells"])
+
+# Plotting
+ggplot(post_third)
+```
+
+![](README-postdates-1.png)
 
 Installation
 ------------
 
-You may install the stable version from **CRAN**, or the development version using **devtools**:
+You may install the stable version from **CRAN**, or the development version from GitHub using **devtools**:
 
 ``` r
 # install from CRAN
@@ -69,8 +124,3 @@ install.packages("pinbasic")
 # install from github using devtools
 devtools::install_github("anre005/pinbasic")
 ```
-
-Github
-------
-
-[Github Repo:anre005/pinbasic](https://github.com/anre005/pinbasic)

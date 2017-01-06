@@ -12,6 +12,8 @@ Description: Utilities for fast and stable estimation of the probability of
  can also be applied to this simpler model structure, if needed. 
  State-of-the-art factorization of the model likelihood function as well as 
  most recent algorithms for generating initial values for optimization routines are implemented. 
+ In total, two likelihood factorizations and three methodologies for 
+ starting values are included. 
  Furthermore, functions for simulating datasets of daily aggregated buys and sells, 
  calculating confidence intervals for the probability of informed trading and posterior probabilities 
  of trading days' conditions are available. 

@@ -8,9 +8,11 @@
 #'
 #' @seealso \code{\link{qpin}}
 #'
-#' @import ggplot2
-#' @import scales
-#' @import reshape2
+#' @importFrom ggplot2 ggplot aes_string facet_grid
+#' @importFrom ggplot2 geom_line geom_point scale_y_continuous
+#' @importFrom ggplot2 theme element_blank
+#' @importFrom scales pretty_breaks
+#' @importFrom reshape2 melt
 #'
 #' @examples
 #' # Loading one year of simulated daily buys and sells

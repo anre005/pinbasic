@@ -1,7 +1,7 @@
 ## Examples
 The `pinbasic` packages is equipped with four synthetic datasets of daily buys and sells, 
 `BSinfrequent`, `BSfrequent`, `BSfrequent2015` and `BSheavy`. 
-The represent infrequently, frequently and heavily traded equities, respectively. 
+They represent infrequently, frequently and heavily traded equities, respectively. 
 The datasets `BSinfrequent`, `BSfrequent` and `BSheavy` cover 60 trading days, whereas 
 `BSfrequent2015` contains simulated daily buys and sells for business days in 2015. 
 The datasets can be loaded with `data` function.

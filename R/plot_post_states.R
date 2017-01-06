@@ -6,7 +6,9 @@
 #'
 #' @seealso \code{\link{posterior}}
 #'
-#' @import ggplot2
+#' @importFrom ggplot2 ggplot aes geom_bar
+#' @importFrom ggplot2 ylab scale_fill_discrete guide_legend
+#' @importFrom ggplot2 theme element_blank
 #' @importFrom reshape2 melt
 #'
 #' @return An object of class \code{\link[ggplot2]{ggplot}}.
