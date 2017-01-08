@@ -8,7 +8,7 @@ Description: Utilities for fast and stable estimation of the probability of
  informed trading (PIN) in the model introduced by Easley et al. (2002) 
  <DOI:10.1111/1540-6261.00493> are implemented. Since the basic model developed 
  by Easley et al. (1996) <DOI:10.1111/j.1540-6261.1996.tb04074.x> is nested in the 
- former due to equating the intensity of uninformed buys and sells, functionalities 
+ former due to equating the intensity of uninformed buys and sells, functions 
  can also be applied to this simpler model structure, if needed. 
  State-of-the-art factorization of the model likelihood function as well as 
  most recent algorithms for generating initial values for optimization routines are implemented. 
