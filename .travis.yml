@@ -9,9 +9,6 @@ matrix:
       r: oldrel
     - os: linux
       sudo: false
-      r: release
-    - os: linux
-      sudo: false
       r: devel
     - os: osx
       disable_homebrew: true
@@ -19,9 +16,5 @@ matrix:
     - os: osx
       disable_homebrew: true
       r: release
-    - os: osx
-      disable_homebrew: true
-      osx_image: xcode8
-      r: devel
       
 warnings_are_errors: true
