@@ -22,8 +22,8 @@
 #'  \item{rem}{Total number of removed sets of initial values}
 #'  }
 #'
-#'  @importFrom stats dist, cutree
-#'  @importFrom fastcluster hclust
+#' @importFrom stats dist cutree
+#' @importFrom fastcluster hclust
 #'
 #' @examples
 #' # Loading simulated datasets

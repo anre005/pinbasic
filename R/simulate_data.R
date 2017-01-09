@@ -11,7 +11,7 @@
 #' @param seed \emph{interpretted as integer}: setting seed for RNG, defaults to \code{NULL}; for more detail see
 #'             \code{\link[base]{set.seed}}
 #' @param ndays \emph{integer}: Number of trading days for which aggregated buys and sells are simulated, defaults to 60
-#' @import stats
+#' @importFrom stats rpois
 #'
 #' @export simulateBS
 

@@ -38,7 +38,7 @@
 #'          \code{\link{pin_est}}
 #'          \code{\link{qpin}}
 #'
-#' @import parallel
+#' @importFrom parallel detectCores
 #' @importFrom stats nlminb
 #'
 #' @references

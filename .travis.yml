@@ -1,9 +1,27 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-
-os: osx
 language: r
-r:
-  - oldrel
-  - release
-sudo: false
 cache: packages
+
+matrix:
+  include:
+    - os: linux
+      sudo: false
+      r: oldrel
+    - os: linux
+      sudo: false
+      r: release
+    - os: linux
+      sudo: false
+      r: devel
+    - os: osx
+      disable_homebrew: true
+      r: oldrel
+    - os: osx
+      disable_homebrew: true
+      r: release
+    - os: osx
+      disable_homebrew: true
+      osx_image: xcode8
+      r: devel
+      
+warnings_are_errors: true

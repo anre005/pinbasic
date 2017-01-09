@@ -33,9 +33,6 @@ Matrix with set(s) of initial values for PIN model optimization.
  \item{irr_mu}{Number of infeasible sets due to intensity of informed trading larger than any daily buys and sells data}
  \item{rem}{Total number of removed sets of initial values}
  }
-
- @importFrom stats dist, cutree
- @importFrom fastcluster hclust
 }
 \description{
 Generates set(s) of initial values which can be used in PIN optimization routines.

@@ -17,9 +17,10 @@
 #'
 #' @return \emph{numeric}: confidence interval
 #'
-#' @import foreach
-#' @import doParallel
-#' @import parallel
+#' @importFrom stats nlminb quantile
+#' @importFrom foreach foreach %dopar%
+#' @importFrom doParallel registerDoParallel
+#' @importFrom parallel makeCluster stopCluster
 #' @importFrom iterators iter
 #'
 #' @export pin_confint
