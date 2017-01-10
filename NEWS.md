@@ -1,3 +1,9 @@
+## pinbasic v1.0.1
+
+### Fixes
+
+* fixed NAMESPACE issues
+
 ## pinbasic v1.0.0 (Release Date: 2017-01-09)
 
 ### New Functions
