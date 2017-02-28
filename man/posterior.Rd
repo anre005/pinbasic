@@ -31,4 +31,3 @@ For more details see corresponding section in vignette
 \seealso{
 \code{\link{ggplot.posterior}}
 }
-

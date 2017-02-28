@@ -22,4 +22,3 @@ Visualization of posterior probabilities returned by \code{post_states} with ggp
 \seealso{
 \code{\link{posterior}}
 }
-

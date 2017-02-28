@@ -118,4 +118,6 @@
 #'
 #' @docType package
 #' @name pinbasic
+#' @importFrom Rcpp sourceCpp
+#' @useDynLib pinbasic
 NULL

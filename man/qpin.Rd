@@ -111,4 +111,3 @@ An improved estimation method and empirical properties of the probability of inf
          \code{\link[lubridate]{quarter}}
          \code{\link[lubridate]{year}}
 }
-

@@ -52,4 +52,3 @@ scales: Scale Functions for Visualization \cr
 \seealso{
 \code{\link{qpin}}
 }
-

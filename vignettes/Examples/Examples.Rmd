@@ -26,7 +26,7 @@ Exemplary, $\pintext$ for `BSheavy` dataset is estimated.
 # confidence interval computation enabled
 pin_bsheavy <- pin_est(numbuys = BSheavy[,"Buys"],
                        numsells = BSheavy[,"Sells"], 
-                       confint = TRUE)
+                       confint = TRUE, ci_control = list(n = 1000, seed = 123))
 ```
 
 ```{r loadpinest, echo = FALSE}

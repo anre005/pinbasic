@@ -19,4 +19,3 @@ BSinfrequent
 A matrix containing three months of synthetic daily buys and sells data representing an infrequently traded stock.
 }
 \keyword{datasets}
-

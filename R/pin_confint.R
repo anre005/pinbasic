@@ -4,9 +4,9 @@
 #'
 #' If names are not set for \code{param} or one or more of the vector names do not match the valid choices, they are internally set to
 #' \code{'alpha'}, \code{'delta'}, \code{'epsilon_b'}, \code{'epsilon_s'}, \code{'mu'} (in this order). \cr
-#' The \pkg{foreach}, \pkg{doParallel} and \pkg{parallel} packages are utilized for computation of confidence intervals in parallel.
-#' By default, \code{ncores} is set to \code{\link[parallel]{detectCores}} which attempts to utilize all available cores for computation.
-#' This task may be slow and time-consuming on older or single-core machines.
+#' By default, only one core is utilized in computations (\code{ncores} = 1).
+#' Confidence intervals can also be calculated in parallel, howwever,
+#' this only pays off for large values of \code{n} (> 5000).
 #'
 #' @inheritParams pin_ll
 #' @inheritParams simulateBS
@@ -14,35 +14,30 @@
 #' @param n \emph{integer}: Number of simulation runs, defaults to 10000
 #' @param level \emph{numeric}: Confidence level, defaults to 0.95
 #' @param ncores \emph{integer}: Number of cpu cores utilized in computation, defaults to \code{\link[parallel]{detectCores}}
+#' @param cl_type \emph{character}: see \code{\link[parallel]{makeCluster}}
 #'
 #' @return \emph{numeric}: confidence interval
 #'
 #' @importFrom stats nlminb quantile
-#' @importFrom foreach foreach %dopar%
-#' @importFrom doParallel registerDoParallel
-#' @importFrom parallel makeCluster stopCluster
-#' @importFrom iterators iter
+#' @importFrom parallel makeCluster stopCluster clusterCall
 #'
 #' @export pin_confint
 #'
 pin_confint <- function(param = NULL, numbuys = NULL, numsells = NULL,
                         lower = rep(0, 5), upper = c(1,1, rep(Inf, 3)),
-                        n = 10000, seed = NULL, level = 0.95, ncores = detectCores()) {
+                        n = 10000, seed = NULL, level = 0.95,
+                        ncores = 1, cl_type = "PSOCK") {
   param <- param_check(param)
   if(!is.numeric(ncores) && ncores < 1) stop("No valid 'ncores' argument!")
   if(length(numbuys) != length(numsells)) stop("Unequal lengths for 'numbuys' and 'numsells'")
-  if(!is.null(seed)) {
-    set.seed(seed)
-  } else {
-    seed <- sample(1e5,1)
-  }
+  if(!is.null(seed)) set.seed(seed)
 
   sim_pin <- numeric(n)
 
   ndays <- length(numbuys)
 
-  fn <- function(x, buys, sells) {
-    pin_ll(param = x,
+  fn <- function(par, buys, sells) {
+    pin_ll(param = par,
            numbuys = buys, numsells = sells,
            factorization = "Lin_Ke")
   }
@@ -51,50 +46,64 @@ pin_confint <- function(param = NULL, numbuys = NULL, numsells = NULL,
     init_vals <- initial_vals(numbuys = numbuys, numsells = numsells,
                               method = "HAC")
 
-    tmp <- nlminb(start = init_vals[1,], objective = function(x) -fn(x, numbuys, numsells),
-                  lower = lower, upper = upper)
-
-    param_dat <- tmp$par
+    param_dat <- nlminb(start = init_vals[1,], objective = function(x) -fn(x, numbuys, numsells),
+                 lower = lower, upper = upper)$par
   } else param_dat <- param
 
-  sim_dat <- vector("list", n)
-  seed_seq <- seq(from = seed, to = seed + (n - 1))
+  sim_dat <- replicate(n = n, simulateBS(param = param_dat, ndays = ndays), simplify = FALSE)
 
-  for(i in 1:n) {
-    sim_dat[[i]] <- simulateBS(param = param_dat, seed = seed_seq[i], ndays = ndays)
-  }
-
+  initial_mat <- lapply(sim_dat, function(x) {initial_vals(numbuys = x[,"Buys"],
+                                                           numsells = x[, "Sells"],
+                                                           method = "HAC")})
   if(ncores == 1) {
-    par_est <- vector("list", n)
-
-    initial_mat <- lapply(sim_dat, function(x) {initial_vals(numbuys = x[,"Buys"],
-                                                             numsells = x[, "Sells"],
-                                                             method = "HAC")})
-
-    for(i in 1:n) {
-      par_est[[i]] <- nlminb(start = initial_mat[i,],
-                             objective = function(x) -fn(x, sim_dat[[i]][,"Buys"], sim_dat[[i]][,"Sells"]),
-                             lower = lower, upper = upper)$par
-    }
-
-    sim_pin <- unlist(lapply(par_est, function(x) pin_calc(x)))
+    par_est <- Map(function(x,y) nlminb(start = y[1,],
+                                        objective = function(par) -fn(par, x[,"Buys"], x[,"Sells"]),
+                                        lower = lower, upper = upper)$par,
+                   x = sim_dat, y = initial_mat)
   } else {
-    itx <- iter(sim_dat)
-    cl <- makeCluster(ncores)
-    registerDoParallel(cl)
+    cl <- makeCluster(getOption("cl.cores", ncores), type = cl_type)
 
-    sim_pin <- foreach(i = itx, .combine = "c") %dopar% {
-      init_vals <- initial_vals(numbuys = i[,"Buys"], numsells = i[,"Sells"],
-                                method = "HAC")
+    split_ind <- split(seq_len(n), seq_len(ncores))
 
-      param <- nlminb(start = init_vals[1,], objective = function(x) -fn(x, i[,"Buys"], i[,"Sells"]),
-                      lower = lower, upper = upper)$par
+    cl_export(cl, sim_dat, initial_mat, split_ind)
 
-      pin_calc(param)
-    }
+    par_est <- clusterCall(cl, fun = ci_mc_helper, fn = fn, lower = lower, upper = upper)
 
-    stopCluster(cl)
+    par_est <- do.call(c, par_est)
+
+    on.exit(stopCluster(cl))
   }
+  sim_pin <- sapply(par_est, function(x) pin_calc(x))
   conf <- quantile(sim_pin, probs = c((1-level)/2, 1 - (1-level)/2))
   conf
+}
+
+
+#################################################
+#
+# helper function for parallel computation
+#
+#################################################
+
+ci_mc_helper <- function(fn = NULL, lower = NULL, upper = NULL) {
+  Map(function(x,y) nlminb(start = y[1,],
+                           objective = function(par) -fn(par, x[,"Buys"], x[,"Sells"]),
+                           lower = lower, upper = upper)$par,
+      x = get("data_sub", envir = .GlobalEnv), y = get("init_sub", envir = .GlobalEnv))
+}
+
+cl_export <- function(cl = NULL, sim_data = NULL, init_mat = NULL, split_ind = NULL) {
+  for (i in seq_along(cl)) {
+    clusterCall(cl[i], function(data, init) {
+      # assign('data_sub', data, pos = .GlobalEnv)
+      # assign('init_sub', init, pos = .GlobalEnv)
+      assign_to_global('data_sub', data)
+      assign_to_global('init_sub', init)
+      NULL  # don't return any data to the master
+    }, data = sim_data[split_ind[[i]]], init = init_mat[split_ind[[i]]])
+  }
+}
+
+assign_to_global <- function(string, object, pos=1){
+  assign(string, object, envir=as.environment(pos))
 }

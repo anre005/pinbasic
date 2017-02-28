@@ -41,4 +41,3 @@ A computing bias in estimating the probability of informed trading \cr
 \emph{Journal of Financial Markets}, Volume 14, Issue 4, pp. 625 - 640 \cr
 \doi{10.1016/j.finmar.2011.03.001}
 }
-

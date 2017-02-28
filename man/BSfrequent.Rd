@@ -19,4 +19,3 @@ BSfrequent
 A matrix containing three months of synthetic daily buys and sells data representing a frequently traded stock.
 }
 \keyword{datasets}
-

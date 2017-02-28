@@ -26,4 +26,3 @@ Simulates a matrix consisting of synthetic data for daily buys and sells
 If names are not set for \code{param} or one or more of the vector names do not match the valid choices, they are internally set to
 \code{'alpha'}, \code{'delta'}, \code{'epsilon_b'}, \code{'epsilon_s'}, \code{'mu'} (in this order).
 }
-

@@ -1,6 +1,15 @@
-pinbasic v1.0.1.9000
+pinbasic v1.1
 ----------------------------------------------------------------
 
+Fixes:
+
+  * `pin_confint` for `ncores = 1`; `seed` is set once at the beginning, hence results differ slightly from them of earlier version
+
+Changes:
+
+  * Code clean-up and less dependencies
+  * Likelihood factorizations are re-implemented with `Rcpp`
+  * `simulateBS` function is re-implemented with `Rcpp`
 
 pinbasic v1.0.1 (Release Date: 2017-01-11)
 ----------------------------------------------------------------

@@ -96,4 +96,3 @@ An improved estimation method and empirical properties of the probability of inf
          \code{\link{pin_est_core}}
          \code{\link{qpin}}
 }
-

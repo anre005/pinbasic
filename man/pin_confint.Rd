@@ -6,7 +6,7 @@
 \usage{
 pin_confint(param = NULL, numbuys = NULL, numsells = NULL,
   lower = rep(0, 5), upper = c(1, 1, rep(Inf, 3)), n = 10000,
-  seed = NULL, level = 0.95, ncores = detectCores())
+  seed = NULL, level = 0.95, ncores = 1, cl_type = "PSOCK")
 }
 \arguments{
 \item{param}{\emph{numeric} (named) vector of model parameters
@@ -29,6 +29,8 @@ length must equal 5}
 \item{level}{\emph{numeric}: Confidence level, defaults to 0.95}
 
 \item{ncores}{\emph{integer}: Number of cpu cores utilized in computation, defaults to \code{\link[parallel]{detectCores}}}
+
+\item{cl_type}{\emph{character}: see \code{\link[parallel]{makeCluster}}}
 }
 \value{
 \emph{numeric}: confidence interval
@@ -39,8 +41,7 @@ Computes confidence intervals for the probability of informed trading by simulat
 \details{
 If names are not set for \code{param} or one or more of the vector names do not match the valid choices, they are internally set to
 \code{'alpha'}, \code{'delta'}, \code{'epsilon_b'}, \code{'epsilon_s'}, \code{'mu'} (in this order). \cr
-The \pkg{foreach}, \pkg{doParallel} and \pkg{parallel} packages are utilized for computation of confidence intervals in parallel.
-By default, \code{ncores} is set to \code{\link[parallel]{detectCores}} which attempts to utilize all available cores for computation.
-This task may be slow and time-consuming on older or single-core machines.
+By default, only one core is utilized in computations (\code{ncores} = 1).
+Confidence intervals can also be calculated in parallel, howwever,
+this only pays off for large values of \code{n} (> 5000).
 }
-

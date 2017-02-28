@@ -20,4 +20,3 @@ A matrix containing one year of synthetic daily buys and sells data representing
 Rownames equal the business days in 2015.
 }
 \keyword{datasets}
-

@@ -32,4 +32,3 @@ Liquidity, Information, and Infrequently Traded Stocks\cr
 \emph{The Journal of Finance}, Volume 51, Number 4, pp. 1405 - 1436 \cr
 \doi{10.1111/j.1540-6261.1996.tb04074.x}
 }
-

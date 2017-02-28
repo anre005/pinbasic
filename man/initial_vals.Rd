@@ -86,4 +86,3 @@ An improved estimation method and empirical properties of the probability of inf
 \emph{Journal of Banking & Finance}, Volume 36, Issue 2, pp. 454 - 467 \cr
 \doi{10.1016/j.jbankfin.2011.08.003}
 }
-
