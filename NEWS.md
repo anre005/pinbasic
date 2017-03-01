@@ -6,7 +6,7 @@
 
 ### Changes
 
-* Code clean-up and less dependencies
+* Code clean-up for `pin_confint` and thus less dependencies; `ncores = 1` by default now
 * Likelihood factorizations are re-implemented with `Rcpp`
 * `simulateBS` function is re-implemented with `Rcpp`
 
