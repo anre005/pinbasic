@@ -7,13 +7,13 @@
 posterior(param = NULL, numbuys = NULL, numsells = NULL)
 }
 \arguments{
-\item{param}{\emph{numeric} (named) vector of model parameters
+\item{param}{\emph{numeric}: (named) vector of model parameters
 (valid names: \code{'alpha'}, \code{'delta'}, \code{'epsilon_b'}, \code{'epsilon_s'}, \code{'mu'}),
 length must equal 5}
 
-\item{numbuys}{\emph{numeric} vector of daily buys}
+\item{numbuys}{\emph{numeric}: vector of daily buys}
 
-\item{numsells}{\emph{numeric} vector of daily sells}
+\item{numsells}{\emph{numeric}: vector of daily sells}
 }
 \value{
 \emph{numeric} matrix with columns 'no', 'good' and 'bad' representing posterior probabiities for the corresponding trading day conditions

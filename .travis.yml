@@ -7,9 +7,6 @@ matrix:
     - os: linux
       sudo: false
       r: oldrel
-    - os: linux
-      sudo: false
-      r: devel
     - os: osx
       disable_homebrew: true
       r: oldrel

@@ -8,9 +8,9 @@ initial_vals(numbuys = NULL, numsells = NULL, method = c("Grid", "HAC",
   "HAC_Ref"), length = 5, num_clust = 5, details = FALSE)
 }
 \arguments{
-\item{numbuys}{\emph{numeric} vector of daily buys}
+\item{numbuys}{\emph{numeric}: vector of daily buys}
 
-\item{numsells}{\emph{numeric} vector of daily sells}
+\item{numsells}{\emph{numeric}: vector of daily sells}
 
 \item{method}{\emph{character} Switch between algorithms for generating initial values,
 valid choices are: 'Grid', 'HAC' and 'HAC_Ref'}

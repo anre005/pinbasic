@@ -10,18 +10,19 @@
 #' \code{\link{nlminb}} function in the \pkg{stats} package is used for maximization.
 #' Vectors for \code{numbuys} and \code{numsells} need to have same length. \cr
 #' Calculation of confidence interval for the probability of informed trading is disabled by default.
-#' For more details see \code{\link{pin_est_core}}
+#' For more details see \code{\link{pin_est_core}} or \code{\link{pin_confint}}.
 #'
 #' @param dates see \strong{Details}
 #' @inheritParams pin_ll
 #' @inheritParams pin_est_core
 #' @inheritParams pin_confint
-#' @param ci_control \emph{list} see \code{\link{pin_est_core}}
+#' @param ci_control \emph{list}: see \code{\link{pin_est_core}}
 #'
 #' @seealso \code{\link{nlminb}},
 #'          \code{\link{initial_vals}}
 #'          \code{\link{pin_est}}
 #'          \code{\link{pin_est_core}}
+#'          \code{\link{pin_confint}}
 #'          \code{\link[lubridate]{quarter}}
 #'          \code{\link[lubridate]{year}}
 #'

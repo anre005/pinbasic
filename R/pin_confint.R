@@ -6,15 +6,14 @@
 #' \code{'alpha'}, \code{'delta'}, \code{'epsilon_b'}, \code{'epsilon_s'}, \code{'mu'} (in this order). \cr
 #' By default, only one core is utilized in computations (\code{ncores} = 1).
 #' Confidence intervals can also be calculated in parallel, howwever,
-#' this only pays off for large values of \code{n} (> 5000).
+#' this only pays off for large values of \code{n}.
 #'
 #' @inheritParams pin_ll
 #' @inheritParams simulateBS
 #' @inheritParams pin_est_core
 #' @param n \emph{integer}: Number of simulation runs, defaults to 10000
 #' @param level \emph{numeric}: Confidence level, defaults to 0.95
-#' @param ncores \emph{integer}: Number of cpu cores utilized in computation, defaults to \code{\link[parallel]{detectCores}}
-#' @param cl_type \emph{character}: see \code{\link[parallel]{makeCluster}}
+#' @param ncores \emph{integer}: Number of cpu cores utilized in computation, defaults to 1
 #'
 #' @return \emph{numeric}: confidence interval
 #'
@@ -26,11 +25,11 @@
 pin_confint <- function(param = NULL, numbuys = NULL, numsells = NULL,
                         lower = rep(0, 5), upper = c(1,1, rep(Inf, 3)),
                         n = 10000, seed = NULL, level = 0.95,
-                        ncores = 1, cl_type = "PSOCK") {
+                        ncores = 1) {
   param <- param_check(param)
   if(!is.numeric(ncores) && ncores < 1) stop("No valid 'ncores' argument!")
   if(length(numbuys) != length(numsells)) stop("Unequal lengths for 'numbuys' and 'numsells'")
-  if(!is.null(seed)) set.seed(seed)
+  set.seed(seed)
 
   sim_pin <- numeric(n)
 
@@ -61,7 +60,7 @@ pin_confint <- function(param = NULL, numbuys = NULL, numsells = NULL,
                                         lower = lower, upper = upper)$par,
                    x = sim_dat, y = initial_mat)
   } else {
-    cl <- makeCluster(getOption("cl.cores", ncores), type = cl_type)
+    cl <- makeCluster(getOption("cl.cores", ncores))
 
     split_ind <- split(seq_len(n), seq_len(ncores))
 
@@ -95,8 +94,6 @@ ci_mc_helper <- function(fn = NULL, lower = NULL, upper = NULL) {
 cl_export <- function(cl = NULL, sim_data = NULL, init_mat = NULL, split_ind = NULL) {
   for (i in seq_along(cl)) {
     clusterCall(cl[i], function(data, init) {
-      # assign('data_sub', data, pos = .GlobalEnv)
-      # assign('init_sub', init, pos = .GlobalEnv)
       assign_to_global('data_sub', data)
       assign_to_global('init_sub', init)
       NULL  # don't return any data to the master

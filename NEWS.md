@@ -7,6 +7,7 @@
 ### Changes
 
 * Code clean-up for `pin_confint` and thus less dependencies; `ncores = 1` by default now
+* Confidence interval computations invoked by `pin_est_core`, `pin_est` or `qpin` use only 1 CPU core by default now
 * Likelihood factorizations are re-implemented with `Rcpp`
 * `simulateBS` function is re-implemented with `Rcpp`
 

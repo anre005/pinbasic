@@ -2,18 +2,18 @@
 #'
 #' Estimates the probability of informed trading (PIN) for daily buys and sells trading data for arbitrary number of trading days.
 #'
-#' User-friendly wrapper around workhorse function \code{pin_ll_max}.
+#' User-friendly wrapper around workhorse function \code{pin_est_core}.
 #' \code{\link{nlminb}} function in the \pkg{stats} package is used for maximization.
 #' In the literature, at least data for 60 trading days is recommended to ensure convergence of optimization.
 #' No information about the trading days' dates is needed.
 #' Vectors for \code{numbuys} and \code{numsells} need to have same length. \cr
 #' Calculation of confidence interval for the probability of informed trading is disabled by default.
-#' For more details see \code{\link{pin_est_core}}
+#' For more details see \code{\link{pin_est_core}} or \code{\link{pin_confint}}.
 #'
 #' @inheritParams pin_ll
 #' @inheritParams pin_est_core
 #' @inheritParams pin_confint
-#' @param ci_control \emph{list} see \code{\link{pin_est_core}}
+#' @param ci_control \emph{list}: see \code{\link{pin_est_core}}
 #'
 #' @seealso \code{\link{nlminb}},
 #'          \code{\link{initial_vals}}

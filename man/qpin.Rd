@@ -8,16 +8,16 @@ qpin(numbuys = NULL, numsells = NULL, dates = NULL, confint = FALSE,
   ci_control = list())
 }
 \arguments{
-\item{numbuys}{\emph{numeric} vector of daily buys}
+\item{numbuys}{\emph{numeric}: vector of daily buys}
 
-\item{numsells}{\emph{numeric} vector of daily sells}
+\item{numsells}{\emph{numeric}: vector of daily sells}
 
 \item{dates}{see \strong{Details}}
 
-\item{confint}{\emph{logical} Compute confidence intervals for PIN?
+\item{confint}{\emph{logical}: Compute confidence intervals for PIN?
 Defaults to \code{FALSE}}
 
-\item{ci_control}{\emph{list} see \code{\link{pin_est_core}}}
+\item{ci_control}{\emph{list}: see \code{\link{pin_est_core}}}
 }
 \value{
 A list of lists with class 'qpin'. The length of the outer list equals the number of available quarters in the data.
@@ -47,7 +47,7 @@ According to the help page of this function \code{dates} argument must be \cr
 \code{\link{nlminb}} function in the \pkg{stats} package is used for maximization.
 Vectors for \code{numbuys} and \code{numsells} need to have same length. \cr
 Calculation of confidence interval for the probability of informed trading is disabled by default.
-For more details see \code{\link{pin_est_core}}
+For more details see \code{\link{pin_est_core}} or \code{\link{pin_confint}}.
 }
 \examples{
 # Loading one year of simulated daily buys and sells
@@ -108,6 +108,7 @@ An improved estimation method and empirical properties of the probability of inf
          \code{\link{initial_vals}}
          \code{\link{pin_est}}
          \code{\link{pin_est_core}}
+         \code{\link{pin_confint}}
          \code{\link[lubridate]{quarter}}
          \code{\link[lubridate]{year}}
 }
