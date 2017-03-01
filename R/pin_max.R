@@ -174,7 +174,7 @@ pin_est_core <- function(numbuys = NULL, numsells = NULL,
 
   if(nrow(mat) == 1) num_best_res <- 1
 
-  ci_con <- list(n = 10000, seed = 123, level = 0.95, ncores = detectCores())
+  ci_con <- list(n = 10000, seed = 123, level = 0.95, ncores = 1)
   names_ci <- names(ci_con)
 
   ci_con[(nam_ci <- names(ci_control))] <- ci_control
