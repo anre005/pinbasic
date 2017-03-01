@@ -65,8 +65,8 @@ Vectors for \code{numbuys} and \code{numsells} need to have same length. \cr \cr
 Confidence intervals for the probability of informed trading are calculated via Monte-Carlo-Simulation
 if \code{confint = TRUE}. Settings of the confidence interval simulation can be specified via a named list for \code{ci_control}.
 Valid list names are \code{n}, \code{seed}, \code{level} and \code{ncores} which pass
-number of simulation runs (defaults to 10000), seed for RNG (defaults to 123; if \code{seed = NULL} results are not reproducible),
-confidence level (default 0.95) and number of cpu cores utilized (default 1).
+number of simulation runs (defaults to 10000), seed for RNG (defaults to \code{seed = NULL}),
+confidence level (defaults to 0.95) and number of cpu cores utilized (defaults to 1).
 }
 \examples{
 # Loading simulated data for frequently traded stock

@@ -1,4 +1,4 @@
-## pinbasic v1.1 
+## pinbasic v1.1 (Release Date: 2017-03-01)
 
 ### Fixes
 

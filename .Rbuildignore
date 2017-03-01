@@ -1,10 +1,11 @@
 ^README\.Rmd$
+^README-.*\.png$
 Makefile
 pinbasic.Rproj
-cran-comments.md
+^cran-comments.md$
 
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^README-*
 ^\.travis\.yml$
-^README-.*\.png$
+^NEWS$
+

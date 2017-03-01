@@ -5,7 +5,7 @@
 pinbasic: Fast and Stable Estimation of the Probability of Informed Trading (PIN)
 =================================================================================
 
-The `pinbasic` package ships utilities for fast and stable estimation of the probability of informed trading in the static \(\pintext\) framework. The function design is chosen to fit the extended EHO model setup but can also be applied to the simpler EKOP model by equating the intensities of uninformed buys and sells. State-of-the-art factorization of the model likelihood function as well as most recent algorithms for generating initial values for optimization routines are implemented. In total, two likelihood factorizations and three methodologies for starting values are included. Likelihood functions are evaluated with `pin_ll` and sets of starting values are returned by `initial_vals`. The probability of informed trading can be estimated for arbitrary length of daily buys and sells data with `pin_est` which is a wrapper around the workhorse function `pin_est_core`. No information about the time span of the underlying data is required to perform optimizations with `pin_est`. However, the recommendation given in the literature is using at least data for 60 trading days to ensure convergence of the likelihood maximization. Quarterly estimates are returned by `qpin` which can be visualized with `ggplot`. Datasets of daily aggregated numbers of buys and sells can be simulated with `simulateBS`. Calculation of confidence intervals for the probability of informed trading can be enabled by `confint` argument in optimization routines (`pin_est_core`, `pin_est` and `qpin`) or by calling `pin_confint` directly. Additionally, posterior probabilities for conditions of trading days can be computed with `posterior` and plotted with `ggplot`.
+The `pinbasic` package ships utilities for fast and stable estimation of the probability of informed trading in the static $\\pintext$ framework. The function design is chosen to fit the extended EHO model setup but can also be applied to the simpler EKOP model by equating the intensities of uninformed buys and sells. State-of-the-art factorization of the model likelihood function as well as most recent algorithms for generating initial values for optimization routines are implemented. In total, two likelihood factorizations and three methodologies for starting values are included. Likelihood functions are evaluated with `pin_ll` and sets of starting values are returned by `initial_vals`. The probability of informed trading can be estimated for arbitrary length of daily buys and sells data with `pin_est` which is a wrapper around the workhorse function `pin_est_core`. No information about the time span of the underlying data is required to perform optimizations with `pin_est`. However, the recommendation given in the literature is using at least data for 60 trading days to ensure convergence of the likelihood maximization. Quarterly estimates are returned by `qpin` which can be visualized with `ggplot`. Datasets of daily aggregated numbers of buys and sells can be simulated with `simulateBS`. Calculation of confidence intervals for the probability of informed trading can be enabled by `confint` argument in optimization routines (`pin_est_core`, `pin_est` and `qpin`) or by calling `pin_confint` directly. Additionally, posterior probabilities for conditions of trading days can be computed with `posterior` and plotted with `ggplot`.
 
 Examples
 --------
@@ -25,9 +25,9 @@ pin_freq
 #>            Estimate  Std. error    t value      Pr(> t)
 #> alpha        0.2000  0.05163873   3.873062 0.0001074766
 #> delta        0.5000  0.14433702   3.464115 0.0005319794
-#> epsilon_b 1805.4354  5.66700075 318.587465 0.0000000000
-#> epsilon_s 1700.6753  5.50983422 308.661788 0.0000000000
-#> mu         597.6107 14.60546004  40.916937 0.0000000000
+#> epsilon_b 1805.4354  5.67230494 318.289553 0.0000000000
+#> epsilon_s 1700.6753  5.50984189 308.661358 0.0000000000
+#> mu         597.6107 14.60600145  40.915421 0.0000000000
 #> 
 #> $ll
 #> loglike 
@@ -72,19 +72,19 @@ ci_quarters <- lapply(qpin2015, function(x) x$confint)
 ci_quarters
 #> $`2015.1`
 #>       2.5%      97.5% 
-#> 0.02793563 0.06111148 
+#> 0.02842460 0.06091706 
 #> 
 #> $`2015.2`
 #>        2.5%       97.5% 
-#> 0.008033003 0.033372790 
+#> 0.006427742 0.034168650 
 #> 
 #> $`2015.3`
 #>       2.5%      97.5% 
-#> 0.03784720 0.07340393 
+#> 0.03818287 0.07267559 
 #> 
 #> $`2015.4`
-#>       2.5%      97.5% 
-#> 0.01032233 0.03707366
+#>        2.5%       97.5% 
+#> 0.009984601 0.037300878
 
 # Visualization of estimated parameters
 library(ggplot2)
