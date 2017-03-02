@@ -1,3 +1,10 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+  * fixed 'Found the following (possibly) invalid URLs: URL: http://cran.r-project.org/package=pinbasic' :
+    changed 'http://cran.r-project.org/package=pinbasic' to 'https://cran.r-project.org/package=pinbasic'
+
+
 ## Test environments
 
   * local linux install (Manjaro Linux [16.10, Kernel 4.8.17-1]): 

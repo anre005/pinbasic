@@ -7,5 +7,4 @@ pinbasic.Rproj
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.travis\.yml$
-^NEWS$
 

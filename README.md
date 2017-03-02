@@ -1,6 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![Travis-CI Build Status](https://travis-ci.org/anre005/pinbasic.svg?branch=master)](https://travis-ci.org/anre005/pinbasic) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/pinbasic)](http://cran.r-project.org/package=pinbasic) [![Research software impact](http://depsy.org/api/package/cran/pinbasic/badge.svg)](http://depsy.org/package/r/pinbasic)
+[![Travis-CI Build Status](https://travis-ci.org/anre005/pinbasic.svg?branch=master)](https://travis-ci.org/anre005/pinbasic) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/pinbasic)](https://cran.r-project.org/package=pinbasic) [![Research software impact](http://depsy.org/api/package/cran/pinbasic/badge.svg)](http://depsy.org/package/r/pinbasic)
 
 pinbasic: Fast and Stable Estimation of the Probability of Informed Trading (PIN)
 =================================================================================
@@ -72,19 +72,19 @@ ci_quarters <- lapply(qpin2015, function(x) x$confint)
 ci_quarters
 #> $`2015.1`
 #>       2.5%      97.5% 
-#> 0.02842460 0.06091706 
+#> 0.02752256 0.05943952 
 #> 
 #> $`2015.2`
 #>        2.5%       97.5% 
-#> 0.006427742 0.034168650 
+#> 0.006405346 0.033145972 
 #> 
 #> $`2015.3`
 #>       2.5%      97.5% 
-#> 0.03818287 0.07267559 
+#> 0.03658681 0.07322781 
 #> 
 #> $`2015.4`
-#>        2.5%       97.5% 
-#> 0.009984601 0.037300878
+#>       2.5%      97.5% 
+#> 0.01014942 0.03794254
 
 # Visualization of estimated parameters
 library(ggplot2)
