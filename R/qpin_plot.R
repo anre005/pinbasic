@@ -27,7 +27,7 @@
 #'
 #' # Visualization of quarterly estimates
 #' library(ggplot2)
-#' ggplot(qpin_list)
+#' ggplot(qpin_list[["res"]])
 #'
 #' @references
 #' Wickham, Hadley (2009) \cr

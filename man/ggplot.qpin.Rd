@@ -31,7 +31,7 @@ qpin_list <- qpin(numbuys = BSfrequent2015[,"Buys"], numsells = BSfrequent2015[,
 
 # Visualization of quarterly estimates
 library(ggplot2)
-ggplot(qpin_list)
+ggplot(qpin_list[["res"]])
 
 }
 \references{

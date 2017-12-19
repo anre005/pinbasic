@@ -78,7 +78,7 @@
 
 
 initial_vals <- function(numbuys = NULL, numsells = NULL,
-                         method = c("Grid","HAC", "HAC_Ref"),
+                         method = "HAC",
                          length = 5, num_clust = 5, details = FALSE) {
   if(is.null(numbuys)) stop("Missing data for 'numbuys'")
   if(is.null(numsells)) stop("Missing data for 'numsells'")

@@ -4,10 +4,10 @@
 \alias{pin_est_core}
 \title{Optimization in PIN models}
 \usage{
-pin_est_core(numbuys = NULL, numsells = NULL, factorization = c("Lin_Ke",
-  "EHO"), init_vals = NULL, lower = rep(0, 5), upper = c(1, 1, rep(Inf,
-  3)), num_best_res = 1, only_converged = TRUE, confint = FALSE,
-  ci_control = list())
+pin_est_core(numbuys = NULL, numsells = NULL, factorization = "Lin_Ke",
+  init_vals = NULL, lower = rep(0, 5), upper = c(1, 1, rep(Inf, 3)),
+  num_best_res = 1, only_converged = TRUE, confint = FALSE,
+  ci_control = list(), posterior = TRUE)
 }
 \arguments{
 \item{numbuys}{\emph{numeric}: vector of daily buys}
@@ -34,6 +34,8 @@ Defaults to \code{TRUE}}
 Defaults to \code{FALSE}}
 
 \item{ci_control}{\emph{list}: see \strong{Details}}
+
+\item{posterior}{\emph{logical}: Should posterior probabilities for conditions of trading days be computed?}
 }
 \value{
 If \code{num_best_res} = 1, a list with following elements is returned:

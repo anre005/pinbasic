@@ -1,5 +1,15 @@
 ## pinbasic v1.1.0.9000
 
+### Changes 
+
+* `simulateBS` now completely in C++
+* Method for generating sets of initial values in `pin_confint` function 
+  is no longer tied to `HAC`. Other available methods can be chosen via 
+  the `method` argument of the function. (Defaults to `"HAC"`)
+* additional boolean flag `posterior` to enable computing posterior probabilities of 
+  conditions of trading days for `pin_est`, `pin_est_core` and `qpin` functions
+
+
 ## pinbasic v1.1.0 (Release Date: 2017-03-01)
 
 ### Fixes

@@ -17,8 +17,8 @@ double eho(NumericVector param , NumericVector numbuys, NumericVector numsells) 
   double log_xb = log(xb);
 
   double exp_mu = exp(-param[4]);
-  NumericVector xs_helper = exp((numsells - m) * log_xs); //pow(xs, (numsells - m));
-  NumericVector xb_helper = exp((numbuys - m) * log_xb); //pow(xb, (numbuys - m));
+  NumericVector xs_helper = exp((numsells - m) * log_xs);
+  NumericVector xb_helper = exp((numbuys - m) * log_xb);
 
   double prob_no = 1.0 - param[0];
   double prob_good = param[0] * (1.0 - param[1]);
@@ -29,8 +29,8 @@ double eho(NumericVector param , NumericVector numbuys, NumericVector numsells) 
                   log(param[4] + param[3]) * sum(numsells);
 
   double part2 = sum(log(prob_no * xs_helper * xb_helper +
-                          prob_good * exp_mu * xs_helper * exp(-m * log_xb) + //xb ** (-m) +
-                          prob_bad * exp_mu * xb_helper * exp(-m * log_xs)));//xs ** (-m)))
+                          prob_good * exp_mu * xs_helper * exp(-m * log_xb) +
+                          prob_bad * exp_mu * xb_helper * exp(-m * log_xs)));
 
   double ll = part1 + part2;
   return(ll);

@@ -26,7 +26,8 @@ Exemplary, $\pintext$ for `BSheavy` dataset is estimated.
 # confidence interval computation enabled
 pin_bsheavy <- pin_est(numbuys = BSheavy[,"Buys"],
                        numsells = BSheavy[,"Sells"], 
-                       confint = TRUE, ci_control = list(n = 1000, seed = 123))
+                       confint = TRUE, ci_control = list(n = 1000, seed = 123), 
+                       posterior = TRUE)
 ```
 
 ```{r loadpinest, echo = FALSE}
@@ -71,15 +72,15 @@ qpin2015 <- readRDS("../RDSfiles/qpin2015.rds")
 
 ```{r qpin2015sum}
 # list of length 4 is returned
-names(qpin2015)
+names(qpin2015[["res"]])
 
 # confidence intervals for all four quarters
-ci_quarters <- lapply(qpin2015, function(x) x$confint)
+ci_quarters <- lapply(qpin2015[["res"]], function(x) x$confint)
 ci_quarters
 
 # each list element has the same structure as results from pin_est function
 # convert matrices to data.frames for prettier output in the vignette
-qpin2015_res <- lapply(qpin2015, function(x) as.data.frame(x$Results))
+qpin2015_res <- lapply(qpin2015[["res"]], function(x) as.data.frame(x$Results))
 
 qpin2015_res[[1]]
 qpin2015_res[[4]]
@@ -88,7 +89,7 @@ qpin2015_res[[4]]
 Results returned by `qpin` can be visualized with `ggplot`.
 ```{r}
 library(ggplot2)
-ggplot(qpin2015)
+ggplot(qpin2015[["res"]])
 ```
 
 Datasets of daily buys and sells can be simulated with `simulateBS` function which offers three arguments. 
@@ -106,7 +107,8 @@ We use the estimated parameters of `pin_bsheavy` to simulate data for 100 tradin
 heavy_est <- pin_bsheavy$Results[,"Estimate"]
 
 # simulate buys and sells data
-sim_heavy <- simulateBS(param = heavy_est, seed = 123, ndays = 100)
+set.seed(123)
+sim_heavy <- simulateBS(param = heavy_est, ndays = 100)
 
 # summary of simulated data
 summary(sim_heavy)
@@ -175,7 +177,7 @@ If x axis should show dates, names of `numbuys` and `numsells` need to be either
 The following code chunk shows how posterior probabilities for `BSfrequent2015` in the third quarter can be visualized. 
 ```{r postdates}
 # Corresponding parameter estimates
-freq_2015.3 <- qpin2015$'2015.3'$Results[,"Estimate"]
+freq_2015.3 <- qpin2015[["res"]]$'2015.3'$Results[,"Estimate"]
 
 # Subsetting data
 third_quarter <- subset(BSfrequent2015, subset = lubridate::quarter(rownames(BSfrequent2015)) == 3)

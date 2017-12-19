@@ -83,7 +83,7 @@
 #' @export
 
 pin_est <- function(numbuys = NULL, numsells = NULL,
-                    confint = FALSE, ci_control = list()) {
+                    confint = FALSE, ci_control = list(), posterior = TRUE) {
   if(is.null(numbuys)) stop("Missing data for 'numbuys'")
   if(is.null(numsells)) stop("Missing data for 'numsells'")
   if(length(numbuys) != length(numsells)) stop("Unequal lengths for 'numbuys' and 'numsells'")
@@ -93,6 +93,7 @@ pin_est <- function(numbuys = NULL, numsells = NULL,
   res <- pin_est_core(numbuys = numbuys, numsells = numsells,
                       factorization = "Lin_Ke",
                       init_vals = init_vals,
-                      confint = confint, ci_control = ci_control)
+                      confint = confint, ci_control = ci_control,
+                      posterior = posterior)
   res
 }

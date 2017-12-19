@@ -5,7 +5,7 @@
 \title{Estimating PIN}
 \usage{
 pin_est(numbuys = NULL, numsells = NULL, confint = FALSE,
-  ci_control = list())
+  ci_control = list(), posterior = TRUE)
 }
 \arguments{
 \item{numbuys}{\emph{numeric}: vector of daily buys}
@@ -16,6 +16,8 @@ pin_est(numbuys = NULL, numsells = NULL, confint = FALSE,
 Defaults to \code{FALSE}}
 
 \item{ci_control}{\emph{list}: see \code{\link{pin_est_core}}}
+
+\item{posterior}{\emph{logical}: Should posterior probabilities for conditions of trading days be computed?}
 }
 \value{
 A list with the following components:

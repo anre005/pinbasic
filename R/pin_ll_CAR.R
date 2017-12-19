@@ -30,7 +30,7 @@
 #' \doi{10.1016/j.finmar.2011.03.001}
 
 pin_ll <- function(param = NULL, numbuys = NULL, numsells = NULL,
-                   factorization = c("Lin_Ke", "EHO")) {
+                   factorization = "Lin_Ke") {
   if(is.null(numbuys)) stop("No number of daily buys given!")
   if(is.null(numsells)) stop("No number of daily sells given!")
   if(length(numbuys) != length(numsells)) stop("Buys and Sells length differ!")

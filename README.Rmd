@@ -8,7 +8,7 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "README-"
+  fig.path = "tools/"
 )
 ```
 
@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 pinbasic: Fast and Stable Estimation of the Probability of Informed Trading (PIN)
 =================================================================================
 
-The `pinbasic` package ships utilities for fast and stable estimation of the probability of informed trading in the static $\pintext$ framework.
+The `pinbasic` package ships utilities for fast and stable estimation of the probability of informed trading in the static PIN framework.
 The function design is chosen to fit the extended EHO model setup but can also be applied to the simpler EKOP model 
 by equating the intensities of uninformed buys and sells. 
 State-of-the-art factorization of the model likelihood function as well as
@@ -66,19 +66,19 @@ qpin2015 <- qpin(numbuys = BSfrequent2015[,"Buys"], numsells = BSfrequent2015[,"
                  confint = TRUE, ci_control = list(n = 1000, seed = 123))
 
 # Print confidence intervals for all four quarters
-ci_quarters <- lapply(qpin2015, function(x) x$confint)
+ci_quarters <- lapply(qpin2015[["res"]], function(x) x$confint)
 ci_quarters
 
 # Visualization of estimated parameters
 library(ggplot2)
-ggplot(qpin2015)
+ggplot(qpin2015[["res"]])
 ```
 
 Posterior probabilities of trading days' condition are returned by `posterior` and can be displayed with `ggplot`. 
 The following code chunk shows how posterior probabilities for `BSfrequent2015` in the third quarter can be calculated and visualized. 
 ```{r postdates}
 # Corresponding parameter estimates
-freq_2015.3 <- qpin2015$'2015.3'$Results[,"Estimate"]
+freq_2015.3 <- qpin2015[["res"]]$'2015.3'$Results[,"Estimate"]
 
 # Subsetting data
 third_quarter <- subset(BSfrequent2015, subset = lubridate::quarter(rownames(BSfrequent2015)) == 3)

@@ -27,6 +27,7 @@
 #' @param confint \emph{logical}: Compute confidence intervals for PIN?
 #'                 Defaults to \code{FALSE}
 #' @param ci_control \emph{list}: see \strong{Details}
+#' @param posterior \emph{logical}: Should posterior probabilities for conditions of trading days be computed?
 #'
 #' @seealso \code{\link{nlminb}},
 #'          \code{\link{initial_vals}}
@@ -147,15 +148,15 @@
 #' @export pin_est_core
 
 pin_est_core <- function(numbuys = NULL, numsells = NULL,
-                         factorization = c("Lin_Ke", "EHO"),
+                         factorization = "Lin_Ke",
                          init_vals = NULL, lower = rep(0,5), upper = c(1,1,rep(Inf,3)),
                          num_best_res = 1, only_converged = TRUE,
-                         confint = FALSE, ci_control = list()) {
+                         confint = FALSE, ci_control = list(), posterior = TRUE) {
   if(is.null(init_vals)) stop("No initial values provided!")
   if(is.null(lower) || is.null(upper)) stop("Lower or upper bounds missing!")
   if(length(numbuys) != length(numsells)) stop("Unequal lengths for 'numbuys' and 'numsells'")
 
-  factr <- match.arg(factorization)
+  factr <- match.arg(factorization, choices = c("Lin_Ke", "EHO"))
 
   mat <- matrix(data = NA, nrow = nrow(init_vals), ncol = ncol(init_vals) + 4)
   colnames(mat) <- c(colnames(init_vals), "loglike", "PIN", "Convergence", "Iterations")
@@ -239,6 +240,10 @@ pin_est_core <- function(numbuys = NULL, numsells = NULL,
                                                                  n = ci_con$n, seed = ci_con$seed,
                                                                  level = ci_con$level, ncores = ci_con$ncores)
       }
+      if(posterior) {
+        mat_list[[paste0("Best",i)]][["posterior"]] <- posterior(param = mat[i,par_names],
+                                                                 numbuys = numbuys, numsells = numsells)
+      }
     }
   } else {
     mat_list <- vector("list", 7)
@@ -271,6 +276,10 @@ pin_est_core <- function(numbuys = NULL, numsells = NULL,
                                            lower = lower, upper = upper,
                                            n = ci_con$n, seed = ci_con$seed,
                                            level = ci_con$level, ncores = ci_con$ncores)
+    }
+    if(posterior) {
+      mat_list[["posterior"]] <- posterior(param = mat[1,par_names],
+                                           numbuys = numbuys, numsells = numsells)
     }
   }
   mat_list

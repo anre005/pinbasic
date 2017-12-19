@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // eho
 double eho(NumericVector param, NumericVector numbuys, NumericVector numsells);
-RcppExport SEXP pinbasic_eho(SEXP paramSEXP, SEXP numbuysSEXP, SEXP numsellsSEXP) {
+RcppExport SEXP _pinbasic_eho(SEXP paramSEXP, SEXP numbuysSEXP, SEXP numsellsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -20,7 +20,7 @@ END_RCPP
 }
 // linke
 double linke(NumericVector param, NumericVector numbuys, NumericVector numsells);
-RcppExport SEXP pinbasic_linke(SEXP paramSEXP, SEXP numbuysSEXP, SEXP numsellsSEXP) {
+RcppExport SEXP _pinbasic_linke(SEXP paramSEXP, SEXP numbuysSEXP, SEXP numsellsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -31,15 +31,15 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// simBS
-NumericMatrix simBS(NumericVector param, int ndays);
-RcppExport SEXP pinbasic_simBS(SEXP paramSEXP, SEXP ndaysSEXP) {
+// simulateBS
+NumericMatrix simulateBS(NumericVector param, int ndays);
+RcppExport SEXP _pinbasic_simulateBS(SEXP paramSEXP, SEXP ndaysSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type param(paramSEXP);
     Rcpp::traits::input_parameter< int >::type ndays(ndaysSEXP);
-    rcpp_result_gen = Rcpp::wrap(simBS(param, ndays));
+    rcpp_result_gen = Rcpp::wrap(simulateBS(param, ndays));
     return rcpp_result_gen;
 END_RCPP
 }

@@ -2,14 +2,27 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 eho <- function(param, numbuys, numsells) {
-    .Call('pinbasic_eho', PACKAGE = 'pinbasic', param, numbuys, numsells)
+    .Call('_pinbasic_eho', PACKAGE = 'pinbasic', param, numbuys, numsells)
 }
 
 linke <- function(param, numbuys, numsells) {
-    .Call('pinbasic_linke', PACKAGE = 'pinbasic', param, numbuys, numsells)
+    .Call('_pinbasic_linke', PACKAGE = 'pinbasic', param, numbuys, numsells)
 }
 
-simBS <- function(param, ndays) {
-    .Call('pinbasic_simBS', PACKAGE = 'pinbasic', param, ndays)
+#' Simulate trading data
+#'
+#' Simulates a matrix consisting of synthetic data for daily buys and sells
+#'
+#' If names are not set for \code{param} or one or more of the vector names do not match the valid choices, they are internally set to
+#' \code{'alpha'}, \code{'delta'}, \code{'epsilon_b'}, \code{'epsilon_s'}, \code{'mu'} (in this order).
+#'
+#' @return \emph{numeric}: Matrix with \code{ndays} rows and two columns which are named \code{'Buys'} and \code{'Sells'}.
+#'
+#' @inheritParams pin_ll
+#' @param ndays \emph{integer}: Number of trading days for which aggregated buys and sells are simulated, defaults to 60
+#'
+#' @export simulateBS
+simulateBS <- function(param, ndays) {
+    .Call('_pinbasic_simulateBS', PACKAGE = 'pinbasic', param, ndays)
 }
 

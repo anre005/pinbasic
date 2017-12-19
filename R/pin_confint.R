@@ -11,7 +11,9 @@
 #' @inheritParams pin_ll
 #' @inheritParams simulateBS
 #' @inheritParams pin_est_core
+#' @inheritParams initial_vals
 #' @param n \emph{integer}: Number of simulation runs, defaults to 10000
+#' @param seed \emph{interpretted as integer or \code{NULL}}: defaults to \code{NULL}, for more details see \link[base]{set.seed}
 #' @param level \emph{numeric}: Confidence level, defaults to 0.95
 #' @param ncores \emph{integer}: Number of cpu cores utilized in computation, defaults to 1
 #'
@@ -23,12 +25,14 @@
 #' @export pin_confint
 #'
 pin_confint <- function(param = NULL, numbuys = NULL, numsells = NULL,
+                        method = "HAC",
                         lower = rep(0, 5), upper = c(1,1, rep(Inf, 3)),
                         n = 10000, seed = NULL, level = 0.95,
                         ncores = 1) {
   param <- param_check(param)
   if(!is.numeric(ncores) && ncores < 1) stop("No valid 'ncores' argument!")
   if(length(numbuys) != length(numsells)) stop("Unequal lengths for 'numbuys' and 'numsells'")
+  meth <- match.arg(method, choices = c("HAC", "HAC_Ref", "Grid"))
   set.seed(seed)
 
   sim_pin <- numeric(n)
@@ -53,7 +57,7 @@ pin_confint <- function(param = NULL, numbuys = NULL, numsells = NULL,
 
   initial_mat <- lapply(sim_dat, function(x) {initial_vals(numbuys = x[,"Buys"],
                                                            numsells = x[, "Sells"],
-                                                           method = "HAC")})
+                                                           method = meth)})
   if(ncores == 1) {
     par_est <- Map(function(x,y) nlminb(start = y[1,],
                                         objective = function(par) -fn(par, x[,"Buys"], x[,"Sells"]),
