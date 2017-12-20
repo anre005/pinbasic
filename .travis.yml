@@ -6,8 +6,9 @@ matrix:
   include:
     - os: linux
       sudo: false
-      r: oldrel
-      r: devel
+      r:
+        - oldrel
+        - devel
     - os: osx
       disable_homebrew: true
       r: oldrel
