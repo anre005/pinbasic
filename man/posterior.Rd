@@ -16,7 +16,7 @@ length must equal 5}
 \item{numsells}{\emph{numeric}: vector of daily sells}
 }
 \value{
-\emph{numeric} matrix with columns 'no', 'good' and 'bad' representing posterior probabiities for the corresponding trading day conditions
+\emph{numeric} matrix with columns 'no', 'good' and 'bad' representing posterior probabilities for the corresponding trading day conditions
 }
 \description{
 Calculates posterior probabilities of conditions of trading days

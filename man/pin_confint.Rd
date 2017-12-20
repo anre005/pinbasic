@@ -26,7 +26,7 @@ valid choices are: 'Grid', 'HAC' and 'HAC_Ref'}
 
 \item{n}{\emph{integer}: Number of simulation runs, defaults to 10000}
 
-\item{seed}{\emph{interpretted as integer or \code{NULL}}: defaults to \code{NULL}, for more details see \link[base]{set.seed}}
+\item{seed}{\emph{interpreted as integer or \code{NULL}}: defaults to \code{NULL}, for more details see \link[base]{set.seed}}
 
 \item{level}{\emph{numeric}: Confidence level, defaults to 0.95}
 
@@ -42,6 +42,6 @@ Computes confidence intervals for the probability of informed trading by simulat
 If names are not set for \code{param} or one or more of the vector names do not match the valid choices, they are internally set to
 \code{'alpha'}, \code{'delta'}, \code{'epsilon_b'}, \code{'epsilon_s'}, \code{'mu'} (in this order). \cr
 By default, only one core is utilized in computations (\code{ncores} = 1).
-Confidence intervals can also be calculated in parallel, howwever,
+Confidence intervals can also be calculated in parallel, however,
 this only pays off for large values of \code{n}.
 }

@@ -6,7 +6,7 @@
 #'
 #' @inheritParams pin_ll
 #'
-#' @return \emph{numeric} matrix with columns 'no', 'good' and 'bad' representing posterior probabiities for the corresponding trading day conditions
+#' @return \emph{numeric} matrix with columns 'no', 'good' and 'bad' representing posterior probabilities for the corresponding trading day conditions
 #'
 #' @examples \dontrun{See Vignette \code{browseVignette(package = 'pinbasic')}}
 #'
