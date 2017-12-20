@@ -1,4 +1,4 @@
-## pinbasic v1.1.0.9000
+## pinbasic v1.2.0 (Release Date: 2017-12-21)
 
 ### Changes 
 
@@ -8,6 +8,8 @@
   the `method` argument of the function. (Defaults to `"HAC"`)
 * additional boolean flag `posterior` to enable computing posterior probabilities of 
   conditions of trading days for `pin_est`, `pin_est_core` and `qpin` functions
+* `qpin` function returns now list of list by default with slots `res` and `posterior`:
+  `res` is relevant for `ggplot.qpin`
 
 
 ## pinbasic v1.1.0 (Release Date: 2017-03-01)
