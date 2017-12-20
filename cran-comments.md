@@ -1,10 +1,3 @@
-## Resubmission
-This is a resubmission. In this version I have:
-
-  * fixed 'Found the following (possibly) invalid URLs: URL: http://cran.r-project.org/package=pinbasic' :
-    changed 'http://cran.r-project.org/package=pinbasic' to 'https://cran.r-project.org/package=pinbasic'
-
-
 ## Test environments
 
   * local linux install (Manjaro Linux [16.10, Kernel 4.8.17-1]): 
@@ -27,4 +20,4 @@ There were no ERRORs or WARNINGs.
 
 There was 1 NOTE: checking CRAN incoming feasibility
 
-This submission updates the pinbasic package to version 1.1.0.
+This submission updates the pinbasic package to version 1.1.1.

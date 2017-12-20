@@ -7,11 +7,12 @@ matrix:
     - os: linux
       sudo: false
       r: oldrel
+      r: devel
     - os: osx
       disable_homebrew: true
       r: oldrel
     - os: osx
       disable_homebrew: true
       r: release
-      
+
 warnings_are_errors: true
