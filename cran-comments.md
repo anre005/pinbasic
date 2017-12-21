@@ -1,7 +1,7 @@
 ## Test environments
 
   * local linux install (Manjaro Linux [17.10, Kernel 4.13.16-2]): 
-      - release: 3.4.2
+      - release: 3.4.3
       
   * Linux: Ubuntu precise (14.04.5 LTS) (on travis-ci): 
       - oldrel: 3.3.3
