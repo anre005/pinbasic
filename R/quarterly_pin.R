@@ -99,6 +99,7 @@
 #' @export
 
 qpin <- function(numbuys = NULL, numsells = NULL, dates = NULL,
+                 nlminb_control = list(),
                  confint = FALSE, ci_control = list(), posterior = TRUE) {
   if(is.null(numbuys)) stop("Missing data for 'numbuys'")
   if(is.null(numsells)) stop("Missing data for 'numsells'")
@@ -134,22 +135,8 @@ qpin <- function(numbuys = NULL, numsells = NULL, dates = NULL,
 
   res <- lapply(quarter_list,
                 function(x) pin_est(numbuys = x[,1], numsells = x[,2],
-                                    confint = confint, ci_control = ci_control))
+                                    nlminb_control = nlminb_control,
+                                    confint = confint, ci_control = ci_control, posterior = posterior))
   class(res) <- c("list", "qpin")
-
-  if(posterior) {
-    post_list <- Map(function(x,y) {
-      posterior(param = x$Results[,"Estimate"],
-                numbuys = y[,1], numsells = y[,2])
-      },
-      x = res, y = quarter_list)
-
-    post_list <- lapply(post_list, function(x) {rownames(x) <- as.Date(rownames(x), format = "%m/%d/%Y")
-                                                x})
-
-    res <- list(res = res, posterior = post_list)
-
-    class(res[["res"]]) <- c("list", "qpin")
-  }
   res
 }

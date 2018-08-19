@@ -24,6 +24,7 @@
 #'                     only relevant if \code{init_vals} = 'Grid', defaults to 1
 #' @param only_converged \emph{logical}: Return only results for which the likelihood converged?
 #'                       Defaults to \code{TRUE}
+#' @param nlminb_control \emph{list}: Control list for \code{\link[stats]{nlminb}}
 #' @param confint \emph{logical}: Compute confidence intervals for PIN?
 #'                 Defaults to \code{FALSE}
 #' @param ci_control \emph{list}: see \strong{Details}
@@ -151,6 +152,7 @@ pin_est_core <- function(numbuys = NULL, numsells = NULL,
                          factorization = "Lin_Ke",
                          init_vals = NULL, lower = rep(0,5), upper = c(1,1,rep(Inf,3)),
                          num_best_res = 1, only_converged = TRUE,
+                         nlminb_control = list(),
                          confint = FALSE, ci_control = list(), posterior = TRUE) {
   if(is.null(init_vals)) stop("No initial values provided!")
   if(is.null(lower) || is.null(upper)) stop("Lower or upper bounds missing!")
@@ -181,9 +183,25 @@ pin_est_core <- function(numbuys = NULL, numsells = NULL,
   if(ci_con$ncores < 1)
     stop("Set valid number of cpu cores for 'ncores'")
 
+  nlminb_con <- list(eval.max = 1000,
+                     iter.max = 500,
+                     trace = 0,
+                     abs.tol = 0,
+                     rel.tol = 1e-10,
+                     x.tol = 1.5e-8,
+                     xf.tol = 2.2e-14,
+                     step.min = 1, step.max = 1,
+                     sing.tol = 1e-10)
+  names_nlminb <- names(nlminb_con)
+  nlminb_con[(nam_nlminb <- names(nlminb_control))] <- nlminb_control
+
+  if (length(noNms_nlminb <- nam_nlminb[!nam_nlminb %in% names_nlminb]))
+    warning("unknown names in control: ", paste(noNms_nlminb, collapse = ", "))
+
   for(i in 1:nrow(mat)) {
     tmp <- nlminb(start = init_vals[i,], objective = function(x) -fn(x),
-                  lower = lower, upper = upper)
+                  lower = lower, upper = upper,
+                  control = nlminb_con)
 
     mat[i, par_names] <- tmp$par
     mat[i,"loglike"] <- -tmp$objective
@@ -224,8 +242,14 @@ pin_est_core <- function(numbuys = NULL, numsells = NULL,
                              numbuys = numbuys, numsells = numsells,
                              factorization = factorization,
                              lower = lower, upper = upper)
-      if(!is.null(tmp_res)) mat_list[[paste0("Best",i)]][["Results"]] <- tmp_res
-      else mat_list[[paste0("Best",i)]][["Results"]] <- mat[i,par_names]
+      if(!is.null(tmp_res)) {
+        mat_list[[paste0("Best",i)]][["Results"]] <- tmp_res
+      } else {
+        mat_list[[paste0("Best",i)]][["Results"]] <- matrix(data = NA, ncol = 4, nrow = 5)
+        colnames(mat_list[[paste0("Best",i)]][["Results"]]) <- c("Estimate", "Std. error", "t value", "Pr(> t)")
+        rownames(mat_list[[paste0("Best",i)]][["Results"]]) <- c("alpha", "delta", "epsilon_b", "epsilon_s", "mu")
+        mat_list[[paste0("Best",i)]][["Results"]][,"Estimate"] <- mat[i,par_names]
+      }
 
       mat_list[[paste0("Best",i)]][["ll"]] <- mat[i,"loglike"]
       mat_list[[paste0("Best",i)]][["pin"]] <- mat[i,"PIN"]
@@ -260,8 +284,14 @@ pin_est_core <- function(numbuys = NULL, numsells = NULL,
                            numbuys = numbuys, numsells = numsells,
                            factorization = factorization,
                            lower = lower, upper = upper)
-    if(!is.null(tmp_res)) mat_list[["Results"]] <- tmp_res
-    else mat_list[["Results"]] <- mat[1,par_names]
+    if(!is.null(tmp_res)) {
+      mat_list[["Results"]] <- tmp_res
+    } else {
+      mat_list[["Results"]] <- matrix(data = NA, ncol = 4, nrow = 5)
+      colnames(mat_list[["Results"]]) <- c("Estimate", "Std. error", "t value", "Pr(> t)")
+      rownames(mat_list[["Results"]]) <- c("alpha", "delta", "epsilon_b", "epsilon_s", "mu")
+      mat_list[["Results"]][,"Estimate"] <- mat[i,par_names]
+    }
 
     mat_list[["ll"]] <- mat[1,"loglike"]
     mat_list[["pin"]] <- mat[1,"PIN"]

@@ -11,7 +11,7 @@ $$
 \begin{align} 
   \prsym \left(\nonews \mid (B_{\daysym}, S_{\daysym}) \right) &=
     \dfrac{\prsym\left( B_{\daysym} \mid \nonews \right) \prsym\left( S_{\daysym} \mid \nonews \right) \prsym\left(\nonews\right)}
-    {\prsym\left(B_{\daysym}\right) \prsym\left(S_{\daysym}\right)} \notag \\
+    {\prsym\left(B_{\daysym}, S_{\daysym}\right)} \notag \\
     &= \dfrac{1 - \probinfevent}{(1 - \probinfevent) + \exp(-\intensinf)
         \left[\probinfevent(1 - \probbadnews) \left(1 + \dfrac{\intensinf}{\intensuninfbuys}\right)^{B_{\daysym}} +
               \probinfevent\probbadnews \left(1 + \dfrac{\intensinf}{\intensuninfsells}\right)^{S_{\daysym}}\right]}. \label{eq:postno}
@@ -24,7 +24,7 @@ $$
 \begin{align} 
   \prsym \left(\goodnews \mid (B_{\daysym}, S_{\daysym}) \right) &=
     \dfrac{\prsym\left( B_{\daysym} \mid \goodnews \right) \prsym\left( S_{\daysym} \mid \goodnews \right) \prsym\left(\nonews\right)}
-    {\prsym\left(B_{\daysym}\right) \prsym\left(S_{\daysym}\right)} \notag \\
+    {\prsym\left(B_{\daysym}, S_{\daysym}\right)} \notag \\
     &= \dfrac{\probinfevent (1 - \probbadnews) \exp(-\intensinf) \left(1 + \dfrac{\intensinf}{\intensuninfbuys}\right)^{B_{\daysym}}}{(1 - \probinfevent) + \exp(-\intensinf)
         \left[\probinfevent(1 - \probbadnews) \left(1 + \dfrac{\intensinf}{\intensuninfbuys}\right)^{B_{\daysym}} +
               \probinfevent\probbadnews \left(1 + \dfrac{\intensinf}{\intensuninfsells}\right)^{S_{\daysym}}\right]} \label{eq:postgood}
@@ -37,7 +37,7 @@ $$
 \begin{align} 
   \prsym \left(\badnews \mid (B_{\daysym}, S_{\daysym}) \right) &=
     \dfrac{\prsym\left( B_{\daysym} \mid \badnews \right) \prsym\left( S_{\daysym} \mid \badnews \right) \prsym\left(\nonews\right)}
-    {\prsym\left(B_{\daysym}\right) \prsym\left(S_{\daysym}\right)} \notag \\
+    {\prsym\left(B_{\daysym}, S_{\daysym}\right)} \notag \\
     &= \dfrac{\probinfevent \probbadnews \exp(-\intensinf) \left(1 + \dfrac{\intensinf}{\intensuninfsells}\right)^{S_{\daysym}}}{(1 - \probinfevent) + \exp(-\intensinf)
         \left[\probinfevent(1 - \probbadnews) \left(1 + \dfrac{\intensinf}{\intensuninfbuys}\right)^{B_{\daysym}} +
               \probinfevent\probbadnews \left(1 + \dfrac{\intensinf}{\intensuninfsells}\right)^{S_{\daysym}}\right]}. \label{eq:postbad}

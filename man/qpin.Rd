@@ -4,8 +4,9 @@
 \alias{qpin}
 \title{Quarterly PIN estimates}
 \usage{
-qpin(numbuys = NULL, numsells = NULL, dates = NULL, confint = FALSE,
-  ci_control = list(), posterior = TRUE)
+qpin(numbuys = NULL, numsells = NULL, dates = NULL,
+  nlminb_control = list(), confint = FALSE, ci_control = list(),
+  posterior = TRUE)
 }
 \arguments{
 \item{numbuys}{\emph{numeric}: vector of daily buys}
@@ -13,6 +14,8 @@ qpin(numbuys = NULL, numsells = NULL, dates = NULL, confint = FALSE,
 \item{numsells}{\emph{numeric}: vector of daily sells}
 
 \item{dates}{see \strong{Details}}
+
+\item{nlminb_control}{\emph{list}: Control list for \code{\link[stats]{nlminb}}}
 
 \item{confint}{\emph{logical}: Compute confidence intervals for PIN?
 Defaults to \code{FALSE}}

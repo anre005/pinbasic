@@ -19,14 +19,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // linke
-double linke(NumericVector param, NumericVector numbuys, NumericVector numsells);
+double linke(NumericVector& param, NumericVector& numbuys, NumericVector& numsells);
 RcppExport SEXP _pinbasic_linke(SEXP paramSEXP, SEXP numbuysSEXP, SEXP numsellsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type param(paramSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type numbuys(numbuysSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type numsells(numsellsSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type param(paramSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type numbuys(numbuysSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type numsells(numsellsSEXP);
     rcpp_result_gen = Rcpp::wrap(linke(param, numbuys, numsells));
     return rcpp_result_gen;
 END_RCPP

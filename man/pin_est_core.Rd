@@ -4,9 +4,10 @@
 \alias{pin_est_core}
 \title{Optimization in PIN models}
 \usage{
-pin_est_core(numbuys = NULL, numsells = NULL, factorization = "Lin_Ke",
-  init_vals = NULL, lower = rep(0, 5), upper = c(1, 1, rep(Inf, 3)),
-  num_best_res = 1, only_converged = TRUE, confint = FALSE,
+pin_est_core(numbuys = NULL, numsells = NULL,
+  factorization = "Lin_Ke", init_vals = NULL, lower = rep(0, 5),
+  upper = c(1, 1, rep(Inf, 3)), num_best_res = 1,
+  only_converged = TRUE, nlminb_control = list(), confint = FALSE,
   ci_control = list(), posterior = TRUE)
 }
 \arguments{
@@ -29,6 +30,8 @@ only relevant if \code{init_vals} = 'Grid', defaults to 1}
 
 \item{only_converged}{\emph{logical}: Return only results for which the likelihood converged?
 Defaults to \code{TRUE}}
+
+\item{nlminb_control}{\emph{list}: Control list for \code{\link[stats]{nlminb}}}
 
 \item{confint}{\emph{logical}: Compute confidence intervals for PIN?
 Defaults to \code{FALSE}}

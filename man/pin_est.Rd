@@ -4,13 +4,15 @@
 \alias{pin_est}
 \title{Estimating PIN}
 \usage{
-pin_est(numbuys = NULL, numsells = NULL, confint = FALSE,
-  ci_control = list(), posterior = TRUE)
+pin_est(numbuys = NULL, numsells = NULL, nlminb_control = list(),
+  confint = FALSE, ci_control = list(), posterior = TRUE)
 }
 \arguments{
 \item{numbuys}{\emph{numeric}: vector of daily buys}
 
 \item{numsells}{\emph{numeric}: vector of daily sells}
+
+\item{nlminb_control}{\emph{list}: Control list for \code{\link[stats]{nlminb}}}
 
 \item{confint}{\emph{logical}: Compute confidence intervals for PIN?
 Defaults to \code{FALSE}}
