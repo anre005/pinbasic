@@ -17,6 +17,4 @@
 ## R CMD check results
 There were no ERRORs or WARNINGs. 
 
-There was 1 NOTE: checking CRAN incoming feasibility
-
 This submission updates the pinbasic package to version 1.2.2.
