@@ -170,20 +170,6 @@ The following scenario tree illustrates
 the probabilities for the potential states a trading day in the $\pintext$ framework can reside in.
 In addition, the mapping of the sets of arrival rates for buys and sells to
 the different trading days' conditions can be read directly from the graph.
-<!-- % -->
-<!-- \begin{figure} -->
-<!--   \centering -->
-<!--   \includegraphics[width = \textwidth]{tikzfigs/EKOPtree.tikz} -->
-<!--   \caption[Scenario Tree for EKOP model] -->
-<!--           {Scenario Tree for EKOP model with equal arrival rates of (un)informed buys and sells. -->
-<!--            Information events, days on which private information hit the market, occur with probability -->
-<!--            $\probinfevent$. -->
-<!--            These private information has a negative direction with probability $\probbadnews$ (Bad-News) -->
-<!--            and a positive direction with probability $1 - \probbadnews$ (Good-News). -->
-<!--            On Bad-News (Good-News) days, the informed traders only sell (buy). -->
-<!--            Uninformed traders buy and sell with rate $\intensuninf$, informed traders buys and sell with rate $\intensinf$.} -->
-<!--   \label{fig:EKOPtree} -->
-<!-- \end{figure} -->
 
 ![EHO Scenario Tree](EHOtree.png)
 
