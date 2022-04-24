@@ -4,11 +4,13 @@
 \name{BSfrequent2015}
 \alias{BSfrequent2015}
 \title{Daily Buys and Sells}
-\format{A matrix with 261 rows and 2 variables:
+\format{
+A matrix with 261 rows and 2 variables:
 \describe{
   \item{Buys}{daily buys}
   \item{Sells}{daily sells}
-}}
+}
+}
 \source{
 own simulation
 }

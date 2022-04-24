@@ -4,8 +4,7 @@
 \alias{pin_ll}
 \title{Likelihood factorizations}
 \usage{
-pin_ll(param = NULL, numbuys = NULL, numsells = NULL,
-  factorization = "Lin_Ke")
+pin_ll(param = NULL, numbuys = NULL, numsells = NULL, factorization = "Lin_Ke")
 }
 \arguments{
 \item{param}{\emph{numeric}: (named) vector of model parameters

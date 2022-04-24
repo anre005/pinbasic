@@ -4,8 +4,14 @@
 \alias{pin_est}
 \title{Estimating PIN}
 \usage{
-pin_est(numbuys = NULL, numsells = NULL, nlminb_control = list(),
-  confint = FALSE, ci_control = list(), posterior = TRUE)
+pin_est(
+  numbuys = NULL,
+  numsells = NULL,
+  nlminb_control = list(),
+  confint = FALSE,
+  ci_control = list(),
+  posterior = TRUE
+)
 }
 \arguments{
 \item{numbuys}{\emph{numeric}: vector of daily buys}

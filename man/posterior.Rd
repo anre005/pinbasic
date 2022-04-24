@@ -25,7 +25,7 @@ Calculates posterior probabilities of conditions of trading days
 For more details see corresponding section in vignette
 }
 \examples{
-\dontrun{See Vignette \\code{browseVignette(package = 'pinbasic')}}
+\dontrun{See Vignette \code{browseVignette(package = 'pinbasic')}}
 
 }
 \seealso{

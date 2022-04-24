@@ -1,7 +1,7 @@
 Package: pinbasic
 Title: Fast and Stable Estimation of the Probability of Informed Trading (PIN)
 Type: Package
-Version: 1.2.2
+Version: 1.2.3
 Authors@R: person("Andreas", "Recktenwald", email = "arecktenwald85@gmail.com",
     role = c("aut", "cre"))
 Description: Utilities for fast and stable estimation of the probability of 
@@ -27,12 +27,12 @@ Imports:
     reshape2,
     scales,
     parallel,
-    Rcpp (>= 0.12.9), 
+    Rcpp (>= 0.12.9)
 LinkingTo: Rcpp
 NeedsCompilation: yes
 License: GPL-3 | file LICENSE
 LazyData: true
-RoxygenNote: 6.1.0
+RoxygenNote: 7.1.2
 Suggests: knitr,
     rmarkdown,
     formatR,

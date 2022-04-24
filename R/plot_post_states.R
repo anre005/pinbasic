@@ -28,7 +28,7 @@ ggplot.posterior <- function(x) {
       df <- data.frame(bs_date = as.Date(rownames(x)),
                        no = x[,"no"], good = x[,"good"], bad = x[,"bad"])
     }
-    if(!is.null(rownames(x)) && is.na(check_rows)) {
+    if(!is.null(rownames(x)) && any(is.na(check_rows))) {
       df <- data.frame(bs_date = rownames(x),
                        no = x[,"no"], good = x[,"good"], bad = x[,"bad"])
     }

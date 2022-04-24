@@ -16,7 +16,7 @@ An object of class \code{\link[ggplot2]{ggplot}}.
 Visualization of posterior probabilities returned by \code{post_states} with ggplot2
 }
 \examples{
-\dontrun{See Vignette \\code{browseVignette(package = 'pinbasic')}}
+\dontrun{See Vignette \code{browseVignette(package = 'pinbasic')}}
 
 }
 \seealso{

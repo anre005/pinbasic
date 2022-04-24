@@ -4,8 +4,14 @@
 \alias{initial_vals}
 \title{Initial values for PIN optimization}
 \usage{
-initial_vals(numbuys = NULL, numsells = NULL, method = "HAC",
-  length = 5, num_clust = 5, details = FALSE)
+initial_vals(
+  numbuys = NULL,
+  numsells = NULL,
+  method = "HAC",
+  length = 5,
+  num_clust = 5,
+  details = FALSE
+)
 }
 \arguments{
 \item{numbuys}{\emph{numeric}: vector of daily buys}

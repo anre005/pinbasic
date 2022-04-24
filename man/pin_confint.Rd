@@ -4,9 +4,18 @@
 \alias{pin_confint}
 \title{PIN confidence intervals}
 \usage{
-pin_confint(param = NULL, numbuys = NULL, numsells = NULL,
-  method = "HAC", lower = rep(0, 5), upper = c(1, 1, rep(Inf, 3)),
-  n = 10000, seed = NULL, level = 0.95, ncores = 1)
+pin_confint(
+  param = NULL,
+  numbuys = NULL,
+  numsells = NULL,
+  method = "HAC",
+  lower = rep(0, 5),
+  upper = c(1, 1, rep(Inf, 3)),
+  n = 10000,
+  seed = NULL,
+  level = 0.95,
+  ncores = 1
+)
 }
 \arguments{
 \item{param}{\emph{numeric}: (named) vector of model parameters

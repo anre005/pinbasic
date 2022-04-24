@@ -3,7 +3,6 @@
 \docType{package}
 \name{pinbasic}
 \alias{pinbasic}
-\alias{pinbasic-package}
 \title{A Package for Fast and Stable Estimation of the Probability of Informed Trading (PIN)}
 \description{
 Utilities for fast and stable

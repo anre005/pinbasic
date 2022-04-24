@@ -4,9 +4,15 @@
 \alias{qpin}
 \title{Quarterly PIN estimates}
 \usage{
-qpin(numbuys = NULL, numsells = NULL, dates = NULL,
-  nlminb_control = list(), confint = FALSE, ci_control = list(),
-  posterior = TRUE)
+qpin(
+  numbuys = NULL,
+  numsells = NULL,
+  dates = NULL,
+  nlminb_control = list(),
+  confint = FALSE,
+  ci_control = list(),
+  posterior = TRUE
+)
 }
 \arguments{
 \item{numbuys}{\emph{numeric}: vector of daily buys}

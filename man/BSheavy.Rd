@@ -4,11 +4,13 @@
 \name{BSheavy}
 \alias{BSheavy}
 \title{Daily Buys and Sells}
-\format{A matrix with 60 rows and 2 variables:
+\format{
+A matrix with 60 rows and 2 variables:
 \describe{
   \item{Buys}{daily buys}
   \item{Sells}{daily sells}
-}}
+}
+}
 \source{
 own simulation
 }
