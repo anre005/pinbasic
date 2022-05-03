@@ -1,5 +1,9 @@
-pinbasic v1.2.2.9000
+pinbasic v1.2.3
 ----------------------------------------------------------------
+
+Fixes:
+
+  * Fix check in if statement (length > 1) which become an error in next R versions
 
 pinbasic v1.2.1 (Release Date: 2018-11-18)
 ----------------------------------------------------------------
