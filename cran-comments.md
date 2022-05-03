@@ -1,7 +1,7 @@
 ## Test environments
 
-  * local linux install (Manjaro Linux [18.10, Kernel 4.17.19-1]): 
-      - release: 3.5.1
+  * local linux install (Manjaro Linux [Kernel 4.19.236-1]): 
+      - release: 4.2.0
       
   * Linux: Ubuntu trusty (14.04.5 LTS) (on travis-ci): 
       - oldrel: 3.4.4
@@ -17,4 +17,4 @@
 ## R CMD check results
 There were no ERRORs or WARNINGs. 
 
-This submission updates the pinbasic package to version 1.2.2.
+This submission updates the pinbasic package to version 1.2.3.
